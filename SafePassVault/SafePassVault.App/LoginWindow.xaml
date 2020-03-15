@@ -8,8 +8,9 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="SAFEPASSvault"
     Style="{StaticResource BaseWindowStyle}"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Width="400" Margin="30">
+    <Grid Width="400" Margin="30,30,30,15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -45,11 +46,11 @@
         <TextBlock
             x:Name="RegisterText"
             Grid.Row="4"
-            Margin="0,20,0,0"
+            Margin="0,15,0,0"
             Foreground="#dddddd"
             Style="{StaticResource MaterialDesignTextBlock}"
             TextAlignment="Center">
             Don't have an account? Click&#160;<Hyperlink Click="Hyperlink_Click">here</Hyperlink>
-        </TextBlock>
+            to register.</TextBlock>
     </Grid>
 </Window>

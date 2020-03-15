@@ -116,6 +116,11 @@
 
             <Style BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="Hyperlink">
                 <Setter Property="Foreground" Value="#ed800c" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#dddddd" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
         </ResourceDictionary>

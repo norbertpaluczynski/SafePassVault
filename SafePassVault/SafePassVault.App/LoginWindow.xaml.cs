@@ -34,7 +34,7 @@ namespace SafePassVault.App
         {
             RegisterWindow register = new RegisterWindow();
             register.Show();
-            this.Close();
+            Close();
         }
     }
 }

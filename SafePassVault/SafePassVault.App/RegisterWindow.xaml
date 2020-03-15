@@ -8,9 +8,11 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="SAFEPASSVault"
     Style="{StaticResource BaseWindowStyle}"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Width="400" Margin="30">
+    <Grid Width="400" Margin="30,30,30,15">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -33,6 +35,8 @@
             Grid.Row="2"
             Margin="20,10"
             md:HintAssist.Hint="Password"
+            CommandManager.PreviewExecuted="ConfirmBox_PreviewExecuted"
+            ContextMenu="{x:Null}"
             Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
         <PasswordBox
             x:Name="ConfirmBox"
@@ -50,5 +54,14 @@
             Click="RegisterButton_Click"
             Content="Register"
             IsDefault="True" />
+        <TextBlock
+            x:Name="AlreadyRegisteredText"
+            Grid.Row="5"
+            Margin="0,15,0,0"
+            Foreground="#dddddd"
+            Style="{StaticResource MaterialDesignTextBlock}"
+            TextAlignment="Center">
+            Already have an account? Click&#160;<Hyperlink Click="Hyperlink_Click">here</Hyperlink>
+            to login.</TextBlock>
     </Grid>
 </Window>
