@@ -26,7 +26,7 @@ namespace SafePassVault.App
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            var w = ((Window)((Button)sender).Tag).WindowState = WindowState.Minimized;
+            ((Window)((Button)sender).Tag).WindowState = WindowState.Minimized;
         }
     }
 }

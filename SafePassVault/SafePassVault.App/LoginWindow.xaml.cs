@@ -29,5 +29,12 @@ namespace SafePassVault.App
         {
 
         }
+
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindow register = new RegisterWindow();
+            register.Show();
+            this.Close();
+        }
     }
 }
