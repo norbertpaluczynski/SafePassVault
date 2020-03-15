@@ -114,6 +114,10 @@
                 <Setter Property="Foreground" Value="#ffffff" />
             </Style>
 
+            <Style BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="Hyperlink">
+                <Setter Property="Foreground" Value="#ed800c" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
