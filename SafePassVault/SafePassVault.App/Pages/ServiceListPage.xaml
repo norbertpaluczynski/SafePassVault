@@ -1,0 +1,76 @@
+﻿<Page
+    x:Class="SafePassVault.App.Pages.ServiceListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SafePassVault.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="ServiceListPage"
+    d:DesignHeight="500"
+    d:DesignWidth="680"
+    mc:Ignorable="d">
+
+    <Grid>
+        <DataGrid
+            x:Name="ServiceList"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserReorderColumns="False"
+            Style="{StaticResource Sp_MaterialDesignDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding Path=Name}"
+                    Header="Service"
+                    IsReadOnly="True" />
+
+                <DataGridTextColumn
+                    Binding="{Binding Path=Login}"
+                    Header="Login"
+                    IsReadOnly="True" />
+
+                <DataGridTemplateColumn Header="Password">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Password}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn
+                    Binding="{Binding Path=Description}"
+                    Header="Description"
+                    IsReadOnly="True" />
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" Style="{StaticResource Sp_MaterialDesignDataGridButton}">
+                                    <md:PackIcon Width="20" Kind="OpenInNew" />
+                                </Button>
+
+                                <Button Grid.Column="1" Style="{StaticResource Sp_MaterialDesignDataGridButton}">
+                                    <md:PackIcon Width="20" Kind="Edit" />
+                                </Button>
+
+                                <Button Grid.Column="2" Style="{StaticResource Sp_MaterialDesignDataGridButton}">
+                                    <md:PackIcon Width="20" Kind="Close" />
+                                </Button>
+
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+</Page>
