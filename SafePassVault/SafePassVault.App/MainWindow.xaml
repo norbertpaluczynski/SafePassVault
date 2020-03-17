@@ -8,17 +8,47 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="SAFEPASSvault"
     Style="{StaticResource BaseWindowStyle}"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid>
+    <Grid MinWidth="900" MinHeight="500">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="220" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Column="0" Width="250">
-            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="Resources/Img/logo.png" />
+        <Grid Grid.Column="0" Background="#303030">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        </DockPanel>
-        <Frame Grid.Column="1" NavigationUIVisibility="Hidden" />
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="10,30"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                Source="Resources/Img/logo.png" />
+
+            <StackPanel Grid.Row="1" Margin="20,0">
+                <Button
+                    x:Name="ServiceListButton"
+                    Click="ServiceListButton_Click"
+                    Content="Service list"
+                    Style="{StaticResource Sp_SidebarButton}" />
+            </StackPanel>
+
+            <Button
+                x:Name="LogoutButton"
+                Grid.Row="2"
+                Margin="20"
+                Click="LogoutButton_Click"
+                Content="Logout"
+                Style="{StaticResource Sp_MaterialDesignFlatDarkBgButton}" />
+        </Grid>
+        <Frame
+            x:Name="ApplicationFrame"
+            Grid.Column="1"
+            NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

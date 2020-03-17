@@ -27,7 +27,9 @@ namespace SafePassVault.App
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow window = new MainWindow();
+            window.Show();
+            Close();
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)

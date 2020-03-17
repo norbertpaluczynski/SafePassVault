@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SafePassVault.App.Pages;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,6 +21,18 @@ namespace SafePassVault.App
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow window = new LoginWindow();
+            window.Show();
+            Close();
+        }
+
+        private void ServiceListButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationFrame.Content = new ServiceListPage();
         }
     }
 }

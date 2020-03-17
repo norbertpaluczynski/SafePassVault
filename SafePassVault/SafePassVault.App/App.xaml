@@ -14,26 +14,31 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <SolidColorBrush x:Key="PrimaryOrange" Color="#ed800c" />
+            <SolidColorBrush x:Key="LightOrange" Color="#ffa22e" />
+            <SolidColorBrush x:Key="DarkOrange" Color="#ab600a" />
+            <SolidColorBrush x:Key="PrimaryGray" Color="#333333" />
+            <SolidColorBrush x:Key="LightGray" Color="#383838" />
+            <SolidColorBrush x:Key="DarkGray" Color="#303030" />
+
             <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#ed800c" />
             <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#FFFFFF" />
             <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#ed800c" />
             <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#FFFFFF" />
-            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#ed800c" />
+            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#333333" />
             <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#FFFFFF" />
-
             <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#dddddd" />
             <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#FFFFFF" />
-
             <SolidColorBrush x:Key="MaterialDesignFlatButtonClick" Color="#ed800c" />
 
 
             <Style x:Key="BaseWindowStyle" TargetType="Window">
-                <Setter Property="Background" Value="#333333" />
+                <Setter Property="Background" Value="{StaticResource PrimaryGray}" />
                 <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="WindowStyle" Value="None" />
                 <Setter Property="ResizeMode" Value="NoResize" />
-                <Setter Property="BorderBrush" Value="#303030" />
+                <Setter Property="BorderBrush" Value="{StaticResource DarkGray}" />
                 <Setter Property="BorderThickness" Value="3" />
                 <Setter Property="SizeToContent" Value="WidthAndHeight" />
                 <Setter Property="Template">
@@ -49,7 +54,7 @@
                                     x:Name="TopBar"
                                     Grid.Row="0"
                                     HorizontalAlignment="Stretch"
-                                    Background="#303030">
+                                    Background="{StaticResource DarkGray}">
                                     <Grid Panel.ZIndex="10">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -114,8 +119,103 @@
                 <Setter Property="Foreground" Value="#ffffff" />
             </Style>
 
+            <Style
+                x:Key="Sp_MaterialDesignFlatDarkBgButton"
+                BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}"
+                TargetType="Button">
+                <Setter Property="Foreground" Value="#dddddd" />
+                <Setter Property="BorderBrush" Value="#dddddd" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource LightGray}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style
+                x:Key="Sp_SidebarButton"
+                BasedOn="{StaticResource MaterialDesignFlatMidBgButton}"
+                TargetType="Button">
+                <Setter Property="Margin" Value="0,5" />
+                <Setter Property="Foreground" Value="{StaticResource PrimaryOrange}" />
+                <Setter Property="Background" Value="{StaticResource PrimaryGray}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource LightGray}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
             <Style BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="Hyperlink">
-                <Setter Property="Foreground" Value="#ed800c" />
+                <Setter Property="Foreground" Value="{StaticResource PrimaryOrange}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#dddddd" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style
+                x:Key="Sp_MaterialDesignDataGrid"
+                BasedOn="{StaticResource MaterialDesignDataGrid}"
+                TargetType="DataGrid">
+                <Setter Property="Background" Value="{StaticResource LightGray}" />
+                <Setter Property="Foreground" Value="#dddddd" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="GridLinesVisibility" Value="None" />
+                <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource DarkGray}" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="DataGridColumnHeader">
+                <Setter Property="Foreground" Value="{StaticResource PrimaryOrange}" />
+                <Setter Property="Background" Value="{StaticResource DarkGray}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource LightOrange}" />
+                    </Trigger>
+                    <Trigger Property="SortDirection" Value="Ascending">
+                        <Setter Property="Foreground" Value="#efa22e" />
+                    </Trigger>
+                    <Trigger Property="SortDirection" Value="Descending">
+                        <Setter Property="Foreground" Value="{StaticResource LightOrange}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                <Setter Property="Margin" Value="0,3,10,3" />
+                <Setter Property="Foreground" Value="#dddddd" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{x:Null}" />
+                        <Setter Property="Foreground" Value="#dddddd" />
+                        <Setter Property="BorderBrush" Value="{x:Null}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style BasedOn="{StaticResource MaterialDesignDataGridRow}" TargetType="DataGridRow">
+                <Setter Property="Background" Value="{StaticResource PrimaryGray}" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{StaticResource PrimaryGray}" />
+                        <Setter Property="BorderBrush" Value="{x:Null}" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource PrimaryGray}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style
+                x:Key="Sp_MaterialDesignDataGridButton"
+                BasedOn="{StaticResource MaterialDesignFlatButton}"
+                TargetType="Button">
+                <Setter Property="Padding" Value="5,3" />
+                <Setter Property="Margin" Value="3,0" />
+                <Setter Property="Background" Value="{StaticResource DarkGray}" />
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Foreground" Value="#dddddd" />
