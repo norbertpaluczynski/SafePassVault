@@ -18,8 +18,11 @@ namespace SafePassVault.App
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ServiceListPage _serviceListPage;
+
         public MainWindow()
         {
+            _serviceListPage = new ServiceListPage();
             InitializeComponent();
         }
 
@@ -32,7 +35,7 @@ namespace SafePassVault.App
 
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationFrame.Content = new ServiceListPage();
+            ApplicationFrame.Content = _serviceListPage;
         }
     }
 }

@@ -64,7 +64,6 @@
                                         <DockPanel
                                             x:Name="TopBarField"
                                             Grid.Column="0"
-                                            Height="25"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
                                             PreviewMouseLeftButtonDown="TopBar_PreviewMouseLeftButtonDown"
@@ -96,7 +95,7 @@
                                 <Border
                                     Grid.Row="1"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                    BorderThickness="3,0,3,3">
                                     <ContentPresenter />
                                 </Border>
                             </Grid>
@@ -150,7 +149,7 @@
                 <Setter Property="Foreground" Value="{StaticResource PrimaryOrange}" />
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="#dddddd" />
+                        <Setter Property="Foreground" Value="{StaticResource LightOrange}" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -182,8 +181,11 @@
                 </Style.Triggers>
             </Style>
 
-            <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
-                <Setter Property="Margin" Value="0,3,10,3" />
+            <Style
+                x:Key="Sp_MaterialDesignDataGridCell"
+                BasedOn="{StaticResource MaterialDesignDataGridCell}"
+                TargetType="DataGridCell">
+                <Setter Property="Margin" Value="0,3,15,3" />
                 <Setter Property="Foreground" Value="#dddddd" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Style.Triggers>
@@ -191,6 +193,18 @@
                         <Setter Property="Background" Value="{x:Null}" />
                         <Setter Property="Foreground" Value="#dddddd" />
                         <Setter Property="BorderBrush" Value="{x:Null}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style
+                x:Key="Sp_DataGridCellClickable"
+                BasedOn="{StaticResource Sp_MaterialDesignDataGridCell}"
+                TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource PrimaryOrange}" />
+                        <Setter Property="Cursor" Value="Hand" />
                     </Trigger>
                 </Style.Triggers>
             </Style>

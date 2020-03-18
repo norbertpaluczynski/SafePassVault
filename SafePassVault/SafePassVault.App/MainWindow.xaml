@@ -10,7 +10,7 @@
     Style="{StaticResource BaseWindowStyle}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid MinWidth="900" MinHeight="500">
+    <Grid MinWidth="970" MinHeight="500">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220" />
             <ColumnDefinition Width="*" />
