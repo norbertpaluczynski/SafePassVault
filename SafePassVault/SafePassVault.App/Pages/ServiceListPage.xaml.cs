@@ -1,4 +1,5 @@
-﻿using SafePassVault.Core.Models;
+﻿using SafePassVault.App.Models;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SafePassVault.App.UserControls;
 
 namespace SafePassVault.App.Pages
 {
@@ -122,10 +124,12 @@ namespace SafePassVault.App.Pages
             ServiceList.ItemsSource = services;
         }
 
-        private void ShowServiceButton_Click(object sender, RoutedEventArgs e)
+        private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
-            MessageBox.Show(service.Name);
+            //MessageBox.Show(service.Name);
+            ShowServiceDialog showService = new ShowServiceDialog(service);
+            var result = await DialogHost.Show(showService, "root");
         }
 
         private void EditServiceButton_Click(object sender, RoutedEventArgs e)
@@ -138,9 +142,10 @@ namespace SafePassVault.App.Pages
             var service = (Service)((Button)e.Source).DataContext;
         }
 
-        private void AddServiceButton_Click(object sender, RoutedEventArgs e)
+        private async void AddServiceButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AddServiceDialog addService = new AddServiceDialog();
+            var result = await DialogHost.Show(addService, "root");
         }
 
         private void RefreshServiceButton_Click(object sender, RoutedEventArgs e)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SafePassVault.Core.Models
+namespace SafePassVault.App.Models
 {
     public class Service
     {

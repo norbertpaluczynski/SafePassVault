@@ -37,5 +37,10 @@ namespace SafePassVault.App
         {
             ApplicationFrame.Content = _serviceListPage;
         }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
