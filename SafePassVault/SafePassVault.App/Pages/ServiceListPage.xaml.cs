@@ -183,11 +183,15 @@ namespace SafePassVault.App.Pages
 
         private void CopyLoginToClipboard(object sender, RoutedEventArgs e)
         {
+            var service = (Service)((DataGridCell)e.Source).DataContext;
+            Clipboard.SetText(service.Login);
             notifier.ShowSuccess("Login copied to clipboard!");
         }
 
         private void CopyPasswordToClipboard(object sender, RoutedEventArgs e)
         {
+            var service = (Service)((DataGridCell)e.Source).DataContext;
+            Clipboard.SetText(service.Password);
             notifier.ShowSuccess("Password copied to clipboard!");
         }
     }
