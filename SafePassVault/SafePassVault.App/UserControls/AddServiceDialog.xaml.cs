@@ -41,5 +41,10 @@ namespace SafePassVault.App.UserControls
         {
             Service.Password = PasswordBox.Password;
         }
+
+        private void PasswordBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
     }
 }

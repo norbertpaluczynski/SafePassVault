@@ -13,7 +13,7 @@
 
 
 
-    <md:DialogHost CloseOnClickAway="True" Identifier="root">
+    <md:DialogHost CloseOnClickAway="True" Identifier="root" DialogTheme="Dark">
 
 
         <Grid MinWidth="970" MinHeight="500">

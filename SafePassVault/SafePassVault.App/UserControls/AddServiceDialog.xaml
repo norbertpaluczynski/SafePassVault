@@ -6,11 +6,14 @@
     xmlns:local="clr-namespace:SafePassVault.App.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
     mc:Ignorable="d">
 
     <Grid Width="400" Background="{StaticResource PrimaryGray}">
+        <Grid.Resources>
+            <Style TargetType="Border">
+                <Setter Property="Padding" Value="0,10" />
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -23,15 +26,17 @@
             Grid.Row="0"
             Margin="20,10"
             md:HintAssist.Hint="Service"
+            Background="Green"
             Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}"
             Text="{Binding Path=Name, Mode=TwoWay}" />
+
         <TextBox
             x:Name="LoginBox"
             Grid.Row="1"
             Margin="20,10"
             md:HintAssist.Hint="Login"
             Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}"
-            Text="{Binding Path=Login, Mode=TwoWay}" />
+            Text="{Binding Path=Login, Mode=OneWayToSource}" />
         <PasswordBox
             x:Name="PasswordBox"
             Grid.Row="2"

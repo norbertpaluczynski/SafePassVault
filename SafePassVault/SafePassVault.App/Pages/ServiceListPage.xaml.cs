@@ -14,6 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SafePassVault.App.UserControls;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using ToastNotifications.Messages;
 
 namespace SafePassVault.App.Pages
 {
@@ -22,6 +26,23 @@ namespace SafePassVault.App.Pages
     /// </summary>
     public partial class ServiceListPage : Page
     {
+
+        Notifier notifier = new Notifier(cfg =>
+        {
+            cfg.PositionProvider = new WindowPositionProvider(
+                parentWindow: Application.Current.MainWindow,
+                corner: Corner.BottomRight,
+                offsetX: 10,
+                offsetY: 10);
+
+            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                notificationLifetime: TimeSpan.FromSeconds(1),
+                maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+
+            cfg.Dispatcher = Application.Current.Dispatcher;
+        });
+
+
         public List<Service> services = new List<Service>();
 
         public ServiceListPage()
@@ -127,14 +148,15 @@ namespace SafePassVault.App.Pages
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
-            //MessageBox.Show(service.Name);
             ShowServiceDialog showService = new ShowServiceDialog(service);
             var result = await DialogHost.Show(showService, "root");
         }
 
-        private void EditServiceButton_Click(object sender, RoutedEventArgs e)
+        private async void EditServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
+            EditServiceDialog editService = new EditServiceDialog(service);
+            var result = await DialogHost.Show(editService, "root");
         }
 
         private void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
@@ -151,21 +173,22 @@ namespace SafePassVault.App.Pages
         private void RefreshServiceButton_Click(object sender, RoutedEventArgs e)
         {
             RefreshServiceList();
+            notifier.ShowInformation("Refreshed!");
         }
 
         private void SyncServiceButton_Click(object sender, RoutedEventArgs e)
         {
-
+            notifier.ShowInformation("Syncing...");
         }
 
         private void CopyLoginToClipboard(object sender, RoutedEventArgs e)
         {
-
+            notifier.ShowSuccess("Login copied to clipboard!");
         }
 
         private void CopyPasswordToClipboard(object sender, RoutedEventArgs e)
         {
-
+            notifier.ShowSuccess("Password copied to clipboard!");
         }
     }
 }

@@ -15,12 +15,12 @@ using System.Windows.Shapes;
 namespace SafePassVault.App.UserControls
 {
     /// <summary>
-    /// Interaction logic for ShowServiceDialog.xaml
+    /// Interaction logic for EditServiceDialog.xaml
     /// </summary>
-    public partial class ShowServiceDialog : UserControl
+    public partial class EditServiceDialog : UserControl
     {
         public Service Service { get; set; }
-        public ShowServiceDialog(Service serv)
+        public EditServiceDialog(Service serv)
         {
             Service = serv;
             DataContext = Service;
@@ -34,16 +34,6 @@ namespace SafePassVault.App.UserControls
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void PasswordBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
         {
 
         }
