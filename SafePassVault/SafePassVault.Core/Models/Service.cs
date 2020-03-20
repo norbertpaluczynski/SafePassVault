@@ -11,6 +11,8 @@ namespace SafePassVault.Core.Models
         private string _login;
         private string _password;
         private string _description;
+        private DateTime _createdAt;
+        private DateTime _updatedAt;
 
         public string Name 
         {
@@ -58,6 +60,26 @@ namespace SafePassVault.Core.Models
             set
             {
                 _description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime CreatedAt
+        {
+            get => _createdAt;
+            set
+            {
+                _createdAt = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime UpdatedAt
+        {
+            get => _updatedAt;
+            set
+            {
+                _updatedAt = value;
                 OnPropertyChanged();
             }
         }
