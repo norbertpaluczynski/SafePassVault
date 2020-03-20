@@ -2,14 +2,64 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SafePassVault.App.Models
+namespace SafePassVault.Core.Models
 {
-    public class Service
+    public class Service : BaseNotifyPropertyModel
     {
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Description { get; set; }
+        private string _name;
+        private string _url;
+        private string _login;
+        private string _password;
+        private string _description;
+
+        public string Name 
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Url 
+        {
+            get => _url;
+            set
+            {
+                _url = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Login 
+        {
+            get => _login;
+            set
+            {
+                _login = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Password 
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Description 
+        {
+            get => _description;
+            set
+            {
+                _description = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
