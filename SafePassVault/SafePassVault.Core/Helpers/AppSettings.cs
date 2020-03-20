@@ -5,9 +5,11 @@ using System.Text;
 
 namespace SafePassVault.Core.Helpers
 {
-    public static class AppSettings
+    public class AppSettings
     {
-        public static PasswordCharsetPreset DefaultPasswordCharsetPreset => new PasswordCharsetPreset
+        public static AppSettings Settings = new AppSettings();
+
+        public PasswordCharsetPreset DefaultPasswordCharsetPreset { get; private set; } = new PasswordCharsetPreset
         {
             PresetName = "Default",
             AllowNumbers = true,
