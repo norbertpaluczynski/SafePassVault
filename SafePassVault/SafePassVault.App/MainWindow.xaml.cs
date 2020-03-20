@@ -1,19 +1,9 @@
 ﻿using SafePassVault.App.Pages;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
-using ToastNotifications.Messages;
 
 namespace SafePassVault.App
 {
@@ -22,7 +12,9 @@ namespace SafePassVault.App
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly StartPage _startPage;
         private readonly ServiceListPage _serviceListPage;
+
         public Notifier Notifier { get; set; }
 
 
@@ -47,8 +39,10 @@ namespace SafePassVault.App
             });
 
             _serviceListPage = new ServiceListPage(Notifier);
+            _startPage = new StartPage();
 
             InitializeComponent();
+            ApplicationFrame.Content = _startPage;
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
