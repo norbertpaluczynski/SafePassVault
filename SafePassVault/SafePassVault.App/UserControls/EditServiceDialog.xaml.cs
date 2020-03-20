@@ -21,6 +21,7 @@ namespace SafePassVault.App.UserControls
     public partial class EditServiceDialog : UserControl
     {
         public Service Service { get; set; }
+
         public EditServiceDialog(Service service)
         {
             Service = service;
@@ -29,12 +30,26 @@ namespace SafePassVault.App.UserControls
             PasswordBox.Password = Service.Password;
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Service.Name = ServiceBox.Text;
+            Service.Login = LoginBox.Text;
+            Service.Password = PasswordBox.Password;
+            Service.Url = UrlBox.Text;
+            Service.Description = DescriptionBox.Text;
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        private void ShowPassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GeneratePassword_Click(object sender, RoutedEventArgs e)
         {
 
         }

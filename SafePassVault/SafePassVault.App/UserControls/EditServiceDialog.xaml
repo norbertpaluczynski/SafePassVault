@@ -8,49 +8,121 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d">
     <Grid Width="400" Background="{StaticResource PrimaryGray}">
+        <Grid.Resources>
+            <Style TargetType="Border">
+                <Setter Property="Padding" Value="0,10" />
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
+        <TextBlock
+            x:Name="Title"
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            Padding="10"
+            Background="{StaticResource DarkGray}"
+            FontSize="20"
+            FontWeight="Bold"
+            Foreground="{StaticResource PrimaryOrange}"
+            Style="{StaticResource MaterialDesignHeadline2TextBlock}"
+            Text="Edite service"
+            TextAlignment="Center" />
+
         <TextBox
             x:Name="ServiceBox"
-            Grid.Row="0"
-            Margin="20,10"
-            md:HintAssist.Hint="Service"
-            Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}"
-            Text="{Binding Path=Name, Mode=TwoWay}" />
+            Grid.Row="1"
+            Margin="25,10"
+            md:HintAssist.Hint="Service name *"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            Text="{Binding Path=Name, Mode=OneWay}" />
+
         <TextBox
             x:Name="LoginBox"
-            Grid.Row="1"
-            Margin="20,10"
-            md:HintAssist.Hint="Login"
-            Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}"
-            Text="{Binding Path=Login, Mode=TwoWay}" />
-        <PasswordBox
-            x:Name="PasswordBox"
             Grid.Row="2"
-            Margin="20,10"
-            md:HintAssist.Hint="Password"
-            PasswordChanged="PasswordBox_PasswordChanged"
-            Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
+            Margin="25,10"
+            md:HintAssist.Hint="Login *"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            Text="{Binding Path=Login, Mode=OneWay}" />
+        <StackPanel
+            Grid.Row="3"
+            Margin="25,10"
+            Orientation="Horizontal">
+            <PasswordBox
+                x:Name="PasswordBox"
+                Width="265"
+                md:HintAssist.Hint="Password *"
+                PasswordChanged="PasswordBox_PasswordChanged"
+                Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+            <Button
+                x:Name="ShowPassword"
+                Margin="10,0,0,0"
+                VerticalAlignment="Bottom"
+                BorderBrush="{StaticResource PrimaryOrange}"
+                BorderThickness="1"
+                Click="ShowPassword_Click"
+                Style="{StaticResource Sp_MaterialDesignDataGridButton}"
+                ToolTip="Show password">
+                <md:PackIcon Width="20" Kind="Show" />
+            </Button>
+            <Button
+                x:Name="GeneratePassword"
+                Margin="10,0,0,0"
+                VerticalAlignment="Bottom"
+                BorderBrush="{StaticResource PrimaryOrange}"
+                BorderThickness="1"
+                Click="GeneratePassword_Click"
+                Style="{StaticResource Sp_MaterialDesignDataGridButton}"
+                ToolTip="Generate new password">
+                <md:PackIcon Width="20" Kind="KeyAdd" />
+            </Button>
+        </StackPanel>
+
+        <TextBox
+            x:Name="UrlBox"
+            Grid.Row="4"
+            Margin="25,10"
+            md:HintAssist.Hint="URL"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            Text="{Binding Path=Url, Mode=OneWay}" />
         <TextBox
             x:Name="DescriptionBox"
-            Grid.Row="3"
-            Margin="20,10"
+            Grid.Row="5"
+            Margin="25,10"
             md:HintAssist.Hint="Description"
-            Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}"
-            Text="{Binding Path=Description, Mode=TwoWay}" />
-        <Button
-            x:Name="Save"
-            Grid.Row="4"
-            Margin="10"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            Text="{Binding Path=Description, Mode=OneWay}" />
+        <StackPanel
+            Grid.Row="6"
+            Margin="10,10,10,20"
             HorizontalAlignment="Center"
-            Click="Save_Click"
-            Command="{x:Static md:DialogHost.CloseDialogCommand}"
-            Content="Save"
-            IsDefault="True" />
+            Orientation="Horizontal">
+            <Button
+                x:Name="CancelButton"
+                Margin="0,0,50,0"
+                HorizontalAlignment="Left"
+                BorderBrush="#3f3f3f"
+                BorderThickness="2"
+                Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                Content="Cancel"
+                Style="{StaticResource MaterialDesignFlatButton}" />
+            <Button
+                x:Name="SaveButton"
+                Width="75"
+                HorizontalAlignment="Right"
+                Click="SaveButton_Click"
+                Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                Content="Save"
+                IsDefault="True" />
+
+        </StackPanel>
+
     </Grid>
 </UserControl>

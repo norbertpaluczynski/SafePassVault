@@ -47,5 +47,25 @@ namespace SafePassVault.App.UserControls
         {
 
         }
+
+        private void ShowPassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GeneratePassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GeneratePassword_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
