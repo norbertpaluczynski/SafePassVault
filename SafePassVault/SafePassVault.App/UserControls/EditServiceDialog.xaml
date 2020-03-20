@@ -33,7 +33,7 @@
             FontWeight="Bold"
             Foreground="{StaticResource PrimaryOrange}"
             Style="{StaticResource MaterialDesignHeadline2TextBlock}"
-            Text="Edite service"
+            Text="Edit service"
             TextAlignment="Center" />
 
         <TextBox
@@ -121,8 +121,6 @@
                 Command="{x:Static md:DialogHost.CloseDialogCommand}"
                 Content="Save"
                 IsDefault="True" />
-
         </StackPanel>
-
     </Grid>
 </UserControl>

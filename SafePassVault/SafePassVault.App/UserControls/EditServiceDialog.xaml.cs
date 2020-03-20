@@ -37,6 +37,7 @@ namespace SafePassVault.App.UserControls
             Service.Password = PasswordBox.Password;
             Service.Url = UrlBox.Text;
             Service.Description = DescriptionBox.Text;
+            Service.UpdatedAt = DateTime.Now;
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -46,7 +47,7 @@ namespace SafePassVault.App.UserControls
 
         private void ShowPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void GeneratePassword_Click(object sender, RoutedEventArgs e)

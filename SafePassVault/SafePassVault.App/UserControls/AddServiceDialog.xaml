@@ -43,7 +43,7 @@
             Margin="25,10"
             md:HintAssist.Hint="Service name *"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Name, Mode=TwoWay}" />
+            Text="{Binding Path=Name, Mode=OneWayToSource}" />
 
         <TextBox
             x:Name="LoginBox"
@@ -92,37 +92,37 @@
             Margin="25,10"
             md:HintAssist.Hint="URL"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Url, Mode=TwoWay}" />
+            Text="{Binding Path=Url, Mode=OneWayToSource}" />
         <TextBox
             x:Name="DescriptionBox"
             Grid.Row="5"
             Margin="25,10"
             md:HintAssist.Hint="Description"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Description, Mode=TwoWay}" />
+            Text="{Binding Path=Description, Mode=OneWayToSource}" />
         <StackPanel
             Grid.Row="6"
             Margin="10,10,10,20"
-            Orientation="Horizontal"
-            HorizontalAlignment="Center">
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
             <Button
                 x:Name="CancelButton"
+                Margin="0,0,50,0"
                 HorizontalAlignment="Left"
-                Command="{x:Static md:DialogHost.CloseDialogCommand}"
-                Content="Cancel"
-                Style="{StaticResource MaterialDesignFlatButton}"
                 BorderBrush="#3f3f3f"
                 BorderThickness="2"
-                Margin="0 0 50 0"/>
+                Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                Content="Cancel"
+                Style="{StaticResource MaterialDesignFlatButton}" />
             <Button
                 x:Name="AddButton"
+                Width="75"
                 HorizontalAlignment="Right"
                 Click="AddButton_Click"
                 Command="{x:Static md:DialogHost.CloseDialogCommand}"
                 Content="Add"
-                IsDefault="True"
-                Width="75"/>
-            
+                IsDefault="True" />
+
         </StackPanel>
 
     </Grid>

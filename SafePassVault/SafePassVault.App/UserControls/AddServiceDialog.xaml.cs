@@ -32,10 +32,8 @@ namespace SafePassVault.App.UserControls
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Service.Name);
-            MessageBox.Show(Service.Login);
-            MessageBox.Show(Service.Password);
-            MessageBox.Show(Service.Description);
+            Service.CreatedAt = DateTime.Now;
+            Service.UpdatedAt = DateTime.Now;
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
