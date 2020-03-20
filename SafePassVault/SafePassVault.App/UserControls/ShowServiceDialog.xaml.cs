@@ -1,4 +1,5 @@
 ﻿using SafePassVault.App.Models;
+using SafePassVault.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,9 +21,9 @@ namespace SafePassVault.App.UserControls
     public partial class ShowServiceDialog : UserControl
     {
         public Service Service { get; set; }
-        public ShowServiceDialog(Service serv)
+        public ShowServiceDialog(Service service)
         {
-            Service = serv;
+            Service = service;
             DataContext = Service;
             InitializeComponent();
             PasswordBox.Password = Service.Password;

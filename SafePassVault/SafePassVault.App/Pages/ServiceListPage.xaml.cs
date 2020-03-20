@@ -1,23 +1,14 @@
 ﻿using SafePassVault.App.Models;
 using MaterialDesignThemes.Wpf;
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SafePassVault.App.UserControls;
 using ToastNotifications;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Position;
 using ToastNotifications.Messages;
+using System.Windows.Data;
+using System.Collections.ObjectModel;
+using SafePassVault.Core.Models;
 
 namespace SafePassVault.App.Pages
 {
@@ -26,125 +17,33 @@ namespace SafePassVault.App.Pages
     /// </summary>
     public partial class ServiceListPage : Page
     {
+        public Notifier Notifier { get; set; }
+        public ObservableCollection<Service> Services { get; set; }
 
-        Notifier notifier = new Notifier(cfg =>
+
+        public ServiceListPage(Notifier notifier)
         {
-            cfg.PositionProvider = new WindowPositionProvider(
-                parentWindow: Application.Current.MainWindow,
-                corner: Corner.BottomRight,
-                offsetX: 10,
-                offsetY: 10);
-
-            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                notificationLifetime: TimeSpan.FromSeconds(1),
-                maximumNotificationCount: MaximumNotificationCount.FromCount(3));
-
-            cfg.DisplayOptions.Width = 230;
-
-            cfg.Dispatcher = Application.Current.Dispatcher;
-        });
-
-
-        public List<Service> services = new List<Service>();
-
-        public ServiceListPage()
-        {
+            Services = new ObservableCollection<Service>();
+            Notifier = notifier;
             InitializeComponent();
-            services.Add(new Service()
+            DataContext = this;
+
+            for(int i = 0; i < 10; i++)
             {
-                Name = "League of Legend",
-                Login = "Gracz123",
-                Password = "TOPsecretPASSWD",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Konto z allegro"
-            });
-            services.Add(new Service()
-            {
-                Name = "League of Legend",
-                Login = "SuperPlayer",
-                Password = "123456789",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Moje konto"
-            });
-            services.Add(new Service()
-            {
-                Name = "Steam",
-                Login = "PanPawel",
-                Password = "ToSieKameruje",
-                Url = "https://store.steampowered.com/"
-            }); services.Add(new Service()
-            {
-                Name = "League of Legend",
-                Login = "Gracz123",
-                Password = "TOPsecretPASSWD",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Konto z allegro"
-            });
-            services.Add(new Service()
-            {
-                Name = "League of sadsadsadLegend",
-                Login = "SuperPlayer",
-                Password = "123456789",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Moje konto"
-            });
-            services.Add(new Service()
-            {
-                Name = "Steam",
-                Login = "PanPawel",
-                Password = "ToSieKameruje",
-                Url = "https://store.steampowered.com/"
-            }); services.Add(new Service()
-            {
-                Name = "League of Legend",
-                Login = "Gracz123",
-                Password = "TOPsecretPASSWD",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Konto z allegro"
-            });
-            services.Add(new Service()
-            {
-                Name = "Leaguesadasd of Legend",
-                Login = "SuperPlayer",
-                Password = "123456789",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Moje konto"
-            });
-            services.Add(new Service()
-            {
-                Name = "Stsadsadsaeam",
-                Login = "PanPawel",
-                Password = "ToSieKameruje",
-                Url = "https://store.steampowered.com/"
-            }); services.Add(new Service()
-            {
-                Name = "League osadsadf Legend",
-                Login = "Gracz123",
-                Password = "TOPsecretPASSWD",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Konto z allegro"
-            });
-            services.Add(new Service()
-            {
-                Name = "League of dsadaasdasdsaLegend",
-                Login = "SuperPlayer",
-                Password = "123456789",
-                Url = "https://eune.leagueoflegends.com/pl-pl/",
-                Description = "Moje konto"
-            });
-            services.Add(new Service()
-            {
-                Name = "Steam",
-                Login = "PanPawel",
-                Password = "ToSieKameruje",
-                Url = "https://store.steampowered.com/"
-            });
-            RefreshServiceList();
+                Services.Add(new Service()
+                {
+                    Name = "League of Legend",
+                    Login = "Gracz123",
+                    Password = "TOPsecretPASSWD",
+                    Url = "https://eune.leagueoflegends.com/pl-pl/",
+                    Description = "Konto z allegro"
+                });
+            }
         }
 
         public void RefreshServiceList()
         {
-            ServiceList.ItemsSource = services;
+
         }
 
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
@@ -164,6 +63,7 @@ namespace SafePassVault.App.Pages
         private void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
+            Services.Remove(service);
         }
 
         private async void AddServiceButton_Click(object sender, RoutedEventArgs e)
@@ -175,26 +75,26 @@ namespace SafePassVault.App.Pages
         private void RefreshServiceButton_Click(object sender, RoutedEventArgs e)
         {
             RefreshServiceList();
-            notifier.ShowInformation("Refreshed!");
+            Notifier.ShowInformation("Refreshed!");
         }
 
         private void SyncServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            notifier.ShowInformation("Syncing...");
+            Notifier.ShowInformation("Syncing...");
         }
 
         private void CopyLoginToClipboard(object sender, RoutedEventArgs e)
         {
             var service = (Service)((DataGridCell)e.Source).DataContext;
             Clipboard.SetText(service.Login);
-            notifier.ShowSuccess("Login copied to clipboard!");
+            Notifier.ShowSuccess("Login copied to clipboard!");
         }
 
         private void CopyPasswordToClipboard(object sender, RoutedEventArgs e)
         {
             var service = (Service)((DataGridCell)e.Source).DataContext;
             Clipboard.SetText(service.Password);
-            notifier.ShowSuccess("Password copied to clipboard!");
+            Notifier.ShowSuccess("Password copied to clipboard!");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SafePassVault.App.Models;
+using SafePassVault.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

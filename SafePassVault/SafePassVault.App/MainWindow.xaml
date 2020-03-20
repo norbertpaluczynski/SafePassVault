@@ -11,12 +11,16 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
+    <md:DialogHost
+        CloseOnClickAway="True"
+        DialogTheme="Dark"
+        Identifier="root">
 
+        <Grid
+            x:Name="MainGrid"
+            MinWidth="970"
+            MinHeight="500">
 
-    <md:DialogHost CloseOnClickAway="True" Identifier="root" DialogTheme="Dark">
-
-
-        <Grid MinWidth="970" MinHeight="500">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="220" />
                 <ColumnDefinition Width="*" />
@@ -52,10 +56,13 @@
                     Content="Logout"
                     Style="{StaticResource Sp_MaterialDesignFlatDarkBgButton}" />
             </Grid>
+
             <Frame
                 x:Name="ApplicationFrame"
                 Grid.Column="1"
                 NavigationUIVisibility="Hidden" />
+
         </Grid>
+
     </md:DialogHost>
 </Window>

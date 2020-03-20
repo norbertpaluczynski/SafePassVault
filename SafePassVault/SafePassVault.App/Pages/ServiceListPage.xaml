@@ -9,98 +9,136 @@
     Title="ServiceListPage"
     mc:Ignorable="d">
 
+    <Grid>
+        <DataGrid
+            x:Name="ServiceList"
+            Width="750"
+            Height="500"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserReorderColumns="False"
+            HorizontalScrollBarVisibility="Disabled"
+            ItemsSource="{Binding Services}"
+            Style="{StaticResource Sp_MaterialDesignDataGrid}"
+            VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
 
+                <DataGridTextColumn
+                    Width="1.2*"
+                    Binding="{Binding Path=Name}"
+                    CellStyle="{StaticResource Sp_MaterialDesignDataGridCell}"
+                    Header="Service"
+                    IsReadOnly="True">
 
+                    <DataGridTextColumn.ElementStyle>
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
 
-    <md:DialogHost Identifier="root2">
-        <Grid>
-            <DataGrid
-                x:Name="ServiceList"
-                Width="750"
-                Height="500"
-                AutoGenerateColumns="False"
-                CanUserAddRows="False"
-                CanUserReorderColumns="False"
-                HorizontalScrollBarVisibility="Disabled"
-                Style="{StaticResource Sp_MaterialDesignDataGrid}"
-                VerticalScrollBarVisibility="Auto">
-                <DataGrid.Columns>
+                </DataGridTextColumn>
 
-                    <DataGridTextColumn
-                        Width="1.2*"
-                        Binding="{Binding Path=Name}"
-                        CellStyle="{StaticResource Sp_MaterialDesignDataGridCell}"
-                        Header="Service"
-                        IsReadOnly="True">
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Login}"
+                    Header="Login"
+                    IsReadOnly="True">
 
-                        <DataGridTextColumn.ElementStyle>
-                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
 
-                    </DataGridTextColumn>
+                    <DataGridTextColumn.CellStyle>
+                        <Style BasedOn="{StaticResource Sp_DataGridCellClickable}" TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="Double click to copy to clipboard" />
+                            <EventSetter Event="MouseDoubleClick" Handler="CopyLoginToClipboard" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
 
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding Path=Login}"
-                        Header="Login"
-                        IsReadOnly="True">
+                </DataGridTextColumn>
 
-                        <DataGridTextColumn.ElementStyle>
-                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
+                <DataGridTemplateColumn Width="0.7*" Header="Password">
 
-                        <DataGridTextColumn.CellStyle>
-                            <Style BasedOn="{StaticResource Sp_DataGridCellClickable}" TargetType="DataGridCell">
-                                <Setter Property="ToolTip" Value="Double click to copy to clipboard" />
-                                <EventSetter Event="MouseDoubleClick" Handler="CopyLoginToClipboard" />
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock ToolTip="Double click to copy to clipboard">
+                                <md:PackIcon Width="7" Kind="Circle" />
+                                <md:PackIcon Width="7" Kind="Circle" />
+                                <md:PackIcon Width="7" Kind="Circle" />
+                                <md:PackIcon Width="7" Kind="Circle" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
 
-                    </DataGridTextColumn>
+                    <DataGridTemplateColumn.CellStyle>
+                        <Style BasedOn="{StaticResource Sp_DataGridCellClickable}" TargetType="DataGridCell">
+                            <EventSetter Event="MouseDoubleClick" Handler="CopyPasswordToClipboard" />
+                        </Style>
+                    </DataGridTemplateColumn.CellStyle>
 
-                    <DataGridTemplateColumn Width="0.7*" Header="Password">
+                </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock ToolTip="Double click to copy to clipboard">
-                                    <md:PackIcon Width="7" Kind="Circle" />
-                                    <md:PackIcon Width="7" Kind="Circle" />
-                                    <md:PackIcon Width="7" Kind="Circle" />
-                                    <md:PackIcon Width="7" Kind="Circle" />
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Description}"
+                    CellStyle="{StaticResource Sp_MaterialDesignDataGridCell}"
+                    Header="Description"
+                    IsReadOnly="True">
 
-                        <DataGridTemplateColumn.CellStyle>
-                            <Style BasedOn="{StaticResource Sp_DataGridCellClickable}" TargetType="DataGridCell">
-                                <EventSetter Event="MouseDoubleClick" Handler="CopyPasswordToClipboard" />
-                            </Style>
-                        </DataGridTemplateColumn.CellStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
 
-                    </DataGridTemplateColumn>
+                </DataGridTextColumn>
 
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding Path=Description}"
-                        CellStyle="{StaticResource Sp_MaterialDesignDataGridCell}"
-                        Header="Description"
-                        IsReadOnly="True">
+                <DataGridTemplateColumn Width="150" CellStyle="{StaticResource Sp_MaterialDesignDataGridCell}">
 
-                        <DataGridTextColumn.ElementStyle>
-                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
+                    <DataGridTemplateColumn.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                    </DataGridTextColumn>
+                            <Button
+                                x:Name="AddServiceButton"
+                                Grid.Column="0"
+                                Background="{StaticResource PrimaryGray}"
+                                Click="AddServiceButton_Click"
+                                Style="{StaticResource Sp_MaterialDesignDataGridButton}"
+                                ToolTip="Add new service">
+                                <md:PackIcon Width="20" Kind="Add" />
+                            </Button>
 
-                    <DataGridTemplateColumn Width="150" CellStyle="{StaticResource Sp_MaterialDesignDataGridCell}">
+                            <Button
+                                x:Name="RefreshServiceButton"
+                                Grid.Column="1"
+                                Background="{StaticResource PrimaryGray}"
+                                Click="RefreshServiceButton_Click"
+                                Style="{StaticResource Sp_MaterialDesignDataGridButton}"
+                                ToolTip="Refresh service list">
+                                <md:PackIcon Width="20" Kind="Refresh" />
+                            </Button>
 
-                        <DataGridTemplateColumn.Header>
+                            <Button
+                                x:Name="SyncServiceButton"
+                                Grid.Column="2"
+                                Background="{StaticResource PrimaryGray}"
+                                Click="SyncServiceButton_Click"
+                                Style="{StaticResource Sp_MaterialDesignDataGridButton}"
+                                ToolTip="Synchronize your service list with server">
+                                <md:PackIcon Width="20" Kind="Sync" />
+                            </Button>
+                        </Grid>
+                    </DataGridTemplateColumn.Header>
+
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -109,81 +147,39 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Button
-                                    x:Name="AddServiceButton"
+                                    x:Name="ShowServiceButton"
                                     Grid.Column="0"
-                                    Background="{StaticResource PrimaryGray}"
-                                    Click="AddServiceButton_Click"
+                                    Click="ShowServiceButton_Click"
                                     Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                    ToolTip="Add new service">
-                                    <md:PackIcon Width="20" Kind="Add" />
+                                    ToolTip="Show service in dialog window">
+                                    <md:PackIcon Width="20" Kind="OpenInNew" />
                                 </Button>
 
                                 <Button
-                                    x:Name="RefreshServiceButton"
+                                    x:Name="EditServiceButton"
                                     Grid.Column="1"
-                                    Background="{StaticResource PrimaryGray}"
-                                    Click="RefreshServiceButton_Click"
+                                    Click="EditServiceButton_Click"
                                     Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                    ToolTip="Refresh service list">
-                                    <md:PackIcon Width="20" Kind="Refresh" />
+                                    ToolTip="Edit service">
+                                    <md:PackIcon Width="20" Kind="Edit" />
                                 </Button>
 
                                 <Button
-                                    x:Name="SyncServiceButton"
+                                    x:Name="DeleteServiceButton"
                                     Grid.Column="2"
-                                    Background="{StaticResource PrimaryGray}"
-                                    Click="SyncServiceButton_Click"
+                                    Click="DeleteServiceButton_Click"
                                     Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                    ToolTip="Synchronize your service list with server">
-                                    <md:PackIcon Width="20" Kind="Sync" />
+                                    ToolTip="Delete service">
+                                    <md:PackIcon Width="20" Kind="Close" />
                                 </Button>
+
                             </Grid>
-                        </DataGridTemplateColumn.Header>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
 
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                </DataGridTemplateColumn>
 
-                                    <Button
-                                        x:Name="ShowServiceButton"
-                                        Grid.Column="0"
-                                        Click="ShowServiceButton_Click"
-                                        Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                        ToolTip="Show service in dialog window">
-                                        <md:PackIcon Width="20" Kind="OpenInNew" />
-                                    </Button>
-
-                                    <Button
-                                        x:Name="EditServiceButton"
-                                        Grid.Column="1"
-                                        Click="EditServiceButton_Click"
-                                        Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                        ToolTip="Edit service">
-                                        <md:PackIcon Width="20" Kind="Edit" />
-                                    </Button>
-
-                                    <Button
-                                        x:Name="DeleteServiceButton"
-                                        Grid.Column="2"
-                                        Click="DeleteServiceButton_Click"
-                                        Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                        ToolTip="Delete service">
-                                        <md:PackIcon Width="20" Kind="Close" />
-                                    </Button>
-
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-    </md:DialogHost>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </Page>
