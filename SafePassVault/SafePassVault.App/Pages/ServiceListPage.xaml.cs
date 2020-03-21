@@ -49,7 +49,7 @@ namespace SafePassVault.App.Pages
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
-            ShowServiceDialog showService = new ShowServiceDialog(service);
+            ShowServiceDialog showService = new ShowServiceDialog(service, Notifier);
             var result = await DialogHost.Show(showService, "root");
         }
 
@@ -60,10 +60,16 @@ namespace SafePassVault.App.Pages
             var result = await DialogHost.Show(editService, "root");
         }
 
-        private void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            var service = (Service)((Button)e.Source).DataContext;
-            Services.Remove(service);
+            ConfirmDialog dialog = new ConfirmDialog();
+            await DialogHost.Show(dialog, "root");
+
+            if(dialog.IsConfirmed)
+            {
+                var service = (Service)((Button)e.Source).DataContext;
+                Services.Remove(service);
+            }
         }
 
         private async void AddServiceButton_Click(object sender, RoutedEventArgs e)

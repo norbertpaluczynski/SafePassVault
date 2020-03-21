@@ -1,17 +1,9 @@
-﻿using SafePassVault.App.Models;
-using SafePassVault.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SafePassVault.Core.Models;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ToastNotifications;
+using ToastNotifications.Messages;
 
 namespace SafePassVault.App.UserControls
 {
@@ -21,32 +13,45 @@ namespace SafePassVault.App.UserControls
     public partial class ShowServiceDialog : UserControl
     {
         public Service Service { get; set; }
-        public ShowServiceDialog(Service service)
+        public Notifier Notifier { get; set; }
+
+        public ShowServiceDialog(Service service, Notifier notifier)
         {
             Service = service;
+            Notifier = notifier;
             DataContext = Service;
             InitializeComponent();
-            PasswordBox.Password = Service.Password;
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void OpenInBrowserButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if(!string.IsNullOrEmpty(Service.Url))
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        UseShellExecute = true,
+                        FileName = Service.Url
+                    });
+                }
+                catch
+                {
+                    Notifier.ShowError("Website address is invalid!");
+                }
+            }
         }
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        private void CopyLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            Clipboard.SetText(Service.Login);
+            Notifier.ShowSuccess("Login copied to clipboard!");
         }
 
-        private void PasswordBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void CopyPasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-
+            Clipboard.SetText(Service.Password);
+            Notifier.ShowSuccess("Password copied to clipboard!");
         }
     }
 }
