@@ -11,7 +11,7 @@ namespace SafePassVault.Core.Helpers
         public static string Generate(PasswordCharsetPreset preset, int length)
         {
             var allowedCharset = GetAllowedCharsets(preset);
-            var array = SchuffleArray(allowedCharset);
+            var array = ShuffleArray(allowedCharset);
 
             StringBuilder password = new StringBuilder();
 
@@ -51,7 +51,7 @@ namespace SafePassVault.Core.Helpers
             return builder.ToString().ToCharArray();
         }
 
-        private static char[] SchuffleArray(char[] array)
+        private static char[] ShuffleArray(char[] array)
         {
             char temp;
             int index;
