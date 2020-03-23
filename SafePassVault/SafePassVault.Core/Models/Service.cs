@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 
 namespace SafePassVault.Core.Models
 {
-    public class Service : BaseNotifyPropertyModel
+    public class Service : BaseNotifyPropertyModel, IDataErrorInfo
     {
         private string _name;
         private string _url;
@@ -81,6 +80,44 @@ namespace SafePassVault.Core.Models
             {
                 _updatedAt = value;
                 OnPropertyChanged();
+            }
+        }
+
+        string IDataErrorInfo.Error
+        {
+            get { return null; }
+        }
+
+        string IDataErrorInfo.this[string columnName]
+        {
+            get
+            {
+                switch(columnName)
+                {
+                    case "Name":
+                        if(string.IsNullOrEmpty(Name))
+                        {
+                            return "Name is required!";
+                        }
+                        break;
+
+                    case "Login":
+                        if (string.IsNullOrEmpty(Login))
+                        {
+                            return "Login is required!";
+                        }
+                        break;
+
+                    case "Password":
+                        if (string.IsNullOrEmpty(Password))
+                        {
+                            return "Password is required!";
+                        }
+                        break;
+                    default: break;
+                }
+
+                return null;
             }
         }
     }

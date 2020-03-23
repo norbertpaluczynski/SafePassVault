@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:SafePassVault.App.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:pba="clr-namespace:SafePassVault.App.Helpers"
     mc:Ignorable="d">
     <Grid Width="400" Background="{StaticResource PrimaryGray}">
         <Grid.Resources>
@@ -42,7 +43,7 @@
             Margin="25,10"
             md:HintAssist.Hint="Service name *"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Name, Mode=OneWay}" />
+            Text="{Binding Path=Name, ValidatesOnDataErrors=True}" />
 
         <TextBox
             x:Name="LoginBox"
@@ -50,16 +51,21 @@
             Margin="25,10"
             md:HintAssist.Hint="Login *"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Login, Mode=OneWay}" />
+            Text="{Binding Path=Login, ValidatesOnDataErrors=True}" />
+
         <StackPanel
             Grid.Row="3"
             Margin="25,10"
             Orientation="Horizontal">
+
             <PasswordBox
                 x:Name="PasswordBox"
                 Width="265"
                 md:HintAssist.Hint="Password *"
+                pba:PasswordBoxAssistant.BindPassword="True"
+                pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, ValidatesOnDataErrors=True}"
                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+
             <Button
                 x:Name="ShowPassword"
                 Margin="10,0,0,0"
@@ -91,19 +97,22 @@
             Margin="25,10"
             md:HintAssist.Hint="URL"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Url, Mode=OneWay}" />
+            Text="{Binding Path=Url}" />
+
         <TextBox
             x:Name="DescriptionBox"
             Grid.Row="5"
             Margin="25,10"
             md:HintAssist.Hint="Description"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Description, Mode=OneWay}" />
+            Text="{Binding Path=Description}" />
+
         <StackPanel
             Grid.Row="6"
             Margin="10,10,10,20"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
+
             <Button
                 x:Name="CancelButton"
                 Margin="0,0,50,0"
@@ -114,6 +123,7 @@
                 Content="Cancel"
                 IsCancel="True"
                 Style="{StaticResource MaterialDesignFlatButton}" />
+
             <Button
                 x:Name="SaveButton"
                 Width="75"
@@ -121,7 +131,24 @@
                 Click="SaveButton_Click"
                 Command="{x:Static md:DialogHost.CloseDialogCommand}"
                 Content="Save"
-                IsDefault="True" />
+                IsDefault="True">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource MaterialDesignFlatLightBgButton}" TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ServiceBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LoginBox}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=PasswordBox}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
         </StackPanel>
     </Grid>
 </UserControl>

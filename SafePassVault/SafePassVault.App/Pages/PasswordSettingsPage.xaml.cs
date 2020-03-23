@@ -32,7 +32,7 @@ namespace SafePassVault.App.Pages
             if (regex.IsMatch(password))
             {
                 AppSettings.Settings.DefaultPasswordLength = Int32.Parse(password);
-                Notifier.ShowSuccess("Seved changes!");
+                Notifier.ShowSuccess("Saved changes!");
             }
             else
             {
