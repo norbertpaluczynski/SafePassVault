@@ -18,17 +18,10 @@ namespace SafePassVault.App.UserControls
     /// </summary>
     public partial class ConfirmDialog : UserControl
     {
-        public bool IsConfirmed { get; set; }
-
         public ConfirmDialog()
         {
-            IsConfirmed = false;
             InitializeComponent();
         }
 
-        private void YesButton_Click(object sender, RoutedEventArgs e)
-        {
-            IsConfirmed = false;
-        }
     }
 }

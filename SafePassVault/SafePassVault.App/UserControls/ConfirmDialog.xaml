@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:SafePassVault.App.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:s="clr-namespace:System;assembly=System.Runtime"
     mc:Ignorable="d">
     <Grid Background="{StaticResource PrimaryGray}">
 
@@ -38,7 +39,12 @@
             Background="{StaticResource DarkGray}"
             Command="{x:Static md:DialogHost.CloseDialogCommand}"
             Content="No"
-            IsCancel="True" />
+            IsCancel="True"
+            IsTabStop="False">
+            <Button.CommandParameter>
+                <s:Boolean>False</s:Boolean>
+            </Button.CommandParameter>
+        </Button>
 
         <Button
             x:Name="YesButton"
@@ -46,10 +52,14 @@
             Grid.Column="1"
             Width="80"
             Margin="20,5,30,20"
-            Click="YesButton_Click"
             Command="{x:Static md:DialogHost.CloseDialogCommand}"
             Content="Yes"
-            IsDefault="True" />
+            IsDefault="True"
+            IsTabStop="False">
+            <Button.CommandParameter>
+                <s:Boolean>True</s:Boolean>
+            </Button.CommandParameter>
+        </Button>
 
     </Grid>
 </UserControl>
