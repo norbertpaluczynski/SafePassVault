@@ -1,17 +1,10 @@
-﻿using SafePassVault.App.Models;
-using SafePassVault.Core.Models;
+﻿using SafePassVault.Core.Models;
+using SafePassVault.Core.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ToastNotifications;
+using ToastNotifications.Messages;
 
 namespace SafePassVault.App.UserControls
 {
@@ -22,26 +15,17 @@ namespace SafePassVault.App.UserControls
     public partial class AddServiceDialog : UserControl
     {
         public Service Service { get; set; }
+        public Notifier Notifier { get; set; }
 
-        public AddServiceDialog()
+        public AddServiceDialog(Notifier notifier)
         {
             Service = new Service();
+            Notifier = notifier;
             DataContext = Service;
             InitializeComponent();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            Service.CreatedAt = DateTime.Now;
-            Service.UpdatedAt = DateTime.Now;
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            Service.Password = PasswordBox.Password;
-        }
-
-        private void PasswordBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
 
         }
@@ -53,17 +37,7 @@ namespace SafePassVault.App.UserControls
 
         private void GeneratePassword_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void GeneratePassword_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            PasswordBox.Password = PasswordGenerator.Generate(AppSettings.Settings.DefaultPasswordCharsetPreset, AppSettings.Settings.DefaultPasswordLength);
         }
     }
 }

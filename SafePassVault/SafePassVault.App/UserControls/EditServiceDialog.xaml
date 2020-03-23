@@ -59,7 +59,6 @@
                 x:Name="PasswordBox"
                 Width="265"
                 md:HintAssist.Hint="Password *"
-                PasswordChanged="PasswordBox_PasswordChanged"
                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
             <Button
                 x:Name="ShowPassword"
@@ -113,6 +112,7 @@
                 BorderThickness="2"
                 Command="{x:Static md:DialogHost.CloseDialogCommand}"
                 Content="Cancel"
+                IsCancel="True"
                 Style="{StaticResource MaterialDesignFlatButton}" />
             <Button
                 x:Name="SaveButton"

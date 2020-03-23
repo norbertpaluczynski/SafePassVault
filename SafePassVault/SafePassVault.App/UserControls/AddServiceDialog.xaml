@@ -42,26 +42,26 @@
             Grid.Row="1"
             Margin="25,10"
             md:HintAssist.Hint="Service name *"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Name, Mode=OneWayToSource}" />
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
         <TextBox
             x:Name="LoginBox"
             Grid.Row="2"
             Margin="25,10"
             md:HintAssist.Hint="Login *"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Login, Mode=OneWayToSource}" />
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
         <StackPanel
             Grid.Row="3"
             Margin="25,10"
             Orientation="Horizontal">
+
             <PasswordBox
                 x:Name="PasswordBox"
                 Width="265"
                 md:HintAssist.Hint="Password *"
-                PasswordChanged="PasswordBox_PasswordChanged"
                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+
             <Button
                 x:Name="ShowPassword"
                 Margin="10,0,0,0"
@@ -74,6 +74,7 @@
                 Visibility="Hidden">
                 <md:PackIcon Width="20" Kind="Show" />
             </Button>
+
             <Button
                 x:Name="GeneratePassword"
                 Margin="10,0,0,0"
@@ -85,27 +86,29 @@
                 ToolTip="Generate new password">
                 <md:PackIcon Width="20" Kind="KeyAdd" />
             </Button>
+
         </StackPanel>
 
         <TextBox
             x:Name="UrlBox"
             Grid.Row="4"
             Margin="25,10"
-            md:HintAssist.Hint="URL"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Url, Mode=OneWayToSource}" />
+            md:HintAssist.Hint="Url"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
         <TextBox
             x:Name="DescriptionBox"
             Grid.Row="5"
             Margin="25,10"
             md:HintAssist.Hint="Description"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Description, Mode=OneWayToSource}" />
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
         <StackPanel
             Grid.Row="6"
             Margin="10,10,10,20"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
+
             <Button
                 x:Name="CancelButton"
                 Margin="0,0,50,0"

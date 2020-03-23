@@ -56,7 +56,7 @@ namespace SafePassVault.App.Pages
         private async void EditServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
-            EditServiceDialog editService = new EditServiceDialog(service);
+            EditServiceDialog editService = new EditServiceDialog(service, Notifier);
             var result = await DialogHost.Show(editService, "root");
         }
 
@@ -78,7 +78,7 @@ namespace SafePassVault.App.Pages
 
         private async void AddServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            AddServiceDialog addService = new AddServiceDialog();
+            AddServiceDialog addService = new AddServiceDialog(Notifier);
             var result = await DialogHost.Show(addService, "root");
         }
 

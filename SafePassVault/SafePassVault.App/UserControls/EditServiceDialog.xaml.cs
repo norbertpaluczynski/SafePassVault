@@ -1,17 +1,10 @@
-﻿using SafePassVault.App.Models;
+﻿using SafePassVault.Core.Helpers;
 using SafePassVault.Core.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ToastNotifications;
+using ToastNotifications.Messages;
 
 namespace SafePassVault.App.UserControls
 {
@@ -21,26 +14,18 @@ namespace SafePassVault.App.UserControls
     public partial class EditServiceDialog : UserControl
     {
         public Service Service { get; set; }
+        public Notifier Notifier { get; set; }
 
-        public EditServiceDialog(Service service)
+        public EditServiceDialog(Service service, Notifier notifier)
         {
             Service = service;
+            Notifier = notifier;
             DataContext = Service;
             InitializeComponent();
             PasswordBox.Password = Service.Password;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            Service.Name = ServiceBox.Text;
-            Service.Login = LoginBox.Text;
-            Service.Password = PasswordBox.Password;
-            Service.Url = UrlBox.Text;
-            Service.Description = DescriptionBox.Text;
-            Service.UpdatedAt = DateTime.Now;
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
 
         }
@@ -52,7 +37,9 @@ namespace SafePassVault.App.UserControls
 
         private void GeneratePassword_Click(object sender, RoutedEventArgs e)
         {
-
+            PasswordBox.Password = PasswordGenerator.Generate(AppSettings.Settings.DefaultPasswordCharsetPreset, AppSettings.Settings.DefaultPasswordLength);
         }
+
+        
     }
 }

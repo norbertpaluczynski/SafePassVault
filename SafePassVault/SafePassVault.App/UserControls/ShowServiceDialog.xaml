@@ -39,6 +39,7 @@
                 Panel.ZIndex="10"
                 Background="{StaticResource PrimaryGray}"
                 Click="OpenInBrowserButton_Click"
+                IsTabStop="False"
                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
                 ToolTip="Open servce's web page in browser">
                 <md:PackIcon Kind="OpenInBrowser" />
@@ -72,6 +73,7 @@
                 Width="40"
                 VerticalAlignment="Center"
                 Click="CopyLoginButton_Click"
+                IsTabStop="False"
                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
                 ToolTip="Copy login to clipboard">
                 <md:PackIcon Kind="ContentCopy" />
@@ -106,6 +108,7 @@
                 Width="40"
                 VerticalAlignment="Center"
                 Click="CopyPasswordButton_Click"
+                IsTabStop="False"
                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
                 ToolTip="Copy password to clipboard">
                 <md:PackIcon Kind="ContentCopy" />
