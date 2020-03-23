@@ -70,7 +70,8 @@
                 BorderThickness="1"
                 Click="ShowPassword_Click"
                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                ToolTip="Show password">
+                ToolTip="Show password"
+                Visibility="Hidden">
                 <md:PackIcon Width="20" Kind="Show" />
             </Button>
             <Button
@@ -113,6 +114,7 @@
                 BorderThickness="2"
                 Command="{x:Static md:DialogHost.CloseDialogCommand}"
                 Content="Cancel"
+                IsCancel="True"
                 Style="{StaticResource MaterialDesignFlatButton}" />
             <Button
                 x:Name="AddButton"
