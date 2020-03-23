@@ -107,7 +107,7 @@
 
                             <Button
                                 x:Name="AddServiceButton"
-                                Grid.Column="0"
+                                Grid.Column="2"
                                 Background="{StaticResource PrimaryGray}"
                                 Click="AddServiceButton_Click"
                                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
@@ -117,21 +117,23 @@
 
                             <Button
                                 x:Name="RefreshServiceButton"
-                                Grid.Column="1"
+                                Grid.Column="0"
                                 Background="{StaticResource PrimaryGray}"
                                 Click="RefreshServiceButton_Click"
                                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                ToolTip="Refresh service list">
+                                ToolTip="Refresh service list"
+                                Visibility="Hidden">
                                 <md:PackIcon Width="20" Kind="Refresh" />
                             </Button>
 
                             <Button
                                 x:Name="SyncServiceButton"
-                                Grid.Column="2"
+                                Grid.Column="1"
                                 Background="{StaticResource PrimaryGray}"
                                 Click="SyncServiceButton_Click"
                                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                                ToolTip="Synchronize your service list with server">
+                                ToolTip="Synchronize your service list with server"
+                                Visibility="Hidden">
                                 <md:PackIcon Width="20" Kind="Sync" />
                             </Button>
                         </Grid>
