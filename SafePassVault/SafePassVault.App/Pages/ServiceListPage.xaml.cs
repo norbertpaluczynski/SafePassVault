@@ -28,7 +28,7 @@ namespace SafePassVault.App.Pages
             InitializeComponent();
             DataContext = this;
 
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 5; i++)
             {
                 Services.Add(new Service()
                 {
@@ -63,13 +63,17 @@ namespace SafePassVault.App.Pages
         private async void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
         {
             ConfirmDialog dialog = new ConfirmDialog();
-            await DialogHost.Show(dialog, "root");
+            var result = await DialogHost.Show(dialog, "root");
 
-            if(dialog.IsConfirmed)
+            try
             {
-                var service = (Service)((Button)e.Source).DataContext;
-                Services.Remove(service);
+                if ((bool)result)
+                {
+                    var service = (Service)((Button)e.Source).DataContext;
+                    Services.Remove(service);
+                }
             }
+            catch { }
         }
 
         private async void AddServiceButton_Click(object sender, RoutedEventArgs e)

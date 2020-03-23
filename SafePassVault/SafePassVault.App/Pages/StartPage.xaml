@@ -13,20 +13,16 @@
         Width="750"
         Height="500"
         Background="{StaticResource PrimaryGray}">
-        <md:PackIcon
-            Width="450"
-            Height="Auto"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Foreground="{StaticResource PrimaryOrange}"
-            Kind="ShieldAccount" />
         <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+            Margin="20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
             Panel.ZIndex="2"
-            FontSize="50"
+            FontSize="24"
             FontWeight="Bold"
-            Foreground="#dddddd"
-            Text="Work in progress!" />
+            Foreground="#dddddd">
+            <Run Text="SAFEPASSvault" />
+            <Run Foreground="{StaticResource PrimaryOrange}" Text="v0.1" />
+        </TextBlock>
     </Grid>
 </Page>
