@@ -40,6 +40,10 @@ namespace SafePassVault.App.UserControls
                     Notifier.ShowError("Website address is invalid!");
                 }
             }
+            else
+            {
+                Notifier.ShowInformation("Website address has not been provided! ");
+            }
         }
 
         private void CopyLoginButton_Click(object sender, RoutedEventArgs e)

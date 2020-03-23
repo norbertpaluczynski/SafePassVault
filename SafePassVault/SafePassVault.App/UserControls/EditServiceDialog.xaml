@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pba="clr-namespace:SafePassVault.App.Helpers"
+    xmlns:s="clr-namespace:System;assembly=System.Runtime"
     mc:Ignorable="d">
     <Grid Width="400" Background="{StaticResource PrimaryGray}">
         <Grid.Resources>
@@ -122,7 +123,13 @@
                 Command="{x:Static md:DialogHost.CloseDialogCommand}"
                 Content="Cancel"
                 IsCancel="True"
-                Style="{StaticResource MaterialDesignFlatButton}" />
+                Style="{StaticResource MaterialDesignFlatButton}">
+
+                <Button.CommandParameter>
+                    <s:Boolean>False</s:Boolean>
+                </Button.CommandParameter>
+
+            </Button>
 
             <Button
                 x:Name="SaveButton"
@@ -132,6 +139,11 @@
                 Command="{x:Static md:DialogHost.CloseDialogCommand}"
                 Content="Save"
                 IsDefault="True">
+
+                <Button.CommandParameter>
+                    <s:Boolean>True</s:Boolean>
+                </Button.CommandParameter>
+
                 <Button.Style>
                     <Style BasedOn="{StaticResource MaterialDesignFlatLightBgButton}" TargetType="Button">
                         <Setter Property="IsEnabled" Value="False" />

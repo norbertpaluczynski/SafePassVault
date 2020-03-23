@@ -1,5 +1,4 @@
-﻿using SafePassVault.App.Models;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,16 +40,11 @@ namespace SafePassVault.App.Pages
             }
         }
 
-        public void RefreshServiceList()
-        {
-
-        }
-
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
             ShowServiceDialog showService = new ShowServiceDialog(service, Notifier);
-            var result = await DialogHost.Show(showService, "root");
+            await DialogHost.Show(showService, "root");
         }
 
         private async void EditServiceButton_Click(object sender, RoutedEventArgs e)
@@ -58,6 +52,30 @@ namespace SafePassVault.App.Pages
             var service = (Service)((Button)e.Source).DataContext;
             EditServiceDialog editService = new EditServiceDialog(service, Notifier);
             var result = await DialogHost.Show(editService, "root");
+
+            try
+            {
+                if ((bool)result)
+                {
+                    //TODO
+                }
+            }
+            catch { }
+        }
+
+        private async void AddServiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddServiceDialog addService = new AddServiceDialog(Notifier);
+            var result = await DialogHost.Show(addService, "root");
+
+            try
+            {
+                if ((bool)result)
+                {
+                    //TODO
+                }
+            }
+            catch { }
         }
 
         private async void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
@@ -76,15 +94,8 @@ namespace SafePassVault.App.Pages
             catch { }
         }
 
-        private async void AddServiceButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddServiceDialog addService = new AddServiceDialog(Notifier);
-            var result = await DialogHost.Show(addService, "root");
-        }
-
         private void RefreshServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            RefreshServiceList();
             Notifier.ShowInformation("Refreshed!");
         }
 
