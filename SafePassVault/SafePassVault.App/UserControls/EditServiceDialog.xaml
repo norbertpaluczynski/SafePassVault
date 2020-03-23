@@ -69,7 +69,8 @@
                 BorderThickness="1"
                 Click="ShowPassword_Click"
                 Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                ToolTip="Show password">
+                ToolTip="Show password"
+                Visibility="Hidden">
                 <md:PackIcon Width="20" Kind="Show" />
             </Button>
             <Button

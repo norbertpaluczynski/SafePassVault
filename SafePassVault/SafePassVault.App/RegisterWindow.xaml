@@ -10,58 +10,65 @@
     Style="{StaticResource BaseWindowStyle}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Width="400" Margin="30,30,30,15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <Image
-            Width="300"
-            RenderOptions.BitmapScalingMode="HighQuality"
-            Source="Resources/Img/logo.png" />
-        <TextBox
-            x:Name="LoginBox"
-            Grid.Row="1"
-            Margin="20,10"
-            md:HintAssist.Hint="Login"
-            Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}" />
-        <PasswordBox
-            x:Name="PasswordBox"
-            Grid.Row="2"
-            Margin="20,10"
-            md:HintAssist.Hint="Password"
-            CommandManager.PreviewExecuted="ConfirmBox_PreviewExecuted"
-            ContextMenu="{x:Null}"
-            Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
-        <PasswordBox
-            x:Name="ConfirmBox"
-            Grid.Row="3"
-            Margin="20,10"
-            md:HintAssist.Hint="Confirm password"
-            CommandManager.PreviewExecuted="ConfirmBox_PreviewExecuted"
-            ContextMenu="{x:Null}"
-            Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
-        <Button
-            x:Name="RegisterButton"
-            Grid.Row="4"
-            Margin="10"
-            HorizontalAlignment="Center"
-            Click="RegisterButton_Click"
-            Content="Register"
-            IsDefault="True" />
-        <TextBlock
-            x:Name="AlreadyRegisteredText"
-            Grid.Row="5"
-            Margin="0,15,0,0"
-            Foreground="#dddddd"
-            Style="{StaticResource MaterialDesignTextBlock}"
-            TextAlignment="Center">
-            Already have an account? Click&#160;<Hyperlink Click="Hyperlink_Click">here</Hyperlink>
-            to login.</TextBlock>
-    </Grid>
+    <md:DialogHost
+        CloseOnClickAway="True"
+        DialogTheme="Dark"
+        Identifier="register">
+
+        <Grid Width="400" Margin="30,30,30,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Image
+                Width="300"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                Source="Resources/Img/logo.png" />
+            <TextBox
+                x:Name="LoginBox"
+                Grid.Row="1"
+                Margin="20,10"
+                md:HintAssist.Hint="Login"
+                Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}" />
+            <PasswordBox
+                x:Name="PasswordBox"
+                Grid.Row="2"
+                Margin="20,10"
+                md:HintAssist.Hint="Password"
+                CommandManager.PreviewExecuted="ConfirmBox_PreviewExecuted"
+                ContextMenu="{x:Null}"
+                Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
+            <PasswordBox
+                x:Name="ConfirmBox"
+                Grid.Row="3"
+                Margin="20,10"
+                md:HintAssist.Hint="Confirm password"
+                CommandManager.PreviewExecuted="ConfirmBox_PreviewExecuted"
+                ContextMenu="{x:Null}"
+                Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
+            <Button
+                x:Name="RegisterButton"
+                Grid.Row="4"
+                Margin="10"
+                HorizontalAlignment="Center"
+                Click="RegisterButton_Click"
+                Content="Register"
+                IsDefault="True" />
+            <TextBlock
+                x:Name="AlreadyRegisteredText"
+                Grid.Row="5"
+                Margin="0,15,0,0"
+                Foreground="#dddddd"
+                Style="{StaticResource MaterialDesignTextBlock}"
+                TextAlignment="Center">
+                Already have an account? Click&#160;<Hyperlink Click="Hyperlink_Click">here</Hyperlink>
+                to login.</TextBlock>
+        </Grid>
+    </md:DialogHost>
 </Window>
