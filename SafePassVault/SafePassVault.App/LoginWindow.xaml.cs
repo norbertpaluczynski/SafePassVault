@@ -1,4 +1,6 @@
-﻿using PCore.Cryptography;
+﻿using MaterialDesignThemes.Wpf;
+using PCore.Cryptography;
+using SafePassVault.App.UserControls;
 using SafePassVault.Core.ApiClient;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ToastNotifications.Messages;
 
 namespace SafePassVault.App
 {
@@ -45,14 +48,21 @@ namespace SafePassVault.App
             try
             {
                 var result = await _apiClient.ApiUsersAuthenticateAsync(loginModel);
+                _ = result;
 
-                int asd = 123;
+                MainWindow window = new MainWindow();
+                window.Show();
+                window.Notifier.ShowSuccess("You logged in successfully!");
+                Close();
             }
-            catch (Exception ex) { Debug.WriteLine(ex); }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine(ex);
+                FailLogin failDialog = new FailLogin();
+                var dialogResult = await DialogHost.Show(failDialog, "login");
+            }
 
-            MainWindow window = new MainWindow();
-            window.Show();
-            Close();
+            
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)

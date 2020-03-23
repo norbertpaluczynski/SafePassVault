@@ -10,47 +10,53 @@
     Style="{StaticResource BaseWindowStyle}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Width="400" Margin="30,30,30,15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <Image
-            Width="300"
-            RenderOptions.BitmapScalingMode="HighQuality"
-            Source="Resources/Img/logo.png" />
-        <TextBox
-            x:Name="LoginBox"
-            Grid.Row="1"
-            Margin="20,10"
-            md:HintAssist.Hint="Login"
-            Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}" />
-        <PasswordBox
-            x:Name="PasswordBox"
-            Grid.Row="2"
-            Margin="20,10"
-            md:HintAssist.Hint="Password"
-            Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
-        <Button
-            x:Name="LoginButton"
-            Grid.Row="3"
-            Margin="10"
-            HorizontalAlignment="Center"
-            Click="LoginButton_Click"
-            Content="Login"
-            IsDefault="True" />
-        <TextBlock
-            x:Name="RegisterText"
-            Grid.Row="4"
-            Margin="0,15,0,0"
-            Foreground="#dddddd"
-            Style="{StaticResource MaterialDesignTextBlock}"
-            TextAlignment="Center">
-            Don't have an account? Click&#160;<Hyperlink Click="Hyperlink_Click">here</Hyperlink>
-            to register.</TextBlock>
-    </Grid>
+    <md:DialogHost
+        CloseOnClickAway="True"
+        DialogTheme="Dark"
+        Identifier="login">
+        <Grid Width="400" Margin="30,30,30,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Image
+                Width="300"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                Source="Resources/Img/logo.png" />
+            <TextBox
+                x:Name="LoginBox"
+                Grid.Row="1"
+                Margin="20,10"
+                md:HintAssist.Hint="Login"
+                Style="{StaticResource Sp_MaterialDesignFilledTextFieldTextBox}" />
+            <PasswordBox
+                x:Name="PasswordBox"
+                Grid.Row="2"
+                Margin="20,10"
+                md:HintAssist.Hint="Password"
+                Style="{StaticResource Sp_MaterialDesignFilledPasswordFieldPasswordBox}" />
+            <Button
+                x:Name="LoginButton"
+                Grid.Row="3"
+                Margin="10"
+                HorizontalAlignment="Center"
+                Click="LoginButton_Click"
+                Content="Login"
+                IsDefault="True" />
+            <TextBlock
+                x:Name="RegisterText"
+                Grid.Row="4"
+                Margin="0,15,0,0"
+                Foreground="#dddddd"
+                Style="{StaticResource MaterialDesignTextBlock}"
+                TextAlignment="Center">
+                Don't have an account? Click&#160;<Hyperlink Click="Hyperlink_Click">here</Hyperlink>
+                to register.</TextBlock>
+        </Grid>
+    </md:DialogHost>
 </Window>
