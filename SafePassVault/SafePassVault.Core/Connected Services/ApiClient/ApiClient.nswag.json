@@ -684,11 +684,11 @@
               }
             ]
           },
-          "ecc_ciphertext_blob": {
+          "ecc_derivation_blob": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/EccCiphertextBlobModel"
+                "$ref": "#/components/schemas/EccDerivationBlobModel"
               }
             ]
           },
@@ -730,13 +730,12 @@
           }
         }
       },
-      "EccCiphertextBlobModel": {
+      "EccDerivationBlobModel": {
         "type": "object",
         "additionalProperties": false,
         "required": [
           "curve",
-          "public_key",
-          "cipthertext"
+          "public_key"
         ],
         "properties": {
           "curve": {
@@ -747,11 +746,6 @@
             "type": "string",
             "format": "byte",
             "minLength": 1
-          },
-          "cipthertext": {
-            "type": "string",
-            "format": "byte",
-            "minLength": 1
           }
         }
       },
@@ -759,12 +753,23 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
+          "derivation_description",
+          "derivation_salt",
           "cipher_description",
           "initialization_vector",
           "authentication_tag",
           "ciphertext"
         ],
         "properties": {
+          "derivation_description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "derivation_salt": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
           "cipher_description": {
             "type": "string",
             "minLength": 1
@@ -824,7 +829,7 @@
         "required": [
           "ecc_key_pair_id",
           "service_description",
-          "ecc_ciphertext_blob",
+          "ecc_derivation_blob",
           "symmetric_ciphertext_blob"
         ],
         "properties": {
@@ -836,8 +841,8 @@
           "service_description": {
             "$ref": "#/components/schemas/ServiceDescriptionModel"
           },
-          "ecc_ciphertext_blob": {
-            "$ref": "#/components/schemas/EccCiphertextBlobModel"
+          "ecc_derivation_blob": {
+            "$ref": "#/components/schemas/EccDerivationBlobModel"
           },
           "symmetric_ciphertext_blob": {
             "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
@@ -864,11 +869,11 @@
               }
             ]
           },
-          "ecc_ciphertext_blob": {
+          "ecc_derivation_blob": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/EccCiphertextBlobModel"
+                "$ref": "#/components/schemas/EccDerivationBlobModel"
               }
             ]
           },
@@ -887,7 +892,7 @@
         "additionalProperties": false,
         "required": [
           "ecc_key_pair_id",
-          "ecc_ciphertext_blob",
+          "ecc_derivation_blob",
           "symmetric_ciphertext_blob",
           "service_description"
         ],
@@ -897,8 +902,8 @@
             "format": "guid",
             "minLength": 1
           },
-          "ecc_ciphertext_blob": {
-            "$ref": "#/components/schemas/EccCiphertextBlobModel"
+          "ecc_derivation_blob": {
+            "$ref": "#/components/schemas/EccDerivationBlobModel"
           },
           "symmetric_ciphertext_blob": {
             "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
@@ -958,6 +963,8 @@
         "additionalProperties": false,
         "required": [
           "curve",
+          "derivation_description",
+          "derivation_salt",
           "cipher_description",
           "initialization_vector",
           "authentication_tag",
@@ -966,6 +973,15 @@
         "properties": {
           "curve": {
             "type": "string",
+            "minLength": 1
+          },
+          "derivation_description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "derivation_salt": {
+            "type": "string",
+            "format": "byte",
             "minLength": 1
           },
           "cipher_description": {

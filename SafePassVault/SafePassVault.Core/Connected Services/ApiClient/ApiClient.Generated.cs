@@ -238,7 +238,7 @@ namespace SafePassVault.Core.ApiClient
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ecccredentials");
-            urlBuilder_.Replace("{GroupVersion}", System.Uri.EscapeDataString(groupVersion.ToString("s", System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Replace("{GroupVersion}", System.Uri.EscapeDataString(((System.DateTimeOffset)groupVersion).ToString("s", System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{MajorVersion}", System.Uri.EscapeDataString(ConvertToString(majorVersion, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{MinorVersion}", System.Uri.EscapeDataString(ConvertToString(minorVersion, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{Status}", System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture)));
@@ -1006,8 +1006,8 @@ namespace SafePassVault.Core.ApiClient
         [Newtonsoft.Json.JsonProperty("service_description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ServiceDescriptionModel Service_description { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("ecc_ciphertext_blob", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public EccCiphertextBlobModel Ecc_ciphertext_blob { get; set; }
+        [Newtonsoft.Json.JsonProperty("ecc_derivation_blob", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public EccDerivationBlobModel Ecc_derivation_blob { get; set; }
     
         [Newtonsoft.Json.JsonProperty("symmetric_ciphertext_blob", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public SymmetricCiphertextBlobModel Symmetric_ciphertext_blob { get; set; }
@@ -1038,7 +1038,7 @@ namespace SafePassVault.Core.ApiClient
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.11.0 (Newtonsoft.Json v12.0.0.2)")]
-    public partial class EccCiphertextBlobModel 
+    public partial class EccDerivationBlobModel 
     {
         [Newtonsoft.Json.JsonProperty("curve", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -1048,16 +1048,20 @@ namespace SafePassVault.Core.ApiClient
         [System.ComponentModel.DataAnnotations.Required]
         public byte[] Public_key { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("cipthertext", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public byte[] Cipthertext { get; set; }
-    
     
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.11.0 (Newtonsoft.Json v12.0.0.2)")]
     public partial class SymmetricCiphertextBlobModel 
     {
+        [Newtonsoft.Json.JsonProperty("derivation_description", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Derivation_description { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("derivation_salt", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public byte[] Derivation_salt { get; set; }
+    
         [Newtonsoft.Json.JsonProperty("cipher_description", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public string Cipher_description { get; set; }
@@ -1112,9 +1116,9 @@ namespace SafePassVault.Core.ApiClient
         [System.ComponentModel.DataAnnotations.Required]
         public ServiceDescriptionModel Service_description { get; set; } = new ServiceDescriptionModel();
     
-        [Newtonsoft.Json.JsonProperty("ecc_ciphertext_blob", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("ecc_derivation_blob", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public EccCiphertextBlobModel Ecc_ciphertext_blob { get; set; } = new EccCiphertextBlobModel();
+        public EccDerivationBlobModel Ecc_derivation_blob { get; set; } = new EccDerivationBlobModel();
     
         [Newtonsoft.Json.JsonProperty("symmetric_ciphertext_blob", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -1135,8 +1139,8 @@ namespace SafePassVault.Core.ApiClient
         [Newtonsoft.Json.JsonProperty("service_description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ServiceDescriptionModel Service_description { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("ecc_ciphertext_blob", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public EccCiphertextBlobModel Ecc_ciphertext_blob { get; set; }
+        [Newtonsoft.Json.JsonProperty("ecc_derivation_blob", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public EccDerivationBlobModel Ecc_derivation_blob { get; set; }
     
         [Newtonsoft.Json.JsonProperty("symmetric_ciphertext_blob", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public SymmetricCiphertextBlobModel Symmetric_ciphertext_blob { get; set; }
@@ -1151,9 +1155,9 @@ namespace SafePassVault.Core.ApiClient
         [System.ComponentModel.DataAnnotations.Required]
         public System.Guid Ecc_key_pair_id { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("ecc_ciphertext_blob", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("ecc_derivation_blob", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public EccCiphertextBlobModel Ecc_ciphertext_blob { get; set; } = new EccCiphertextBlobModel();
+        public EccDerivationBlobModel Ecc_derivation_blob { get; set; } = new EccDerivationBlobModel();
     
         [Newtonsoft.Json.JsonProperty("symmetric_ciphertext_blob", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -1201,6 +1205,14 @@ namespace SafePassVault.Core.ApiClient
         [Newtonsoft.Json.JsonProperty("curve", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public string Curve { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("derivation_description", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Derivation_description { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("derivation_salt", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public byte[] Derivation_salt { get; set; }
     
         [Newtonsoft.Json.JsonProperty("cipher_description", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
