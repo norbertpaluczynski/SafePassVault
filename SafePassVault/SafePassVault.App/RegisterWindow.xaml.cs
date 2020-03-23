@@ -58,14 +58,19 @@ namespace SafePassVault.App
             {
                 var result = await _apiClient.ApiUsersRegisterAsync(registerModel);
 
-                SuccessRegister dialog = new SuccessRegister();
-                var dialogResult = await DialogHost.Show(dialog, "register");
+                SuccessRegister successDialog = new SuccessRegister();
+                var dialogResult = await DialogHost.Show(successDialog, "register");
 
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.Show();
                 Close();
             }
-            catch (Exception ex) { Debug.WriteLine(ex); }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine(ex);
+                FailRegister failDialog = new FailRegister();
+                var dialogResult = await DialogHost.Show(failDialog, "register");
+            }
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)

@@ -31,7 +31,7 @@ namespace SafePassVault.App
                     offsetY: 5);
 
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                    notificationLifetime: TimeSpan.FromSeconds(1),
+                    notificationLifetime: TimeSpan.FromSeconds(1.5),
                     maximumNotificationCount: MaximumNotificationCount.FromCount(3));
 
                 cfg.DisplayOptions.Width = 230;
