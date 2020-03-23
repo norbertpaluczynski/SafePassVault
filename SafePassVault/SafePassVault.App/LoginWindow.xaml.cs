@@ -29,6 +29,7 @@ namespace SafePassVault.App
     {
         private HttpClient _http;
         private Client _apiClient;
+        public static String _username;
         public LoginWindow()
         {
             _http = new HttpClient();
@@ -38,6 +39,7 @@ namespace SafePassVault.App
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            _username = LoginBox.Text;
             PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
             UserAuthenticatePostModel loginModel = new UserAuthenticatePostModel()
             {
@@ -50,7 +52,7 @@ namespace SafePassVault.App
                 var result = await _apiClient.ApiUsersAuthenticateAsync(loginModel);
                 _ = result;
 
-                MainWindow window = new MainWindow();
+                MainWindow window = new MainWindow(LoginBox.Text);
                 window.Show();
                 window.Notifier.ShowSuccess("You logged in successfully!");
                 Close();

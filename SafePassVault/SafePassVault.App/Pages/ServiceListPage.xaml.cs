@@ -8,6 +8,7 @@ using ToastNotifications.Messages;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using SafePassVault.Core.Models;
+using SafePassVault.App.Helpers;
 
 namespace SafePassVault.App.Pages
 {
@@ -27,17 +28,16 @@ namespace SafePassVault.App.Pages
             InitializeComponent();
             DataContext = this;
 
-            for(int i = 0; i < 5; i++)
+            var data = StaticHelper.ReadData();
+            if(data != null)
             {
-                Services.Add(new Service()
+                foreach (var x in data)
                 {
-                    Name = "League of Legend",
-                    Login = "Gracz123",
-                    Password = "TOPsecretPASSWD",
-                    Url = "https://eune.leagueoflegends.com/pl-pl/",
-                    Description = "Konto z allegro"
-                });
+                    Services.Add(x);
+                }
             }
+
+            
         }
 
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
-                    //TODO
+                    // TO DO
                 }
             }
             catch { }
@@ -72,7 +72,7 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
-                    //TODO
+                    Services.Add(addService.Service);
                 }
             }
             catch { }

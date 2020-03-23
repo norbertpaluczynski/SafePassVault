@@ -1,9 +1,15 @@
 ﻿using SafePassVault.App.Pages;
+using SafePassVault.Core.Models;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
+using Newtonsoft.Json;
+using System.IO;
+using SafePassVault.App.Helpers;
 
 namespace SafePassVault.App
 {
@@ -12,15 +18,18 @@ namespace SafePassVault.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly StartPage _startPage;
-        private readonly ServiceListPage _serviceListPage;
-        private readonly PasswordSettingsPage _passwordSettingsPage;
+        public static StartPage _startPage;
+        public static ServiceListPage _serviceListPage;
+        public static PasswordSettingsPage _passwordSettingsPage;
+        public static String _username;
+
 
         public Notifier Notifier { get; set; }
 
 
-        public MainWindow()
+        public MainWindow(String username)
         {
+            _username = username;
             Notifier = new Notifier(cfg =>
             {
                 cfg.PositionProvider = new ControlPositionProvider(
@@ -49,9 +58,14 @@ namespace SafePassVault.App
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
+            StaticHelper.SaveData();
+
+
+
             LoginWindow window = new LoginWindow();
             window.Show();
             Close();
+            
         }
 
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)

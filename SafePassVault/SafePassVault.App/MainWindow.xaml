@@ -11,10 +11,7 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
-    <md:DialogHost
-        CloseOnClickAway="True"
-        DialogTheme="Dark"
-        Identifier="root">
+    <md:DialogHost DialogTheme="Dark" Identifier="root">
 
         <Grid
             x:Name="MainGrid"

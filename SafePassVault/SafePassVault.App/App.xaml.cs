@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using SafePassVault.App.Helpers;
 
 namespace SafePassVault.App
 {
@@ -21,6 +22,7 @@ namespace SafePassVault.App
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            StaticHelper.SaveData();
             ((Window)((Button)sender).Tag).Close();
         }
 

@@ -27,7 +27,8 @@ namespace SafePassVault.App.UserControls
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Service.CreatedAt = DateTime.Now;
+            Service.UpdatedAt = DateTime.Now;
         }
 
         private void ShowPassword_Click(object sender, RoutedEventArgs e)
