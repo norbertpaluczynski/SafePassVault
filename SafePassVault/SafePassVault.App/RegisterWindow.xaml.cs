@@ -45,6 +45,12 @@ namespace SafePassVault.App
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrEmpty(LoginBox.Text) || String.IsNullOrEmpty(PasswordBox.Password) || String.IsNullOrEmpty(ConfirmBox.Password))
+            {
+                FailLogin failDialog = new FailLogin();
+                var dialogResult = await DialogHost.Show(failDialog, "register");
+                return;
+            }
             PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
 
             UserRegisterPostModel registerModel = new UserRegisterPostModel

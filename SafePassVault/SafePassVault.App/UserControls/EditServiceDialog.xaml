@@ -64,7 +64,7 @@
                 Width="265"
                 md:HintAssist.Hint="Password *"
                 pba:PasswordBoxAssistant.BindPassword="True"
-                pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, ValidatesOnDataErrors=True}"
+                pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, ValidatesOnDataErrors=True, Mode=TwoWay}"
                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
 
             <Button

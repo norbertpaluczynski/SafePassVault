@@ -16,36 +16,49 @@ namespace SafePassVault.App.Helpers
     {
         public static void SaveData()
         {
-            JsonData data = new JsonData();
-            data.list = new List<Service>();
-            String username = LoginWindow._username;
-
-            foreach (var x in MainWindow._serviceListPage.Services)
+            try
             {
-                data.list.Add(x);
+                JsonData data = new JsonData();
+                data.list = new List<Service>();
+                String username = LoginWindow._username;
+
+                foreach (var x in MainWindow._serviceListPage.Services)
+                {
+                    data.list.Add(x);
+                }
+
+
+                File.WriteAllText("C:\\Users\\Norbert\\AppData\\Local\\Temp\\" + username + ".json", JsonConvert.SerializeObject(data));
             }
+            catch
+            {
 
-
-            File.WriteAllText("C:\\Users\\Norbert\\AppData\\Local\\Temp\\" + username + ".json", JsonConvert.SerializeObject(data));
+            }
         }
 
         public static List<Service> ReadData()
         {
-            String username = LoginWindow._username;
-            String path = "C:\\Users\\Norbert\\AppData\\Local\\Temp\\" + username + ".json";
-            if(File.Exists(path))
+            try
             {
-                String read = File.ReadAllText("C:\\Users\\Norbert\\AppData\\Local\\Temp\\" + username + ".json");
+                String username = LoginWindow._username;
+                String path = "C:\\Users\\Norbert\\AppData\\Local\\Temp\\" + username + ".json";
+                if (File.Exists(path))
+                {
+                    String read = File.ReadAllText("C:\\Users\\Norbert\\AppData\\Local\\Temp\\" + username + ".json");
 
-                var list = JsonConvert.DeserializeObject<JsonData>(read);
-                return list.list;
+                    var list = JsonConvert.DeserializeObject<JsonData>(read);
+                    return list.list;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch
             {
-                return null;
+
             }
-            
-            
+            return null;
         }
     }
 }
