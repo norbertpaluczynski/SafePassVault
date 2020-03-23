@@ -672,11 +672,11 @@
             "type": "string",
             "format": "guid"
           },
-          "ecc_key_pair_id": {
+          "eccKeyPairId": {
             "type": "string",
             "format": "guid"
           },
-          "service_description": {
+          "serviceDescription": {
             "nullable": true,
             "oneOf": [
               {
@@ -684,7 +684,7 @@
               }
             ]
           },
-          "ecc_derivation_blob": {
+          "eccDerivationBlob": {
             "nullable": true,
             "oneOf": [
               {
@@ -692,7 +692,7 @@
               }
             ]
           },
-          "symmetric_ciphertext_blob": {
+          "symmetricCiphertextBlob": {
             "nullable": true,
             "oneOf": [
               {
@@ -735,14 +735,14 @@
         "additionalProperties": false,
         "required": [
           "curve",
-          "public_key"
+          "publicKey"
         ],
         "properties": {
           "curve": {
             "type": "string",
             "minLength": 1
           },
-          "public_key": {
+          "publicKey": {
             "type": "string",
             "format": "byte",
             "minLength": 1
@@ -753,33 +753,33 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "derivation_description",
-          "derivation_salt",
-          "cipher_description",
-          "initialization_vector",
-          "authentication_tag",
+          "derivationDescription",
+          "derivationSalt",
+          "cipherDescription",
+          "initializationVector",
+          "authenticationTag",
           "ciphertext"
         ],
         "properties": {
-          "derivation_description": {
+          "derivationDescription": {
             "type": "string",
             "minLength": 1
           },
-          "derivation_salt": {
-            "type": "string",
-            "format": "byte",
-            "minLength": 1
-          },
-          "cipher_description": {
-            "type": "string",
-            "minLength": 1
-          },
-          "initialization_vector": {
+          "derivationSalt": {
             "type": "string",
             "format": "byte",
             "minLength": 1
           },
-          "authentication_tag": {
+          "cipherDescription": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initializationVector": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "authenticationTag": {
             "type": "string",
             "format": "byte",
             "minLength": 1
@@ -827,24 +827,24 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "ecc_key_pair_id",
-          "service_description",
-          "ecc_derivation_blob",
-          "symmetric_ciphertext_blob"
+          "eccKeyPairId",
+          "serviceDescription",
+          "eccDerivationBlob",
+          "symmetricCiphertextBlob"
         ],
         "properties": {
-          "ecc_key_pair_id": {
+          "eccKeyPairId": {
             "type": "string",
             "format": "guid",
             "minLength": 1
           },
-          "service_description": {
+          "serviceDescription": {
             "$ref": "#/components/schemas/ServiceDescriptionModel"
           },
-          "ecc_derivation_blob": {
+          "eccDerivationBlob": {
             "$ref": "#/components/schemas/EccDerivationBlobModel"
           },
-          "symmetric_ciphertext_blob": {
+          "symmetricCiphertextBlob": {
             "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
           }
         }
@@ -857,11 +857,11 @@
             "type": "string",
             "format": "guid"
           },
-          "ecc_key_pair_id": {
+          "eccKeyPairId": {
             "type": "string",
             "format": "guid"
           },
-          "service_description": {
+          "serviceDescription": {
             "nullable": true,
             "oneOf": [
               {
@@ -869,7 +869,7 @@
               }
             ]
           },
-          "ecc_derivation_blob": {
+          "eccDerivationBlob": {
             "nullable": true,
             "oneOf": [
               {
@@ -877,7 +877,7 @@
               }
             ]
           },
-          "symmetric_ciphertext_blob": {
+          "symmetricCiphertextBlob": {
             "nullable": true,
             "oneOf": [
               {
@@ -891,24 +891,24 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "ecc_key_pair_id",
-          "ecc_derivation_blob",
-          "symmetric_ciphertext_blob",
-          "service_description"
+          "eccKeyPairId",
+          "eccDerivationBlob",
+          "symmetricCiphertextBlob",
+          "serviceDescription"
         ],
         "properties": {
-          "ecc_key_pair_id": {
+          "eccKeyPairId": {
             "type": "string",
             "format": "guid",
             "minLength": 1
           },
-          "ecc_derivation_blob": {
+          "eccDerivationBlob": {
             "$ref": "#/components/schemas/EccDerivationBlobModel"
           },
-          "symmetric_ciphertext_blob": {
+          "symmetricCiphertextBlob": {
             "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
           },
-          "service_description": {
+          "serviceDescription": {
             "$ref": "#/components/schemas/ServiceDescriptionModel"
           }
         }
@@ -921,7 +921,7 @@
             "type": "string",
             "format": "guid"
           },
-          "public_key": {
+          "publicKey": {
             "nullable": true,
             "oneOf": [
               {
@@ -929,7 +929,7 @@
               }
             ]
           },
-          "encrypted_private_key": {
+          "encryptedPrivateKey": {
             "nullable": true,
             "oneOf": [
               {
@@ -944,14 +944,14 @@
         "additionalProperties": false,
         "required": [
           "curve",
-          "public_key"
+          "publicKey"
         ],
         "properties": {
           "curve": {
             "type": "string",
             "minLength": 1
           },
-          "public_key": {
+          "publicKey": {
             "type": "string",
             "format": "byte",
             "minLength": 1
@@ -963,11 +963,11 @@
         "additionalProperties": false,
         "required": [
           "curve",
-          "derivation_description",
-          "derivation_salt",
-          "cipher_description",
-          "initialization_vector",
-          "authentication_tag",
+          "derivationDescription",
+          "derivationSalt",
+          "cipherDescription",
+          "initializationVector",
+          "authenticationTag",
           "ciphertext"
         ],
         "properties": {
@@ -975,25 +975,25 @@
             "type": "string",
             "minLength": 1
           },
-          "derivation_description": {
+          "derivationDescription": {
             "type": "string",
             "minLength": 1
           },
-          "derivation_salt": {
-            "type": "string",
-            "format": "byte",
-            "minLength": 1
-          },
-          "cipher_description": {
-            "type": "string",
-            "minLength": 1
-          },
-          "initialization_vector": {
+          "derivationSalt": {
             "type": "string",
             "format": "byte",
             "minLength": 1
           },
-          "authentication_tag": {
+          "cipherDescription": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initializationVector": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "authenticationTag": {
             "type": "string",
             "format": "byte",
             "minLength": 1
@@ -1009,14 +1009,14 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "public_key",
-          "encrypted_private_key"
+          "publicKey",
+          "encryptedPrivateKey"
         ],
         "properties": {
-          "public_key": {
+          "publicKey": {
             "$ref": "#/components/schemas/EccPublicKeyModel"
           },
-          "encrypted_private_key": {
+          "encryptedPrivateKey": {
             "$ref": "#/components/schemas/EccEncryptedPrivateKeyModel"
           }
         }
@@ -1029,7 +1029,7 @@
             "type": "string",
             "format": "guid"
           },
-          "public_key": {
+          "publicKey": {
             "nullable": true,
             "oneOf": [
               {
@@ -1037,7 +1037,7 @@
               }
             ]
           },
-          "encrypted_private_key": {
+          "encryptedPrivateKey": {
             "nullable": true,
             "oneOf": [
               {
@@ -1064,7 +1064,7 @@
             "format": "byte",
             "nullable": true
           },
-          "password_repeat": {
+          "passwordRepeat": {
             "type": "string",
             "format": "byte",
             "nullable": true
@@ -1077,7 +1077,7 @@
         "required": [
           "username",
           "password",
-          "password_repeat"
+          "passwordRepeat"
         ],
         "properties": {
           "username": {
@@ -1089,7 +1089,7 @@
             "format": "byte",
             "minLength": 1
           },
-          "password_repeat": {
+          "passwordRepeat": {
             "type": "string",
             "format": "byte",
             "minLength": 1
@@ -1100,7 +1100,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "authentication_token": {
+          "authenticationToken": {
             "type": "string",
             "nullable": true
           },
