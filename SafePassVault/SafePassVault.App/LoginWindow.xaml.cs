@@ -1,6 +1,10 @@
-﻿using System;
+﻿using PCore.Cryptography;
+using SafePassVault.Core.ApiClient;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,13 +24,32 @@ namespace SafePassVault.App
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private HttpClient _http;
+        private Client _apiClient;
         public LoginWindow()
         {
+            _http = new HttpClient();
+            _apiClient = new Client(_http);
             InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
+            UserAuthenticatePostModel loginModel = new UserAuthenticatePostModel()
+            {
+                Username = LoginBox.Text,
+                Password = await phsp.Client_ComputePasswordForLogin(Encoding.UTF8.GetBytes(LoginBox.Text), Encoding.UTF8.GetBytes(PasswordBox.Password))
+            };
+
+            try
+            {
+                var result = await _apiClient.ApiUsersAuthenticateAsync(loginModel);
+
+                int asd = 123;
+            }
+            catch (Exception ex) { Debug.WriteLine(ex); }
+
             MainWindow window = new MainWindow();
             window.Show();
             Close();

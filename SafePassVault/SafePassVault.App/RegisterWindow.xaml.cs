@@ -11,6 +11,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SafePassVault.Core.ApiClient;
+using PCore.Cryptography;
+using System.Diagnostics;
+using SafePassVault.App.UserControls;
+using MaterialDesignThemes.Wpf;
 
 namespace SafePassVault.App
 {
@@ -41,18 +45,27 @@ namespace SafePassVault.App
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
+
             UserRegisterPostModel registerModel = new UserRegisterPostModel
-            { 
+            {
                 Username = LoginBox.Text,
-                Password = Encoding.UTF8.GetBytes(PasswordBox.Password),
-                PasswordRepeat = Encoding.UTF8.GetBytes(ConfirmBox.Password)
+                Password = await phsp.Client_ComputePasswordForLogin(Encoding.UTF8.GetBytes(LoginBox.Text), Encoding.UTF8.GetBytes(PasswordBox.Password)),
+                PasswordRepeat = await phsp.Client_ComputePasswordForLogin(Encoding.UTF8.GetBytes(LoginBox.Text), Encoding.UTF8.GetBytes(ConfirmBox.Password))
             };
 
             try
             {
                 var result = await _apiClient.ApiUsersRegisterAsync(registerModel);
+
+                SuccessRegister dialog = new SuccessRegister();
+                var dialogResult = await DialogHost.Show(dialog, "register");
+
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.Show();
+                Close();
             }
-            catch { }
+            catch (Exception ex) { Debug.WriteLine(ex); }
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
