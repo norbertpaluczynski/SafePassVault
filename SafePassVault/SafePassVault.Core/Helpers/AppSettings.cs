@@ -18,5 +18,7 @@ namespace SafePassVault.Core.Helpers
             AllowSpecialCharacters = true,
             AllowSpace = true
         };
+
+        public int DefaultPasswordLength { get; set; } = 12;
     }
 }

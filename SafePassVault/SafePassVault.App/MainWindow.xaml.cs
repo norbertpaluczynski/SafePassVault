@@ -39,9 +39,9 @@ namespace SafePassVault.App
                 cfg.Dispatcher = Application.Current.Dispatcher;
             });
 
-            _serviceListPage = new ServiceListPage(Notifier);
             _startPage = new StartPage();
-            _passwordSettingsPage = new PasswordSettingsPage();
+            _serviceListPage = new ServiceListPage(Notifier);
+            _passwordSettingsPage = new PasswordSettingsPage(Notifier);
 
             InitializeComponent();
             ApplicationFrame.Content = _startPage;
