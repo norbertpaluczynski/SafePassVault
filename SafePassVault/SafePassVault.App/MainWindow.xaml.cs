@@ -14,6 +14,7 @@ namespace SafePassVault.App
     {
         private readonly StartPage _startPage;
         private readonly ServiceListPage _serviceListPage;
+        private readonly PasswordSettingsPage _passwordSettingsPage;
 
         public Notifier Notifier { get; set; }
 
@@ -40,6 +41,7 @@ namespace SafePassVault.App
 
             _serviceListPage = new ServiceListPage(Notifier);
             _startPage = new StartPage();
+            _passwordSettingsPage = new PasswordSettingsPage();
 
             InitializeComponent();
             ApplicationFrame.Content = _startPage;
@@ -57,5 +59,9 @@ namespace SafePassVault.App
             ApplicationFrame.Content = _serviceListPage;
         }
 
+        private void PasswordSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationFrame.Content = _passwordSettingsPage;
+        }
     }
 }

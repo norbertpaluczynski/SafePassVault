@@ -41,11 +41,19 @@
                     Source="Resources/Img/logo.png" />
 
                 <StackPanel Grid.Row="1" Margin="20,0">
+
                     <Button
                         x:Name="ServiceListButton"
                         Click="ServiceListButton_Click"
                         Content="Service list"
                         Style="{StaticResource Sp_SidebarButton}" />
+
+                    <Button
+                        x:Name="PasswordSettingsButton"
+                        Click="PasswordSettingsButton_Click"
+                        Content="Password settings"
+                        Style="{StaticResource Sp_SidebarButton}" />
+
                 </StackPanel>
 
                 <Button
