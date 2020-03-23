@@ -17,7 +17,6 @@
             Margin="20"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            Panel.ZIndex="2"
             FontSize="24"
             FontWeight="Bold"
             Foreground="#dddddd">
