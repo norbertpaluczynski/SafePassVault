@@ -45,7 +45,7 @@ namespace SafePassVault.App
             { 
                 Username = LoginBox.Text,
                 Password = Encoding.UTF8.GetBytes(PasswordBox.Password),
-                Password_repeat = Encoding.UTF8.GetBytes(ConfirmBox.Password)
+                PasswordRepeat = Encoding.UTF8.GetBytes(ConfirmBox.Password)
             };
 
             try
