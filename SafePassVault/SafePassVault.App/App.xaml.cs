@@ -22,7 +22,6 @@ namespace SafePassVault.App
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            StaticHelper.SaveData();
             ((Window)((Button)sender).Tag).Close();
         }
 

@@ -1,14 +1,11 @@
 ﻿using MaterialDesignThemes.Wpf;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using SafePassVault.App.UserControls;
 using ToastNotifications;
 using ToastNotifications.Messages;
-using System.Windows.Data;
 using System.Collections.ObjectModel;
 using SafePassVault.Core.Models;
-using SafePassVault.App.Helpers;
 
 namespace SafePassVault.App.Pages
 {
@@ -26,18 +23,7 @@ namespace SafePassVault.App.Pages
             Services = new ObservableCollection<Service>();
             Notifier = notifier;
             InitializeComponent();
-            DataContext = this;
-
-            var data = StaticHelper.ReadData();
-            if(data != null)
-            {
-                foreach (var x in data)
-                {
-                    Services.Add(x);
-                }
-            }
-
-            
+            DataContext = this;                        
         }
 
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
@@ -57,7 +43,7 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
-                    // TO DO
+                    //TODO
                 }
             }
             catch { }
@@ -72,6 +58,7 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
+                    //TODO
                     Services.Add(addService.Service);
                 }
             }
@@ -87,6 +74,7 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
+                    //TODO
                     var service = (Service)((Button)e.Source).DataContext;
                     Services.Remove(service);
                 }

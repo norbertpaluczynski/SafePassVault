@@ -21,15 +21,11 @@ namespace SafePassVault.App
         public static StartPage _startPage;
         public static ServiceListPage _serviceListPage;
         public static PasswordSettingsPage _passwordSettingsPage;
-        public static String _username;
-
 
         public Notifier Notifier { get; set; }
 
-
         public MainWindow(String username)
         {
-            _username = username;
             Notifier = new Notifier(cfg =>
             {
                 cfg.PositionProvider = new ControlPositionProvider(
@@ -58,14 +54,9 @@ namespace SafePassVault.App
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            StaticHelper.SaveData();
-
-
-
             LoginWindow window = new LoginWindow();
             window.Show();
-            Close();
-            
+            Close();            
         }
 
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)
