@@ -39,6 +39,12 @@ namespace SafePassVault.App
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrEmpty(LoginBox.Text) || String.IsNullOrEmpty(PasswordBox.Password))
+            {
+                FailLogin failDialog = new FailLogin();
+                var dialogResult = await DialogHost.Show(failDialog, "login");
+                return;
+            }
             _username = LoginBox.Text;
             PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
             UserAuthenticatePostModel loginModel = new UserAuthenticatePostModel()
@@ -49,6 +55,7 @@ namespace SafePassVault.App
 
             try
             {
+                
                 var result = await _apiClient.ApiUsersAuthenticateAsync(loginModel);
                 _ = result;
 
