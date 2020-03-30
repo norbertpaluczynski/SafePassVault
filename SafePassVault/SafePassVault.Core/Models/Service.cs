@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace SafePassVault.Core.Models
 {
@@ -13,6 +14,7 @@ namespace SafePassVault.Core.Models
         private DateTime _createdAt;
         private DateTime _updatedAt;
 
+        [JsonProperty()]
         public string Name 
         {
             get => _name;

@@ -12,12 +12,125 @@
     }
   ],
   "paths": {
-    "/api/ecccredentials/{id}": {
+    "/api/ecccredentials": {
+      "post": {
+        "tags": [
+          "EccCredentials"
+        ],
+        "operationId": "EccCredentials_PostAsync_v1",
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EccCredentialPostModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EccCredentialPostReturnModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "EccCredentials"
         ],
-        "operationId": "EccCredentials_GetCredentialBlobByIdAsync_v1",
+        "operationId": "EccCredentials_GetAsync_V1",
+        "parameters": [
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EccCredentialGetModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ecccredentials/{id}": {
+      "delete": {
+        "tags": [
+          "EccCredentials"
+        ],
+        "operationId": "EccCredentials_DeleteAsync_v1",
         "parameters": [
           {
             "name": "id",
@@ -32,14 +145,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EccCredentialGetModel"
-                }
-              }
-            }
+            "description": ""
           },
           "400": {
             "description": "",
@@ -147,78 +253,31 @@
             }
           }
         }
-      }
-    },
-    "/api/ecccredentials": {
-      "post": {
+      },
+      "get": {
         "tags": [
           "EccCredentials"
         ],
-        "operationId": "EccCredentials_PostAsync_v1",
+        "operationId": "EccCredentials_GetCredentialBlobByIdAsync_v1",
         "parameters": [
           {
-            "name": "GroupVersion",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string",
-              "format": "date-time",
-              "nullable": true
+              "format": "guid"
             },
             "x-position": 1
-          },
-          {
-            "name": "MajorVersion",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "nullable": true
-            },
-            "x-position": 2
-          },
-          {
-            "name": "MinorVersion",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "nullable": true
-            },
-            "x-position": 3
-          },
-          {
-            "name": "Status",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 4
           }
         ],
-        "requestBody": {
-          "x-name": "model",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EccCredentialPostModel"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 5
-        },
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EccCredentialPostReturnModel"
+                  "$ref": "#/components/schemas/EccCredentialGetModel"
                 }
               }
             }
@@ -233,63 +292,12 @@
               }
             }
           },
-          "401": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "415": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "EccCredentials"
-        ],
-        "operationId": "EccCredentials_GetAsync_V1",
-        "parameters": [
-          {
-            "name": "PageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          },
-          {
-            "name": "PageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 2
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EccCredentialGetModel"
-                  }
                 }
               }
             }
@@ -664,7 +672,7 @@
   },
   "components": {
     "schemas": {
-      "EccCredentialGetModel": {
+      "EccCredentialPostReturnModel": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -675,14 +683,6 @@
           "eccKeyPairId": {
             "type": "string",
             "format": "guid"
-          },
-          "serviceDescription": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/ServiceDescriptionModel"
-              }
-            ]
           },
           "eccDerivationBlob": {
             "nullable": true,
@@ -699,34 +699,6 @@
                 "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
               }
             ]
-          }
-        }
-      },
-      "ServiceDescriptionModel": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name",
-          "url",
-          "login",
-          "description"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "minLength": 1
-          },
-          "url": {
-            "type": "string",
-            "minLength": 1
-          },
-          "login": {
-            "type": "string",
-            "minLength": 1
-          },
-          "description": {
-            "type": "string",
-            "minLength": 1
           }
         }
       },
@@ -757,8 +729,8 @@
           "derivationSalt",
           "cipherDescription",
           "initializationVector",
-          "authenticationTag",
-          "ciphertext"
+          "ciphertext",
+          "authenticationTag"
         ],
         "properties": {
           "derivationDescription": {
@@ -779,12 +751,12 @@
             "format": "byte",
             "minLength": 1
           },
-          "authenticationTag": {
+          "ciphertext": {
             "type": "string",
             "format": "byte",
             "minLength": 1
           },
-          "ciphertext": {
+          "authenticationTag": {
             "type": "string",
             "format": "byte",
             "minLength": 1
@@ -823,12 +795,11 @@
           }
         }
       },
-      "EccCredentialPutModel": {
+      "EccCredentialPostModel": {
         "type": "object",
         "additionalProperties": false,
         "required": [
           "eccKeyPairId",
-          "serviceDescription",
           "eccDerivationBlob",
           "symmetricCiphertextBlob"
         ],
@@ -838,8 +809,27 @@
             "format": "guid",
             "minLength": 1
           },
-          "serviceDescription": {
-            "$ref": "#/components/schemas/ServiceDescriptionModel"
+          "eccDerivationBlob": {
+            "$ref": "#/components/schemas/EccDerivationBlobModel"
+          },
+          "symmetricCiphertextBlob": {
+            "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
+          }
+        }
+      },
+      "EccCredentialPutModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "eccKeyPairId",
+          "eccDerivationBlob",
+          "symmetricCiphertextBlob"
+        ],
+        "properties": {
+          "eccKeyPairId": {
+            "type": "string",
+            "format": "guid",
+            "minLength": 1
           },
           "eccDerivationBlob": {
             "$ref": "#/components/schemas/EccDerivationBlobModel"
@@ -849,7 +839,7 @@
           }
         }
       },
-      "EccCredentialPostReturnModel": {
+      "EccCredentialGetModel": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -860,14 +850,6 @@
           "eccKeyPairId": {
             "type": "string",
             "format": "guid"
-          },
-          "serviceDescription": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/ServiceDescriptionModel"
-              }
-            ]
           },
           "eccDerivationBlob": {
             "nullable": true,
@@ -884,32 +866,6 @@
                 "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
               }
             ]
-          }
-        }
-      },
-      "EccCredentialPostModel": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "eccKeyPairId",
-          "eccDerivationBlob",
-          "symmetricCiphertextBlob",
-          "serviceDescription"
-        ],
-        "properties": {
-          "eccKeyPairId": {
-            "type": "string",
-            "format": "guid",
-            "minLength": 1
-          },
-          "eccDerivationBlob": {
-            "$ref": "#/components/schemas/EccDerivationBlobModel"
-          },
-          "symmetricCiphertextBlob": {
-            "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
-          },
-          "serviceDescription": {
-            "$ref": "#/components/schemas/ServiceDescriptionModel"
           }
         }
       },

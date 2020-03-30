@@ -19,6 +19,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ToastNotifications.Messages;
+using SafePassVault.App.Helpers;
+using System.Security.Cryptography;
 
 namespace SafePassVault.App
 {
@@ -29,7 +31,7 @@ namespace SafePassVault.App
     {
         private HttpClient _http;
         private Client _apiClient;
-        public static String _username;
+
         public LoginWindow()
         {
             _http = new HttpClient();
@@ -45,7 +47,7 @@ namespace SafePassVault.App
                 var dialogResult = await DialogHost.Show(failDialog, "login");
                 return;
             }
-            _username = LoginBox.Text;
+
             PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
             UserAuthenticatePostModel loginModel = new UserAuthenticatePostModel()
             {
@@ -57,9 +59,84 @@ namespace SafePassVault.App
             {
                 
                 var result = await _apiClient.ApiUsersAuthenticateAsync(loginModel);
-                _ = result;
 
-                MainWindow window = new MainWindow(LoginBox.Text);
+                _http.DefaultRequestHeaders.Add("Authorization", $"Bearer {result.AuthenticationToken}");
+                var bytePassword = Encoding.UTF8.GetBytes(PasswordBox.Password);
+                UserData.bytePassword = bytePassword;
+
+                UserData.AuthToken = result.AuthenticationToken;
+                
+                var checkResult = await _apiClient.ApiEcckeypairsGetAsync(20, 0);
+                if(checkResult.Count == 0)
+                {
+                    // Send new keypair
+                    EccKeyServiceProvider ecckey = new EccKeyServiceProvider();
+                    var keypair = ecckey.CreateNew_secp256r1_ECKeyPair();
+
+                    var masterKeyService = new KeyDerivationServiceProvider();
+                    var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(bytePassword, 16, 16);
+
+                    var symenc = new SymmetricCryptographyServiceProvider();
+                    var privateKeyEncrypted = symenc.Aes128GcmEncrypt(masterKey.MasterKey, keypair.PrivateKey);
+
+
+                    var keyPairPostResult = await _apiClient.ApiEcckeypairsPostAsync(new EccKeyPairPostModel
+                    {
+                        EncryptedPrivateKey = new EccEncryptedPrivateKeyModel()
+                        {
+                            Curve = keypair.Curve,
+                            AuthenticationTag = privateKeyEncrypted.AuthenticationTag,
+                            CipherDescription = privateKeyEncrypted.CipherDescription,
+                            Ciphertext = privateKeyEncrypted.Cipthertext,
+                            InitializationVector = privateKeyEncrypted.InitializationVector,
+                            DerivationDescription = masterKey.DerivationDescription,
+                            DerivationSalt = masterKey.DerivationSalt
+                        },
+                        PublicKey = new EccPublicKeyModel()
+                        {
+                            Curve = keypair.Curve,
+                            PublicKey = keypair.PublicKey
+                        }
+                    });
+
+                    _ = keyPairPostResult;
+                }
+                else
+                {
+                    // Get user keypairs and decrypt them
+                    foreach(var keyPair in checkResult)
+                    {
+                        UserData.eccKeyPairs.Add(keyPair);
+                        var masterKeyService = new KeyDerivationServiceProvider();
+                        var masterKey = masterKeyService.DeriveKeyFromBlob(bytePassword, new KeyDerivationBlob(
+                            keyPair.EncryptedPrivateKey.DerivationDescription,
+                            keyPair.EncryptedPrivateKey.DerivationSalt,
+                            null
+                            ));
+
+                        var symenc = new SymmetricCryptographyServiceProvider();
+
+                        var privateKeyDecrypted = symenc.DecryptFromSymmetricCipthertextBlob(masterKey.MasterKey, new SymmetricCipthertextBlob
+                            (
+                                keyPair.EncryptedPrivateKey.CipherDescription,
+                                keyPair.EncryptedPrivateKey.InitializationVector,
+                                keyPair.EncryptedPrivateKey.Ciphertext,
+                                keyPair.EncryptedPrivateKey.AuthenticationTag
+                            )
+                        );
+
+                        UserData.privateKeyDecrypted = privateKeyDecrypted;
+                        //CngKey.Import(privateKeyDecrypted, CngKeyBlobFormat.EccPrivateBlob, new CngProvider());
+
+                        int xd = 10;
+                    }
+                }
+
+
+                
+
+
+                MainWindow window = new MainWindow();
                 window.Show();
                 window.Notifier.ShowSuccess("You logged in successfully!");
                 Close();

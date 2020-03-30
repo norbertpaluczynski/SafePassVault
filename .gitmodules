@@ -1,3 +1,4 @@
 [submodule "SafePassVault/PCore.Cryptography"]
 	path = SafePassVault/PCore.Cryptography
 	url = https://github.com/cppalpha/PCore.Cryptography
+	branch = master

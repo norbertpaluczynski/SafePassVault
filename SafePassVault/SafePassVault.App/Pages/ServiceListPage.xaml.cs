@@ -6,6 +6,13 @@ using ToastNotifications;
 using ToastNotifications.Messages;
 using System.Collections.ObjectModel;
 using SafePassVault.Core.Models;
+using PCore.Cryptography;
+using System.Text;
+using SafePassVault.App.Helpers;
+using System.Security.Cryptography;
+using SafePassVault.Core.ApiClient;
+using System;
+using Newtonsoft.Json;
 
 namespace SafePassVault.App.Pages
 {
@@ -23,7 +30,54 @@ namespace SafePassVault.App.Pages
             Services = new ObservableCollection<Service>();
             Notifier = notifier;
             InitializeComponent();
-            DataContext = this;                        
+            DataContext = this;
+
+            EccKeyServiceProvider eccService = new EccKeyServiceProvider();
+            var masterKeyService = new KeyDerivationServiceProvider();
+            var symenc = new SymmetricCryptographyServiceProvider();
+            var getUserServices = UserData.apiClient.ApiEcccredentialsGetAsync(null, null).ConfigureAwait(false).GetAwaiter().GetResult();
+            var UserKeyPair = UserData.eccKeyPairs[0];
+
+            foreach (var serviceTemp in getUserServices)
+            {
+                var derivedKey = eccService.EcdhDervieKey(
+                    new EccKeyPairBlob(
+                        serviceTemp.EccDerivationBlob.Curve,
+                        serviceTemp.EccDerivationBlob.PublicKey,
+                        null
+                        ),
+                    new EccKeyPairBlob(
+                        serviceTemp.EccDerivationBlob.Curve,
+                        null,
+                        UserData.privateKeyDecrypted
+                        ),
+                    HashAlgorithmName.SHA256
+                );
+                var masterKey = masterKeyService.DeriveKeyFromBlob(
+                    derivedKey,
+                    new KeyDerivationBlob(
+                        serviceTemp.SymmetricCiphertextBlob.DerivationDescription,
+                        serviceTemp.SymmetricCiphertextBlob.DerivationSalt,
+                        null
+                        )
+                    );
+
+                var decryptedService = symenc.DecryptFromSymmetricCipthertextBlob(
+                    masterKey.MasterKey,
+                    new SymmetricCipthertextBlob(
+                        serviceTemp.SymmetricCiphertextBlob.CipherDescription,
+                        serviceTemp.SymmetricCiphertextBlob.InitializationVector,
+                        serviceTemp.SymmetricCiphertextBlob.Ciphertext,
+                        serviceTemp.SymmetricCiphertextBlob.AuthenticationTag
+                        )
+                );
+
+                Services.Add(JsonConvert.DeserializeObject<Service>(Encoding.UTF8.GetString(decryptedService)));
+
+            }
+
+            
+
         }
 
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
@@ -54,15 +108,55 @@ namespace SafePassVault.App.Pages
             AddServiceDialog addService = new AddServiceDialog(Notifier);
             var result = await DialogHost.Show(addService, "root");
 
-            try
+            //try
             {
                 if ((bool)result)
                 {
                     //TODO
+                    EccKeyServiceProvider eccService = new EccKeyServiceProvider();
+                    var ServiceKeyPair = eccService.CreateNew_secp256r1_ECKeyPair();
+
+                    // decrypt private keys
+                    
+                    var UserKeyPair = UserData.eccKeyPairs[0];
+                    var masterKeyService = new KeyDerivationServiceProvider();
+                    var symenc = new SymmetricCryptographyServiceProvider();
+
+                    var derivedKey = eccService.EcdhDervieKey(
+                        new EccKeyPairBlob(UserKeyPair.PublicKey.Curve, UserKeyPair.PublicKey.PublicKey, null),
+                        ServiceKeyPair,
+                        HashAlgorithmName.SHA256);
+
+                    var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(derivedKey, 16, 16);
+
+                    var encrypted = symenc.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(addService.Service)));
+
+                    var postModel = new EccCredentialPostModel()
+                    {
+                        EccDerivationBlob = new EccDerivationBlobModel()
+                        {
+                            Curve = ServiceKeyPair.Curve,
+                            PublicKey = ServiceKeyPair.PublicKey
+                        },
+                        EccKeyPairId = UserKeyPair.Id,
+                        SymmetricCiphertextBlob = new SymmetricCiphertextBlobModel()
+                        {
+                            AuthenticationTag = encrypted.AuthenticationTag,
+                            CipherDescription = encrypted.CipherDescription,
+                            Ciphertext = encrypted.Cipthertext,
+                            InitializationVector = encrypted.InitializationVector,
+                            DerivationDescription = masterKey.DerivationDescription,
+                            DerivationSalt = masterKey.DerivationSalt
+                        },
+                    };
+
+                    string postModelJson = Newtonsoft.Json.JsonConvert.SerializeObject(postModel);
+                    var PostResult = await UserData.apiClient.ApiEcccredentialsPostAsync(postModel);
+
                     Services.Add(addService.Service);
                 }
             }
-            catch { }
+            //catch { }
         }
 
         private async void DeleteServiceButton_Click(object sender, RoutedEventArgs e)

@@ -24,7 +24,7 @@ namespace SafePassVault.App
 
         public Notifier Notifier { get; set; }
 
-        public MainWindow(String username)
+        public MainWindow()
         {
             Notifier = new Notifier(cfg =>
             {

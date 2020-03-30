@@ -6,7 +6,7 @@
   },
   "ExtendedData": {
     "ServiceName": "ApiClient",
-    "Endpoint": "C:\\Users\\Michal\\Downloads\\swagger.json",
+    "Endpoint": "C:\\Users\\Norbert\\Documents\\swagger.json",
     "GeneratedFileNamePrefix": null,
     "GenerateCSharpClient": true,
     "GenerateTypeScriptClient": false,

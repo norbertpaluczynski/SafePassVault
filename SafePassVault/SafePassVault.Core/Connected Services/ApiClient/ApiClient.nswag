@@ -3,7 +3,7 @@
   "defaultVariables": null,
   "documentGenerator": {
     "fromDocument": {
-      "url": "C:\\Users\\Michal\\Downloads\\swagger.json",
+      "url": "C:\\Users\\Norbert\\Documents\\swagger.json",
       "output": "ApiClient.nswag.json"
     }
   },
