@@ -47,8 +47,13 @@ namespace SafePassVault.App
         {
             if (String.IsNullOrEmpty(LoginBox.Text) || String.IsNullOrEmpty(PasswordBox.Password) || String.IsNullOrEmpty(ConfirmBox.Password))
             {
-                FailLogin failDialog = new FailLogin();
-                var dialogResult = await DialogHost.Show(failDialog, "register");
+                var errorDialog = new MessageDialog("Fields cannot be empty!");
+                await DialogHost.Show(errorDialog, "register");
+                return;
+            } else if (PasswordBox.Password != ConfirmBox.Password)
+            {
+                var errorDialog = new MessageDialog("Passwords are not the same!");
+                await DialogHost.Show(errorDialog, "register");
                 return;
             }
             PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
@@ -64,18 +69,26 @@ namespace SafePassVault.App
             {
                 var result = await _apiClient.ApiUsersRegisterAsync(registerModel);
 
-                SuccessRegister successDialog = new SuccessRegister();
+                var successDialog = new MessageDialog("You registered successfuly!\nYou can log in now.");
                 var dialogResult = await DialogHost.Show(successDialog, "register");
 
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.Show();
                 Close();
             }
-            catch (Exception ex) 
+            catch (ApiException ex) 
             {
-                Debug.WriteLine(ex);
-                FailRegister failDialog = new FailRegister();
-                var dialogResult = await DialogHost.Show(failDialog, "register");
+                if(ex.StatusCode == 400)
+                {
+                    await DialogHost.Show(new MessageDialog("User with that login already exists!"), "register");
+                } else
+                {
+                    await DialogHost.Show(new MessageDialog("Server error, exit code: " + ex.StatusCode), "register");
+                }
+            }
+            catch (Exception)
+            {
+                await DialogHost.Show(new MessageDialog("Unknown error"), "register");
             }
         }
 

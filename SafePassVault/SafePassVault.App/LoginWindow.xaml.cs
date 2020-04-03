@@ -43,8 +43,7 @@ namespace SafePassVault.App
         {
             if (String.IsNullOrEmpty(LoginBox.Text) || String.IsNullOrEmpty(PasswordBox.Password))
             {
-                FailLogin failDialog = new FailLogin();
-                var dialogResult = await DialogHost.Show(failDialog, "login");
+                await DialogHost.Show(new MessageDialog("Fields cannot be empty!"), "login");
                 return;
             }
 
@@ -127,25 +126,21 @@ namespace SafePassVault.App
 
                         UserData.privateKeyDecrypted = privateKeyDecrypted;
                         //CngKey.Import(privateKeyDecrypted, CngKeyBlobFormat.EccPrivateBlob, new CngProvider());
-
-                        int xd = 10;
                     }
                 }
-
-
-                
-
 
                 MainWindow window = new MainWindow();
                 window.Show();
                 window.Notifier.ShowSuccess("You logged in successfully!");
                 Close();
             }
-            catch (Exception ex) 
+            catch (ApiException)
             {
-                Debug.WriteLine(ex);
-                FailLogin failDialog = new FailLogin();
-                var dialogResult = await DialogHost.Show(failDialog, "login");
+                await DialogHost.Show(new MessageDialog("Wrong username or password!\nPlease try again."), "login");
+            }
+            catch (Exception)
+            {
+                await DialogHost.Show(new MessageDialog("Unknown error"), "login");
             }
 
             
