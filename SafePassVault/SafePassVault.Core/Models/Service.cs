@@ -6,6 +6,7 @@ namespace SafePassVault.Core.Models
 {
     public class Service : BaseNotifyPropertyModel, IDataErrorInfo
     {
+        private Guid _id;
         private string _name;
         private string _url;
         private string _login;
@@ -13,6 +14,15 @@ namespace SafePassVault.Core.Models
         private string _description;
         private DateTime _createdAt;
         private DateTime _updatedAt;
+
+        public Guid Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+            }
+        }
 
         [JsonProperty()]
         public string Name 
