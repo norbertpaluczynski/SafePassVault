@@ -50,12 +50,6 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
-                    //TODO
-
-                    //var getIdService = await UserData.apiClient.ApiEcccredentialsGetAsync(service.Id);
-                    //int a = 1;
-
-                    //
                     var eccService = new EccKeyServiceProvider();
                     var ServiceKeyPair = eccService.CreateNew_secp256r1_ECKeyPair();
 
@@ -92,12 +86,12 @@ namespace SafePassVault.App.Pages
                     };
 
                     await UserData.apiClient.ApiEcccredentialsPutAsync(service.Id, putModel);
-                    //int xd = 10;
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                Notifier.ShowError(ex.Message);
             }
         }
 
@@ -110,7 +104,6 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
-                    //TODO
                     var eccService = new EccKeyServiceProvider();
                     var serviceKeyPair = eccService.CreateNew_secp256r1_ECKeyPair();
                     
@@ -151,7 +144,8 @@ namespace SafePassVault.App.Pages
             }
             catch(Exception ex) 
             {
-            
+                Debug.WriteLine(ex.Message);
+                Notifier.ShowError(ex.Message);
             }
         }
 
@@ -164,17 +158,15 @@ namespace SafePassVault.App.Pages
             {
                 if ((bool)result)
                 {
-                    //TODO
                     var service = (Service)((Button)e.Source).DataContext;
-                    Services.Remove(service);
-
-                    MessageBox.Show(service.Id.ToString());
                     await UserData.apiClient.ApiEcccredentialsDeleteAsync(service.Id);
+                    Services.Remove(service); 
                 }
             }
             catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                Notifier.ShowError(ex.Message);
             }
         }
 
