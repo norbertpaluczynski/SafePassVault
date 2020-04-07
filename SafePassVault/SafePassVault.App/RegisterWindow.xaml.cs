@@ -15,6 +15,7 @@ using PCore.Cryptography;
 using System.Diagnostics;
 using SafePassVault.App.UserControls;
 using MaterialDesignThemes.Wpf;
+using SafePassVault.App.Helpers;
 
 namespace SafePassVault.App
 {
@@ -23,13 +24,8 @@ namespace SafePassVault.App
     /// </summary>
     public partial class RegisterWindow : Window
     {
-        private HttpClient _http;
-        private Client _apiClient;
-
         public RegisterWindow()
-        {
-            _http = new HttpClient();
-            _apiClient = new Client(_http);
+        { 
             InitializeComponent();
         }
 
@@ -50,12 +46,14 @@ namespace SafePassVault.App
                 var errorDialog = new MessageDialog("Fields cannot be empty!");
                 await DialogHost.Show(errorDialog, "register");
                 return;
-            } else if (PasswordBox.Password != ConfirmBox.Password)
+            } 
+            else if (PasswordBox.Password != ConfirmBox.Password)
             {
                 var errorDialog = new MessageDialog("Passwords are not the same!");
                 await DialogHost.Show(errorDialog, "register");
                 return;
             }
+
             PasswordHashingServiceProvider phsp = new PasswordHashingServiceProvider();
 
             UserRegisterPostModel registerModel = new UserRegisterPostModel
@@ -67,7 +65,7 @@ namespace SafePassVault.App
 
             try
             {
-                var result = await _apiClient.ApiUsersRegisterAsync(registerModel);
+                var result = await UserData.ApiClient.ApiUsersRegisterAsync(registerModel);
 
                 var successDialog = new MessageDialog("You registered successfuly!\nYou can log in now.");
                 var dialogResult = await DialogHost.Show(successDialog, "register");

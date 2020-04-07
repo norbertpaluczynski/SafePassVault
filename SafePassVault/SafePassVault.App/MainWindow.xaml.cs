@@ -18,9 +18,9 @@ namespace SafePassVault.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static StartPage _startPage;
-        public static ServiceListPage _serviceListPage;
-        public static PasswordSettingsPage _passwordSettingsPage;
+        public static StartPage StartPage;
+        public static ServiceListPage ServiceListPage;
+        public static PasswordSettingsPage PasswordSettingsPage;
 
         public Notifier Notifier { get; set; }
 
@@ -44,12 +44,12 @@ namespace SafePassVault.App
                 cfg.Dispatcher = Application.Current.Dispatcher;
             });
 
-            _startPage = new StartPage();
-            _serviceListPage = new ServiceListPage(Notifier);
-            _passwordSettingsPage = new PasswordSettingsPage(Notifier);
+            StartPage = new StartPage();
+            ServiceListPage = new ServiceListPage(Notifier);
+            PasswordSettingsPage = new PasswordSettingsPage(Notifier);
 
             InitializeComponent();
-            ApplicationFrame.Content = _startPage;
+            ApplicationFrame.Content = StartPage;
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
@@ -61,12 +61,12 @@ namespace SafePassVault.App
 
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationFrame.Content = _serviceListPage;
+            ApplicationFrame.Content = ServiceListPage;
         }
 
         private void PasswordSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationFrame.Content = _passwordSettingsPage;
+            ApplicationFrame.Content = PasswordSettingsPage;
         }
     }
 }

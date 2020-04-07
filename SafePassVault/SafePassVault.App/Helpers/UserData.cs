@@ -12,24 +12,26 @@ namespace SafePassVault.App.Helpers
 {
     public static class UserData
     {
-        public static HttpClient http;
-        public static Client apiClient;
-        static public byte[] bytePassword;
-        static public byte[] privateKeyDecrypted;
+        public static HttpClient Http;
+        public static Client ApiClient;
+        static public byte[] BytePassword;
+        static public byte[] PrivateKeyDecrypted;
+
         static public string AuthToken 
         {
             set 
             {
-                http.DefaultRequestHeaders.Remove("Authorization");
-                http.DefaultRequestHeaders.Add("Authorization", $"Bearer {value}");
+                Http.DefaultRequestHeaders.Remove("Authorization");
+                Http.DefaultRequestHeaders.Add("Authorization", $"Bearer {value}");
             }
         }
+
         static public List<EccKeyPairGetModel> eccKeyPairs;
 
         static UserData()
         {
-            http = new HttpClient();
-            apiClient = new Client(http);
+            Http = new HttpClient();
+            ApiClient = new Client(Http);
             eccKeyPairs = new List<EccKeyPairGetModel>();
         }
 
@@ -38,47 +40,49 @@ namespace SafePassVault.App.Helpers
             var services = new List<Service>();
             var eccService = new EccKeyServiceProvider();
             var masterKeyService = new KeyDerivationServiceProvider();
-            var symenc = new SymmetricCryptographyServiceProvider();
-            var getUserServices = UserData.apiClient.ApiEcccredentialsGetAsync(null, null).ConfigureAwait(false).GetAwaiter().GetResult();
-            //var userKeyPair = UserData.eccKeyPairs[0];
+            var crypto = new SymmetricCryptographyServiceProvider();
+            var userServices = UserData.ApiClient.ApiEcccredentialsGetAsync(null, null).ConfigureAwait(false).GetAwaiter().GetResult();
 
-            foreach (var serviceTemp in getUserServices)
+            foreach (var service in userServices)
             {
                 var derivedKey = eccService.EcdhDervieKey(
                     new EccKeyPairBlob(
-                        serviceTemp.EccDerivationBlob.Curve,
-                        serviceTemp.EccDerivationBlob.PublicKey,
+                        service.EccDerivationBlob.Curve,
+                        service.EccDerivationBlob.PublicKey,
                         null
                         ),
                     new EccKeyPairBlob(
-                        serviceTemp.EccDerivationBlob.Curve,
+                        service.EccDerivationBlob.Curve,
                         null,
-                        UserData.privateKeyDecrypted
+                        UserData.PrivateKeyDecrypted
                         ),
                     HashAlgorithmName.SHA256
                 );
+
                 var masterKey = masterKeyService.DeriveKeyFromBlob(
                     derivedKey,
                     new KeyDerivationBlob(
-                        serviceTemp.SymmetricCiphertextBlob.DerivationDescription,
-                        serviceTemp.SymmetricCiphertextBlob.DerivationSalt,
+                        service.SymmetricCiphertextBlob.DerivationDescription,
+                        service.SymmetricCiphertextBlob.DerivationSalt,
                         null
                         )
                     );
 
-                var decryptedService = symenc.DecryptFromSymmetricCipthertextBlob(
+                var decryptedService = crypto.DecryptFromSymmetricCipthertextBlob(
                     masterKey.MasterKey,
                     new SymmetricCipthertextBlob(
-                        serviceTemp.SymmetricCiphertextBlob.CipherDescription,
-                        serviceTemp.SymmetricCiphertextBlob.InitializationVector,
-                        serviceTemp.SymmetricCiphertextBlob.Ciphertext,
-                        serviceTemp.SymmetricCiphertextBlob.AuthenticationTag
+                        service.SymmetricCiphertextBlob.CipherDescription,
+                        service.SymmetricCiphertextBlob.InitializationVector,
+                        service.SymmetricCiphertextBlob.Ciphertext,
+                        service.SymmetricCiphertextBlob.AuthenticationTag
                         )
                 );
-                Service tempServ = JsonConvert.DeserializeObject<Service>(Encoding.UTF8.GetString(decryptedService));
-                tempServ.Id = serviceTemp.Id;
-                services.Add(tempServ);
+
+                Service tempService = JsonConvert.DeserializeObject<Service>(Encoding.UTF8.GetString(decryptedService));
+                tempService.Id = service.Id;
+                services.Add(tempService);
             }
+
             return services;
         }   
     }

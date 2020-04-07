@@ -37,15 +37,15 @@ namespace SafePassVault.App.Pages
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
-            var showService = new ShowServiceDialog(service, Notifier);
-            await DialogHost.Show(showService, "root");
+            await DialogHost.Show(new ShowServiceDialog(service, Notifier), "root");
         }
 
         private async void EditServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var service = (Service)((Button)e.Source).DataContext;
-            var editService = new EditServiceDialog(service, Notifier);
-            var result = await DialogHost.Show(editService, "root");
+            var dialog = new EditServiceDialog(service, Notifier);
+            var result = await DialogHost.Show(dialog, "root");
+
             try
             {
                 if ((bool)result)
@@ -55,7 +55,7 @@ namespace SafePassVault.App.Pages
 
                     var userKeyPair = UserData.eccKeyPairs[0];
                     var masterKeyService = new KeyDerivationServiceProvider();
-                    var symEnc = new SymmetricCryptographyServiceProvider();
+                    var crypto = new SymmetricCryptographyServiceProvider();
 
                     var derivedKey = eccService.EcdhDervieKey(
                         new EccKeyPairBlob(userKeyPair.PublicKey.Curve, userKeyPair.PublicKey.PublicKey, null),
@@ -64,7 +64,7 @@ namespace SafePassVault.App.Pages
 
                     var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(derivedKey, 16, 16);
 
-                    var encrypted = symEnc.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(editService.Service)));
+                    var encrypted = crypto.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dialog.Service)));
 
                     var putModel = new EccCredentialPutModel()
                     {
@@ -85,20 +85,19 @@ namespace SafePassVault.App.Pages
                         },
                     };
 
-                    await UserData.apiClient.ApiEcccredentialsPutAsync(service.Id, putModel);
+                    await UserData.ApiClient.ApiEcccredentialsPutAsync(service.Id, putModel);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
                 Notifier.ShowError(ex.Message);
             }
         }
 
         private async void AddServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            var addService = new AddServiceDialog(Notifier);
-            var result = await DialogHost.Show(addService, "root");
+            var dialog = new AddServiceDialog(Notifier);
+            var result = await DialogHost.Show(dialog, "root");
 
             try
             {
@@ -109,7 +108,7 @@ namespace SafePassVault.App.Pages
                     
                     var userKeyPair = UserData.eccKeyPairs[0];
                     var masterKeyService = new KeyDerivationServiceProvider();
-                    var symEnc = new SymmetricCryptographyServiceProvider();
+                    var crypto = new SymmetricCryptographyServiceProvider();
 
                     var derivedKey = eccService.EcdhDervieKey(
                         new EccKeyPairBlob(userKeyPair.PublicKey.Curve, userKeyPair.PublicKey.PublicKey, null),
@@ -118,7 +117,7 @@ namespace SafePassVault.App.Pages
 
                     var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(derivedKey, 16, 16);
 
-                    var encrypted = symEnc.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(addService.Service)));
+                    var encrypted = crypto.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(dialog.Service)));
 
                     var postModel = new EccCredentialPostModel()
                     {
@@ -138,8 +137,8 @@ namespace SafePassVault.App.Pages
                             DerivationSalt = masterKey.DerivationSalt
                         },
                     };
-                    var PostResult = await UserData.apiClient.ApiEcccredentialsPostAsync(postModel);
-                    Services.Add(addService.Service);
+                    var PostResult = await UserData.ApiClient.ApiEcccredentialsPostAsync(postModel);
+                    Services.Add(dialog.Service);
                 }
             }
             catch(Exception ex) 
@@ -151,15 +150,14 @@ namespace SafePassVault.App.Pages
 
         private async void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
         {
-            ConfirmDialog dialog = new ConfirmDialog();
-            var result = await DialogHost.Show(dialog, "root");
+            var result = await DialogHost.Show(new ConfirmDialog(), "root");
 
             try
             {
                 if ((bool)result)
                 {
                     var service = (Service)((Button)e.Source).DataContext;
-                    await UserData.apiClient.ApiEcccredentialsDeleteAsync(service.Id);
+                    await UserData.ApiClient.ApiEcccredentialsDeleteAsync(service.Id);
                     Services.Remove(service); 
                 }
             }

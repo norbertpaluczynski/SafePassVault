@@ -29,13 +29,8 @@ namespace SafePassVault.App
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private HttpClient _http;
-        private Client _apiClient;
-
         public LoginWindow()
         {
-            _http = new HttpClient();
-            _apiClient = new Client(_http);
             InitializeComponent();
         }
 
@@ -55,31 +50,27 @@ namespace SafePassVault.App
             };
 
             try
-            {
-                
-                var result = await _apiClient.ApiUsersAuthenticateAsync(loginModel);
-
-                _http.DefaultRequestHeaders.Add("Authorization", $"Bearer {result.AuthenticationToken}");
-                var bytePassword = Encoding.UTF8.GetBytes(PasswordBox.Password);
-                UserData.bytePassword = bytePassword;
+            {                
+                var result = await UserData.ApiClient.ApiUsersAuthenticateAsync(loginModel);
 
                 UserData.AuthToken = result.AuthenticationToken;
+                UserData.BytePassword = Encoding.UTF8.GetBytes(PasswordBox.Password);
                 
-                var checkResult = await _apiClient.ApiEcckeypairsGetAsync(20, 0);
-                if(checkResult.Count == 0)
+                var checkResult = await UserData.ApiClient.ApiEcckeypairsGetAsync(20, 0);
+
+                if(checkResult.Count == 0) 
                 {
                     // Send new keypair
                     EccKeyServiceProvider ecckey = new EccKeyServiceProvider();
                     var keypair = ecckey.CreateNew_secp256r1_ECKeyPair();
 
                     var masterKeyService = new KeyDerivationServiceProvider();
-                    var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(bytePassword, 16, 16);
+                    var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(UserData.BytePassword, 16, 16);
 
-                    var symenc = new SymmetricCryptographyServiceProvider();
-                    var privateKeyEncrypted = symenc.Aes128GcmEncrypt(masterKey.MasterKey, keypair.PrivateKey);
+                    var crypto = new SymmetricCryptographyServiceProvider();
+                    var privateKeyEncrypted = crypto.Aes128GcmEncrypt(masterKey.MasterKey, keypair.PrivateKey);
 
-
-                    var keyPairPostResult = await _apiClient.ApiEcckeypairsPostAsync(new EccKeyPairPostModel
+                    var keyPairPostResult = await UserData.ApiClient.ApiEcckeypairsPostAsync(new EccKeyPairPostModel
                     {
                         EncryptedPrivateKey = new EccEncryptedPrivateKeyModel()
                         {
@@ -97,8 +88,6 @@ namespace SafePassVault.App
                             PublicKey = keypair.PublicKey
                         }
                     });
-
-                    _ = keyPairPostResult;
                 }
                 else
                 {
@@ -107,15 +96,15 @@ namespace SafePassVault.App
                     {
                         UserData.eccKeyPairs.Add(keyPair);
                         var masterKeyService = new KeyDerivationServiceProvider();
-                        var masterKey = masterKeyService.DeriveKeyFromBlob(bytePassword, new KeyDerivationBlob(
+                        var masterKey = masterKeyService.DeriveKeyFromBlob(UserData.BytePassword, new KeyDerivationBlob(
                             keyPair.EncryptedPrivateKey.DerivationDescription,
                             keyPair.EncryptedPrivateKey.DerivationSalt,
                             null
                             ));
 
-                        var symenc = new SymmetricCryptographyServiceProvider();
+                        var crypto = new SymmetricCryptographyServiceProvider();
 
-                        var privateKeyDecrypted = symenc.DecryptFromSymmetricCipthertextBlob(masterKey.MasterKey, new SymmetricCipthertextBlob
+                        var privateKeyDecrypted = crypto.DecryptFromSymmetricCipthertextBlob(masterKey.MasterKey, new SymmetricCipthertextBlob
                             (
                                 keyPair.EncryptedPrivateKey.CipherDescription,
                                 keyPair.EncryptedPrivateKey.InitializationVector,
@@ -124,7 +113,7 @@ namespace SafePassVault.App
                             )
                         );
 
-                        UserData.privateKeyDecrypted = privateKeyDecrypted;
+                        UserData.PrivateKeyDecrypted = privateKeyDecrypted;
                         //CngKey.Import(privateKeyDecrypted, CngKeyBlobFormat.EccPrivateBlob, new CngProvider());
                     }
                 }
