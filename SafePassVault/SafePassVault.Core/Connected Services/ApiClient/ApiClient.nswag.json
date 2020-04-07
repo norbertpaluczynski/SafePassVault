@@ -1,0 +1,1095 @@
+﻿{
+  "x-generator": "NSwag v13.3.0.0 (NJsonSchema v10.1.11.0 (Newtonsoft.Json v12.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PCore API",
+    "description": "PCore API",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://pcore.neptide.com"
+    }
+  ],
+  "paths": {
+    "/api/ecccredentials": {
+      "post": {
+        "tags": [
+          "EccCredentials"
+        ],
+        "operationId": "EccCredentials_PostAsync_v1",
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EccCredentialPostModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EccCredentialPostReturnModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "EccCredentials"
+        ],
+        "operationId": "EccCredentials_GetAsync_V1",
+        "parameters": [
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EccCredentialGetModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ecccredentials/{id}": {
+      "delete": {
+        "tags": [
+          "EccCredentials"
+        ],
+        "operationId": "EccCredentials_DeleteAsync_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EccCredentials"
+        ],
+        "operationId": "EccCredentials_PutAsync_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EccCredentialPutModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "EccCredentials"
+        ],
+        "operationId": "EccCredentials_GetCredentialBlobByIdAsync_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EccCredentialGetModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ecckeypairs/{id}": {
+      "get": {
+        "tags": [
+          "EccKeyPairs"
+        ],
+        "operationId": "EccKeyPairs_GetKeyPairByIdAsync_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EccKeyPairGetModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EccKeyPairs"
+        ],
+        "operationId": "EccKeyPairs_PutAsync_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EccKeyPairPostModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ecckeypairs": {
+      "post": {
+        "tags": [
+          "EccKeyPairs"
+        ],
+        "operationId": "EccKeyPairs_PostAsync_v1",
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EccKeyPairPostModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EccKeyPairPostReturnModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "EccKeyPairs"
+        ],
+        "operationId": "EccKeyPairs_GetAsync_v1",
+        "parameters": [
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EccKeyPairGetModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/register": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_PostRegisterAsync_v1",
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterPostModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRegisterPostReturnModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/authenticate": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_PostAuthenticateAsync_v1",
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuthenticatePostModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAuthenticatePostReturnModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EccCredentialPostReturnModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "eccKeyPairId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "eccDerivationBlob": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccDerivationBlobModel"
+              }
+            ]
+          },
+          "symmetricCiphertextBlob": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
+              }
+            ]
+          }
+        }
+      },
+      "EccDerivationBlobModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "curve",
+          "publicKey"
+        ],
+        "properties": {
+          "curve": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publicKey": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          }
+        }
+      },
+      "SymmetricCiphertextBlobModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "derivationDescription",
+          "derivationSalt",
+          "cipherDescription",
+          "initializationVector",
+          "ciphertext",
+          "authenticationTag"
+        ],
+        "properties": {
+          "derivationDescription": {
+            "type": "string",
+            "minLength": 1
+          },
+          "derivationSalt": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "cipherDescription": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initializationVector": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "ciphertext": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "authenticationTag": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensions": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      },
+      "EccCredentialPostModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "eccKeyPairId",
+          "eccDerivationBlob",
+          "symmetricCiphertextBlob"
+        ],
+        "properties": {
+          "eccKeyPairId": {
+            "type": "string",
+            "format": "guid",
+            "minLength": 1
+          },
+          "eccDerivationBlob": {
+            "$ref": "#/components/schemas/EccDerivationBlobModel"
+          },
+          "symmetricCiphertextBlob": {
+            "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
+          }
+        }
+      },
+      "EccCredentialPutModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "eccKeyPairId",
+          "eccDerivationBlob",
+          "symmetricCiphertextBlob"
+        ],
+        "properties": {
+          "eccKeyPairId": {
+            "type": "string",
+            "format": "guid",
+            "minLength": 1
+          },
+          "eccDerivationBlob": {
+            "$ref": "#/components/schemas/EccDerivationBlobModel"
+          },
+          "symmetricCiphertextBlob": {
+            "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
+          }
+        }
+      },
+      "EccCredentialGetModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "eccKeyPairId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "eccDerivationBlob": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccDerivationBlobModel"
+              }
+            ]
+          },
+          "symmetricCiphertextBlob": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SymmetricCiphertextBlobModel"
+              }
+            ]
+          }
+        }
+      },
+      "EccKeyPairGetModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "publicKey": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccPublicKeyModel"
+              }
+            ]
+          },
+          "encryptedPrivateKey": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccEncryptedPrivateKeyModel"
+              }
+            ]
+          }
+        }
+      },
+      "EccPublicKeyModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "curve",
+          "publicKey"
+        ],
+        "properties": {
+          "curve": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publicKey": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          }
+        }
+      },
+      "EccEncryptedPrivateKeyModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "curve",
+          "derivationDescription",
+          "derivationSalt",
+          "cipherDescription",
+          "initializationVector",
+          "authenticationTag",
+          "ciphertext"
+        ],
+        "properties": {
+          "curve": {
+            "type": "string",
+            "minLength": 1
+          },
+          "derivationDescription": {
+            "type": "string",
+            "minLength": 1
+          },
+          "derivationSalt": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "cipherDescription": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initializationVector": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "authenticationTag": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "ciphertext": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          }
+        }
+      },
+      "EccKeyPairPostModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "publicKey",
+          "encryptedPrivateKey"
+        ],
+        "properties": {
+          "publicKey": {
+            "$ref": "#/components/schemas/EccPublicKeyModel"
+          },
+          "encryptedPrivateKey": {
+            "$ref": "#/components/schemas/EccEncryptedPrivateKeyModel"
+          }
+        }
+      },
+      "EccKeyPairPostReturnModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "publicKey": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccPublicKeyModel"
+              }
+            ]
+          },
+          "encryptedPrivateKey": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccEncryptedPrivateKeyModel"
+              }
+            ]
+          }
+        }
+      },
+      "UserRegisterPostReturnModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "passwordRepeat": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        }
+      },
+      "UserRegisterPostModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "username",
+          "password",
+          "passwordRepeat"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "passwordRepeat": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          }
+        }
+      },
+      "UserAuthenticatePostReturnModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "authenticationToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        }
+      },
+      "UserAuthenticatePostModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+﻿<Window
+    x:Class="SafePassVault.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SafePassVault.App"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="SAFEPASSvault"
+    Style="{StaticResource BaseWindowStyle}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <md:DialogHost DialogTheme="Dark" Identifier="root">
+
+        <Grid
+            x:Name="MainGrid"
+            MinWidth="970"
+            MinHeight="500">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Background="#303030">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="10,30"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Source="Resources/Img/logo.png" />
+
+                <StackPanel Grid.Row="1" Margin="20,0">
+
+                    <Button
+                        x:Name="ServiceListButton"
+                        Click="ServiceListButton_Click"
+                        Content="Service list"
+                        Style="{StaticResource Sp_SidebarButton}" />
+
+                    <Button
+                        x:Name="PasswordSettingsButton"
+                        Click="PasswordSettingsButton_Click"
+                        Content="Password settings"
+                        Style="{StaticResource Sp_SidebarButton}" />
+
+                </StackPanel>
+
+                <Button
+                    x:Name="LogoutButton"
+                    Grid.Row="2"
+                    Margin="20"
+                    Click="LogoutButton_Click"
+                    Content="Logout"
+                    Style="{StaticResource Sp_MaterialDesignFlatDarkBgButton}" />
+            </Grid>
+
+            <Frame
+                x:Name="ApplicationFrame"
+                Grid.Column="1"
+                NavigationUIVisibility="Hidden" />
+
+        </Grid>
+
+    </md:DialogHost>
+</Window>

@@ -1,0 +1,36 @@
+﻿<UserControl
+    x:Class="SafePassVault.App.UserControls.MessageDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SafePassVault.App.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+    <Grid Background="{StaticResource PrimaryGray}">
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="20"
+            FontWeight="Bold"
+            Foreground="{StaticResource PrimaryOrange}"
+            Style="{StaticResource MaterialDesignBody1TextBlock}"
+            x:Name="errorText"
+            TextAlignment="Center" />
+
+        <Button
+            x:Name="YesButton"
+            Grid.Row="1"
+            Width="80"
+            Margin="20,5,30,20"
+            Command="{x:Static md:DialogHost.CloseDialogCommand}"
+            Content="OK"
+            IsDefault="True" />
+    </Grid>
+</UserControl>
