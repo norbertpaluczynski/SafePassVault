@@ -9,16 +9,15 @@ namespace SafePassVault.Core.Helpers
     {
         public static AppSettings Settings = new AppSettings();
 
-        public PasswordCharsetPreset DefaultPasswordCharsetPreset { get; private set; } = new PasswordCharsetPreset
+        public PasswordGeneratorSettings DefaultPasswordGeneratorSettings { get; private set; } = new PasswordGeneratorSettings
         {
-            PresetName = "Default",
             AllowNumbers = true,
             AllowLowercaseLetters = true,
             AllowUppercaseLetters = true,
             AllowSpecialCharacters = true,
-            AllowSpace = true
+            AllowSpace = true,
+            PasswordLength = 12
         };
 
-        public int DefaultPasswordLength { get; set; } = 12;
     }
 }

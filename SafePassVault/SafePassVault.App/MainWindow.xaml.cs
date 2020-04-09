@@ -20,7 +20,6 @@ namespace SafePassVault.App
     {
         public static StartPage StartPage;
         public static ServiceListPage ServiceListPage;
-        public static PasswordSettingsPage PasswordSettingsPage;
 
         public Notifier Notifier { get; set; }
 
@@ -37,7 +36,7 @@ namespace SafePassVault.App
 
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
                     notificationLifetime: TimeSpan.FromSeconds(1.5),
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
 
                 cfg.DisplayOptions.Width = 230;
 
@@ -46,7 +45,6 @@ namespace SafePassVault.App
 
             StartPage = new StartPage();
             ServiceListPage = new ServiceListPage(Notifier);
-            PasswordSettingsPage = new PasswordSettingsPage(Notifier);
 
             InitializeComponent();
             ApplicationFrame.Content = StartPage;
@@ -62,11 +60,6 @@ namespace SafePassVault.App
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)
         {
             ApplicationFrame.Content = ServiceListPage;
-        }
-
-        private void PasswordSettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            ApplicationFrame.Content = PasswordSettingsPage;
         }
     }
 }

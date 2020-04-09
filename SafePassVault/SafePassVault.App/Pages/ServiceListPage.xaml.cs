@@ -64,7 +64,7 @@ namespace SafePassVault.App.Pages
 
                     var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(derivedKey, 16, 16);
 
-                    var encrypted = crypto.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dialog.Service)));
+                    var encrypted = crypto.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(service)));
 
                     var putModel = new EccCredentialPutModel()
                     {
