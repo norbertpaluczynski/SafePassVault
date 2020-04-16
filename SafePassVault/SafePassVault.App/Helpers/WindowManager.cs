@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SafePassVault.App.Helpers
 {
-    public static class Windows
+    public static class WindowManager
     {
         public static LoginWindow LoginWindow { get; set; }
         public static RegisterWindow RegisterWindow { get; set; }

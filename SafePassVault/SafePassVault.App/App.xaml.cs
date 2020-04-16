@@ -18,8 +18,8 @@ namespace SafePassVault.App
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Helpers.Windows.LoginWindow = new LoginWindow();
-            Helpers.Windows.LoginWindow.Show();
+            Helpers.WindowManager.LoginWindow = new LoginWindow();
+            Helpers.WindowManager.LoginWindow.Show();
         }
 
         private void TopBar_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

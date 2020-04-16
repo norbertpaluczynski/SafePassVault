@@ -10,6 +10,9 @@ using ToastNotifications.Position;
 using Newtonsoft.Json;
 using System.IO;
 using SafePassVault.App.Helpers;
+using System.Timers;
+using SafePassVault.Core.Helpers;
+using ToastNotifications.Messages;
 
 namespace SafePassVault.App
 {
@@ -18,6 +21,8 @@ namespace SafePassVault.App
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Timer _timer;
+
         public static StartPage StartPage;
         public static ServiceListPage ServiceListPage;
 
@@ -48,12 +53,36 @@ namespace SafePassVault.App
 
             InitializeComponent();
             ApplicationFrame.Content = StartPage;
+
+            _timer = new Timer(1000);
+            _timer.Elapsed += _timer_Elapsed;
+            _timer.Start();
+        }
+
+        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var timeLeft = AppSettings.Settings.IdleTimeLimit - TimeSpan.FromMilliseconds(IdleTimeFinder.GetIdleTime());
+
+            if (timeLeft.Seconds > 0 && timeLeft.Seconds <= 3)
+            {
+                Notifier.ShowInformation($"You will be loged out in: { timeLeft.Seconds }!");
+            }
+            else if(timeLeft.Seconds <= 0)
+            {
+                _timer.Stop();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    WindowManager.LoginWindow = new LoginWindow();
+                    WindowManager.LoginWindow.Show();
+                    Close();
+                });
+            }
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            Windows.LoginWindow = new LoginWindow();
-            Windows.LoginWindow.Show();
+            WindowManager.LoginWindow = new LoginWindow();
+            WindowManager.LoginWindow.Show();
             Close();            
         }
 

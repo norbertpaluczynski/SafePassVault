@@ -118,9 +118,9 @@ namespace SafePassVault.App
                     }
                 }
 
-                Windows.MainWindow = new MainWindow();
-                Windows.MainWindow.Show();
-                Windows.MainWindow.Notifier.ShowSuccess("You logged in successfully!");
+                WindowManager.MainWindow = new MainWindow();
+                WindowManager.MainWindow.Show();
+                WindowManager.MainWindow.Notifier.ShowSuccess("You logged in successfully!");
                 Close();
             }
             catch (ApiException)
@@ -137,8 +137,8 @@ namespace SafePassVault.App
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            Windows.RegisterWindow = new RegisterWindow();
-            Windows.RegisterWindow.Show();
+            WindowManager.RegisterWindow = new RegisterWindow();
+            WindowManager.RegisterWindow.Show();
             Close();
         }
     }

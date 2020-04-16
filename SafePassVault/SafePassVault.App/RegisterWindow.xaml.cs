@@ -92,8 +92,8 @@ namespace SafePassVault.App
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            Windows.LoginWindow = new LoginWindow();
-            Windows.LoginWindow.Show();
+            WindowManager.LoginWindow = new LoginWindow();
+            WindowManager.LoginWindow.Show();
             Close();
         }
     }
