@@ -52,8 +52,8 @@ namespace SafePassVault.App
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginWindow window = new LoginWindow();
-            window.Show();
+            Windows.LoginWindow = new LoginWindow();
+            Windows.LoginWindow.Show();
             Close();            
         }
 
