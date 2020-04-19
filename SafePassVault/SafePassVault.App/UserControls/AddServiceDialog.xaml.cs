@@ -61,14 +61,22 @@ namespace SafePassVault.App.UserControls
                 if (password.Length < 4)
                 {
                     PasswordGeneratorSettings.PasswordLength = Int32.Parse(password);
-                    try
+
+                    if(PasswordGeneratorSettings.PasswordLength > 4)
                     {
-                        PasswordBox.Password = PasswordGenerator.Generate(PasswordGeneratorSettings);
-                        Notifier.ShowSuccess("Password generated successfully!");
+                        try
+                        {
+                            PasswordBox.Password = PasswordGenerator.Generate(PasswordGeneratorSettings);
+                            Notifier.ShowSuccess("Password generated successfully!");
+                        }
+                        catch (Exception)
+                        {
+                            Notifier.ShowError("At least one checkbox must be checked!");
+                        }
                     }
-                    catch (Exception)
+                    else
                     {
-                        Notifier.ShowError("At least one checkbox must be checked!");
+                        Notifier.ShowError("Password length must be longer than 4 characters!");
                     }
                 }
                 else
