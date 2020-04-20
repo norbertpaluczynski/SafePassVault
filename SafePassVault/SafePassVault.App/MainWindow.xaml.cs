@@ -45,6 +45,8 @@ namespace SafePassVault.App
                     notificationLifetime: TimeSpan.FromSeconds(1.5),
                     maximumNotificationCount: MaximumNotificationCount.FromCount(5));
 
+                cfg.DisplayOptions.TopMost = false;
+
                 cfg.DisplayOptions.Width = 230;
 
                 cfg.Dispatcher = Application.Current.Dispatcher;
