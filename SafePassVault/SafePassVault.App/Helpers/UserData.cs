@@ -14,10 +14,11 @@ namespace SafePassVault.App.Helpers
     {
         public static HttpClient Http;
         public static Client ApiClient;
-        static public byte[] BytePassword;
-        static public byte[] PrivateKeyDecrypted;
+        public static byte[] BytePassword;
+        public static byte[] PrivateKeyDecrypted;
+        public static string UserName;
 
-        static public string AuthToken 
+        public static string AuthToken 
         {
             set 
             {
@@ -26,7 +27,7 @@ namespace SafePassVault.App.Helpers
             }
         }
 
-        static public List<EccKeyPairGetModel> eccKeyPairs;
+        public static List<EccKeyPairGetModel> eccKeyPairs;
 
         static UserData()
         {

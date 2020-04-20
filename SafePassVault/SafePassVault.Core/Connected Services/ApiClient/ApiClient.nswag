@@ -3,7 +3,7 @@
   "defaultVariables": null,
   "documentGenerator": {
     "fromDocument": {
-      "url": "C:\\Users\\Norbert\\Documents\\swagger.json",
+      "url": "C:\\Users\\Michal\\Downloads\\swagger.json",
       "output": "ApiClient.nswag.json"
     }
   },
@@ -13,6 +13,7 @@
       "configurationClass": null,
       "generateClientClasses": true,
       "generateClientInterfaces": false,
+      "clientBaseInterface": null,
       "injectHttpClient": true,
       "disposeHttpClient": true,
       "protectedMethods": [],
@@ -87,7 +88,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "ApiClientClient.Generated.cs"
+      "output": "ApiClient.cs"
     }
   }
 }

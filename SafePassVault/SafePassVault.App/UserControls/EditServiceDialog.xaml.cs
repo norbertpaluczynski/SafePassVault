@@ -93,7 +93,6 @@ namespace SafePassVault.App.UserControls
                 ShowPasswordSettingsButtonIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.ChevronDoubleLeft;
                 ShowPasswordSettings.ToolTip = "Hide password\ngenerator settings.";
                 PasswordGeneratorSettingsArea.Visibility = Visibility.Visible;
-
             }
         }
     }

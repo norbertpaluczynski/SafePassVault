@@ -19,6 +19,6 @@ namespace SafePassVault.Core.Helpers
             PasswordLength = 12
         };
 
-        public TimeSpan IdleTimeLimit { get; private set; } = TimeSpan.FromSeconds(10);
+        public TimeSpan IdleTimeLimit { get; private set; } = TimeSpan.FromSeconds(30);
     }
 }

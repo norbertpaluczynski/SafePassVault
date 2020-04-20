@@ -21,7 +21,7 @@
             FontWeight="Bold"
             Foreground="#dddddd">
             <Run Text="SAFEPASSvault" />
-            <Run Foreground="{StaticResource PrimaryOrange}" Text="v0.1" />
+            <Run Foreground="{StaticResource PrimaryOrange}" Text="v0.2" />
         </TextBlock>
     </Grid>
 </Page>

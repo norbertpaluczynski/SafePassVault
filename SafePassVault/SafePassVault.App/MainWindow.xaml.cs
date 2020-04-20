@@ -25,6 +25,7 @@ namespace SafePassVault.App
 
         public static StartPage StartPage;
         public static ServiceListPage ServiceListPage;
+        public static ChangePasswordPage ChangePasswordPage;
 
         public Notifier Notifier { get; set; }
 
@@ -50,6 +51,7 @@ namespace SafePassVault.App
 
             StartPage = new StartPage();
             ServiceListPage = new ServiceListPage(Notifier);
+            ChangePasswordPage = new ChangePasswordPage(Notifier);
 
             InitializeComponent();
             ApplicationFrame.Content = StartPage;
@@ -89,6 +91,11 @@ namespace SafePassVault.App
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)
         {
             ApplicationFrame.Content = ServiceListPage;
+        }
+
+        private void ChangePasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationFrame.Content = ChangePasswordPage;
         }
     }
 }

@@ -14,6 +14,7 @@ using SafePassVault.Core.ApiClient;
 using System;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using SafePassVault.Core.Helpers;
 
 namespace SafePassVault.App.Pages
 {
@@ -88,9 +89,16 @@ namespace SafePassVault.App.Pages
                     await UserData.ApiClient.ApiEcccredentialsPutAsync(service.Id, putModel);
                 }
             }
-            catch (Exception ex)
+            catch (ApiException<ProblemDetails> exc)
             {
-                Notifier.ShowError(ex.Message);
+                foreach (var error in ApiErrorsBuilder.GetErrorList(exc.Result.Errors))
+                {
+                    Notifier.ShowError(error);
+                }
+            }
+            catch (Exception)
+            {
+                Notifier.ShowError("Unknown error");
             }
         }
 
@@ -141,10 +149,16 @@ namespace SafePassVault.App.Pages
                     Services.Add(dialog.Service);
                 }
             }
-            catch(Exception ex) 
+            catch (ApiException<ProblemDetails> exc)
             {
-                Debug.WriteLine(ex.Message);
-                Notifier.ShowError(ex.Message);
+                foreach (var error in ApiErrorsBuilder.GetErrorList(exc.Result.Errors))
+                {
+                    Notifier.ShowError(error);
+                }
+            }
+            catch (Exception)
+            {
+                Notifier.ShowError("Unknown error");
             }
         }
 
@@ -161,10 +175,16 @@ namespace SafePassVault.App.Pages
                     Services.Remove(service); 
                 }
             }
-            catch(Exception ex)
+            catch (ApiException<ProblemDetails> exc)
             {
-                Debug.WriteLine(ex.Message);
-                Notifier.ShowError(ex.Message);
+                foreach (var error in ApiErrorsBuilder.GetErrorList(exc.Result.Errors))
+                {
+                    Notifier.ShowError(error);
+                }
+            }
+            catch (Exception)
+            {
+                Notifier.ShowError("Unknown error");
             }
         }
 

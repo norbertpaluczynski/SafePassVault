@@ -21,6 +21,7 @@ using System.Windows.Shapes;
 using ToastNotifications.Messages;
 using SafePassVault.App.Helpers;
 using System.Security.Cryptography;
+using SafePassVault.Core.Helpers;
 
 namespace SafePassVault.App
 {
@@ -54,6 +55,7 @@ namespace SafePassVault.App
                 var result = await UserData.ApiClient.ApiUsersAuthenticateAsync(loginModel);
 
                 UserData.AuthToken = result.AuthenticationToken;
+                UserData.UserName = LoginBox.Text;
                 UserData.BytePassword = Encoding.UTF8.GetBytes(PasswordBox.Password);
                 
                 var checkResult = await UserData.ApiClient.ApiEcckeypairsGetAsync(20, 0);
@@ -123,16 +125,14 @@ namespace SafePassVault.App
                 WindowManager.MainWindow.Notifier.ShowSuccess("You logged in successfully!");
                 Close();
             }
-            catch (ApiException)
+            catch (ApiException<ProblemDetails> exc)
             {
-                await DialogHost.Show(new MessageDialog("Wrong username or password!\nPlease try again."), "login");
+                await DialogHost.Show(new MessageDialog(ApiErrorsBuilder.GetErrorString(exc.Result.Errors)), "login");
             }
             catch (Exception)
             {
                 await DialogHost.Show(new MessageDialog("Unknown error"), "login");
             }
-
-            
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)

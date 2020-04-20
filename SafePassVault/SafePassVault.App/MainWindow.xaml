@@ -45,6 +45,12 @@
                         Content="Service list"
                         Style="{StaticResource Sp_SidebarButton}" />
 
+                    <Button
+                        x:Name="ChangePasswordButton"
+                        Click="ChangePasswordButton_Click"
+                        Content="Change password"
+                        Style="{StaticResource Sp_SidebarButton}" />
+
                 </StackPanel>
 
                 <Button
