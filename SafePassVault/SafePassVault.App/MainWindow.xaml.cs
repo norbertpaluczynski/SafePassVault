@@ -13,6 +13,7 @@ using SafePassVault.App.Helpers;
 using System.Timers;
 using SafePassVault.Core.Helpers;
 using ToastNotifications.Messages;
+using MaterialDesignThemes.Wpf;
 
 namespace SafePassVault.App
 {
@@ -70,22 +71,25 @@ namespace SafePassVault.App
                 Notifier.ShowInformation($"You will be loged out in: { timeLeft.Seconds }!");
             }
             else if(timeLeft.Seconds <= 0)
-            {
-                _timer.Stop();
+            {                
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    WindowManager.LoginWindow = new LoginWindow();
-                    WindowManager.LoginWindow.Show();
-                    Close();
+                    Logout();
                 });
             }
         }
 
-        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        public void Logout()
         {
+            _timer.Stop();
             WindowManager.LoginWindow = new LoginWindow();
             WindowManager.LoginWindow.Show();
-            Close();            
+            Close();
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Logout();
         }
 
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)

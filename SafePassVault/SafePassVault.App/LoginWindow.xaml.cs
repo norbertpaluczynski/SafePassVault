@@ -37,6 +37,8 @@ namespace SafePassVault.App
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            UserData.eccKeyPairs = new List<EccKeyPairGetModel>();
+
             if (String.IsNullOrEmpty(LoginBox.Text) || String.IsNullOrEmpty(PasswordBox.Password))
             {
                 await DialogHost.Show(new MessageDialog("Fields cannot be empty!"), "login");
@@ -90,35 +92,35 @@ namespace SafePassVault.App
                             PublicKey = keypair.PublicKey
                         }
                     });
+
+                    checkResult = await UserData.ApiClient.ApiEcckeypairsGetAsync(20, 0);
                 }
-                else
+               
+                // Get user keypairs and decrypt them
+                foreach (var keyPair in checkResult)
                 {
-                    // Get user keypairs and decrypt them
-                    foreach(var keyPair in checkResult)
-                    {
-                        UserData.eccKeyPairs.Add(keyPair);
-                        var masterKeyService = new KeyDerivationServiceProvider();
-                        var masterKey = masterKeyService.DeriveKeyFromBlob(UserData.BytePassword, new KeyDerivationBlob(
-                            keyPair.EncryptedPrivateKey.DerivationDescription,
-                            keyPair.EncryptedPrivateKey.DerivationSalt,
-                            null
-                            ));
+                    UserData.eccKeyPairs.Add(keyPair);
+                    var masterKeyService = new KeyDerivationServiceProvider();
+                    var masterKey = masterKeyService.DeriveKeyFromBlob(UserData.BytePassword, new KeyDerivationBlob(
+                        keyPair.EncryptedPrivateKey.DerivationDescription,
+                        keyPair.EncryptedPrivateKey.DerivationSalt,
+                        null
+                        ));
 
-                        var crypto = new SymmetricCryptographyServiceProvider();
+                    var crypto = new SymmetricCryptographyServiceProvider();
 
-                        var privateKeyDecrypted = crypto.DecryptFromSymmetricCipthertextBlob(masterKey.MasterKey, new SymmetricCipthertextBlob
-                            (
-                                keyPair.EncryptedPrivateKey.CipherDescription,
-                                keyPair.EncryptedPrivateKey.InitializationVector,
-                                keyPair.EncryptedPrivateKey.Ciphertext,
-                                keyPair.EncryptedPrivateKey.AuthenticationTag
-                            )
-                        );
+                    var privateKeyDecrypted = crypto.DecryptFromSymmetricCipthertextBlob(masterKey.MasterKey, new SymmetricCipthertextBlob
+                        (
+                            keyPair.EncryptedPrivateKey.CipherDescription,
+                            keyPair.EncryptedPrivateKey.InitializationVector,
+                            keyPair.EncryptedPrivateKey.Ciphertext,
+                            keyPair.EncryptedPrivateKey.AuthenticationTag
+                        )
+                    );
 
-                        UserData.PrivateKeyDecrypted = privateKeyDecrypted;
-                        //CngKey.Import(privateKeyDecrypted, CngKeyBlobFormat.EccPrivateBlob, new CngProvider());
-                    }
-                }
+                    UserData.PrivateKeyDecrypted = privateKeyDecrypted;
+                    //CngKey.Import(privateKeyDecrypted, CngKeyBlobFormat.EccPrivateBlob, new CngProvider());
+                }                
 
                 WindowManager.MainWindow = new MainWindow();
                 WindowManager.MainWindow.Show();

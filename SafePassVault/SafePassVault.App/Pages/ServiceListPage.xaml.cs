@@ -47,6 +47,11 @@ namespace SafePassVault.App.Pages
             var dialog = new EditServiceDialog(service, Notifier);
             var result = await DialogHost.Show(dialog, "root");
 
+            if (result == null)
+            {
+                return;
+            }
+
             try
             {
                 if ((bool)result)
@@ -107,6 +112,11 @@ namespace SafePassVault.App.Pages
             var dialog = new AddServiceDialog(Notifier);
             var result = await DialogHost.Show(dialog, "root");
 
+            if (result == null)
+            {
+                return;
+            }
+
             try
             {
                 if ((bool)result)
@@ -165,6 +175,11 @@ namespace SafePassVault.App.Pages
         private async void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var result = await DialogHost.Show(new ConfirmDialog(), "root");
+            
+            if (result == null)
+            {
+                return;
+            }
 
             try
             {

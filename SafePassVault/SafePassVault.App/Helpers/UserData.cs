@@ -33,7 +33,6 @@ namespace SafePassVault.App.Helpers
         {
             Http = new HttpClient();
             ApiClient = new Client(Http);
-            eccKeyPairs = new List<EccKeyPairGetModel>();
         }
 
         public static List<Service> GetServicesListDecrypted()

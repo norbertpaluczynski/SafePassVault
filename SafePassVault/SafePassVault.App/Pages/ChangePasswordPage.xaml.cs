@@ -99,9 +99,7 @@ namespace SafePassVault.App.Pages
                     EccKeyPairs = keyPairs
                 });                              
 
-                WindowManager.LoginWindow = new LoginWindow();
-                WindowManager.LoginWindow.Show();
-                WindowManager.MainWindow.Close();
+                WindowManager.MainWindow.Logout();
                 var dialogResult = await DialogHost.Show(new MessageDialog("Password changed successfully!\nYou can login now."), "login");
             }
             catch(ApiException<ProblemDetails> exc)
