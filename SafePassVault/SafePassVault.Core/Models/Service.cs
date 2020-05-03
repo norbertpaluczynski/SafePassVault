@@ -15,6 +15,24 @@ namespace SafePassVault.Core.Models
         private DateTime _createdAt;
         private DateTime _updatedAt;
 
+        public Service()
+        {
+            _createdAt = DateTime.Now;
+            _updatedAt = DateTime.Now;
+        }
+
+        public Service(Service service)
+        {
+            _name = service.Name;
+            _login = service.Login;
+            _password = service.Password;
+            _description = service.Description;
+            _url = service.Url;
+            _createdAt = service.CreatedAt;
+            _updatedAt = service.UpdatedAt;
+        }
+
+
         public Guid Id
         {
             get => _id;

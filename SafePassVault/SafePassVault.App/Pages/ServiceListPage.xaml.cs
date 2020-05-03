@@ -14,6 +14,7 @@ using SafePassVault.Core.ApiClient;
 using System;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using SafePassVault.Core.Helpers;
 
 namespace SafePassVault.App.Pages
 {
@@ -46,6 +47,11 @@ namespace SafePassVault.App.Pages
             var dialog = new EditServiceDialog(service, Notifier);
             var result = await DialogHost.Show(dialog, "root");
 
+            if (result == null)
+            {
+                return;
+            }
+
             try
             {
                 if ((bool)result)
@@ -64,7 +70,7 @@ namespace SafePassVault.App.Pages
 
                     var masterKey = masterKeyService.Pbkdf2Sha256DeriveKeyFromPassword(derivedKey, 16, 16);
 
-                    var encrypted = crypto.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dialog.Service)));
+                    var encrypted = crypto.Aes128GcmEncrypt(masterKey.MasterKey, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(service)));
 
                     var putModel = new EccCredentialPutModel()
                     {
@@ -88,9 +94,16 @@ namespace SafePassVault.App.Pages
                     await UserData.ApiClient.ApiEcccredentialsPutAsync(service.Id, putModel);
                 }
             }
-            catch (Exception ex)
+            catch (ApiException<ProblemDetails> exc)
             {
-                Notifier.ShowError(ex.Message);
+                foreach (var error in ApiErrorsBuilder.GetErrorList(exc.Result.Errors))
+                {
+                    Notifier.ShowError(error);
+                }
+            }
+            catch (Exception)
+            {
+                Notifier.ShowError("Unknown error");
             }
         }
 
@@ -98,6 +111,11 @@ namespace SafePassVault.App.Pages
         {
             var dialog = new AddServiceDialog(Notifier);
             var result = await DialogHost.Show(dialog, "root");
+
+            if (result == null)
+            {
+                return;
+            }
 
             try
             {
@@ -141,16 +159,27 @@ namespace SafePassVault.App.Pages
                     Services.Add(dialog.Service);
                 }
             }
-            catch(Exception ex) 
+            catch (ApiException<ProblemDetails> exc)
             {
-                Debug.WriteLine(ex.Message);
-                Notifier.ShowError(ex.Message);
+                foreach (var error in ApiErrorsBuilder.GetErrorList(exc.Result.Errors))
+                {
+                    Notifier.ShowError(error);
+                }
+            }
+            catch (Exception)
+            {
+                Notifier.ShowError("Unknown error");
             }
         }
 
         private async void DeleteServiceButton_Click(object sender, RoutedEventArgs e)
         {
             var result = await DialogHost.Show(new ConfirmDialog(), "root");
+            
+            if (result == null)
+            {
+                return;
+            }
 
             try
             {
@@ -161,10 +190,16 @@ namespace SafePassVault.App.Pages
                     Services.Remove(service); 
                 }
             }
-            catch(Exception ex)
+            catch (ApiException<ProblemDetails> exc)
             {
-                Debug.WriteLine(ex.Message);
-                Notifier.ShowError(ex.Message);
+                foreach (var error in ApiErrorsBuilder.GetErrorList(exc.Result.Errors))
+                {
+                    Notifier.ShowError(error);
+                }
+            }
+            catch (Exception)
+            {
+                Notifier.ShowError("Unknown error");
             }
         }
 

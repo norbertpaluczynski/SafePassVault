@@ -10,7 +10,7 @@
     xmlns:s="clr-namespace:System;assembly=System.Runtime"
     mc:Ignorable="d">
 
-    <Grid Width="400" Background="{StaticResource PrimaryGray}">
+    <Grid x:Name="Content" Background="{StaticResource PrimaryGray}">
         <Grid.Resources>
             <Style TargetType="Border">
                 <Setter Property="Padding" Value="0,10" />
@@ -25,10 +25,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
         <TextBlock
             x:Name="Title"
             Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Margin="0,0,0,10"
             Padding="10"
             Background="{StaticResource DarkGray}"
@@ -42,21 +48,24 @@
         <TextBox
             x:Name="ServiceBox"
             Grid.Row="1"
+            Grid.Column="0"
             Margin="25,10"
             md:HintAssist.Hint="Service name *"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Name, ValidatesOnDataErrors=True}" />
+            Text="{Binding Service.Name, ValidatesOnDataErrors=True}" />
 
         <TextBox
             x:Name="LoginBox"
             Grid.Row="2"
+            Grid.Column="0"
             Margin="25,10"
             md:HintAssist.Hint="Login *"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Login, ValidatesOnDataErrors=True}" />
+            Text="{Binding Service.Login, ValidatesOnDataErrors=True}" />
 
         <StackPanel
             Grid.Row="3"
+            Grid.Column="0"
             Margin="25,10"
             Orientation="Horizontal">
 
@@ -65,21 +74,8 @@
                 Width="265"
                 md:HintAssist.Hint="Password *"
                 pba:PasswordBoxAssistant.BindPassword="True"
-                pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                pba:PasswordBoxAssistant.BoundPassword="{Binding Service.Password, ValidatesOnDataErrors=True, Mode=TwoWay}"
                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
-
-            <Button
-                x:Name="ShowPassword"
-                Margin="10,0,0,0"
-                VerticalAlignment="Bottom"
-                BorderBrush="{StaticResource PrimaryOrange}"
-                BorderThickness="1"
-                Click="ShowPassword_Click"
-                Style="{StaticResource Sp_MaterialDesignDataGridButton}"
-                ToolTip="Show password"
-                Visibility="Hidden">
-                <md:PackIcon Width="20" Kind="Show" />
-            </Button>
 
             <Button
                 x:Name="GeneratePassword"
@@ -93,26 +89,126 @@
                 <md:PackIcon Width="20" Kind="KeyAdd" />
             </Button>
 
+            <Button
+                x:Name="ShowPasswordSettings"
+                Margin="10,0,0,0"
+                VerticalAlignment="Bottom"
+                BorderBrush="{StaticResource PrimaryOrange}"
+                BorderThickness="1"
+                Click="ShowPasswordSettings_Click"
+                Style="{StaticResource Sp_MaterialDesignDataGridButton}"
+                ToolTip="Show password&#10;generator settings">
+                <md:PackIcon
+                    x:Name="ShowPasswordSettingsButtonIcon"
+                    Width="20"
+                    Kind="ChevronDoubleRight" />
+            </Button>
+
         </StackPanel>
 
         <TextBox
             x:Name="UrlBox"
             Grid.Row="4"
+            Grid.Column="0"
             Margin="25,10"
             md:HintAssist.Hint="Url"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Url}" />
+            Text="{Binding Service.Url}" />
 
         <TextBox
             x:Name="DescriptionBox"
             Grid.Row="5"
+            Grid.Column="0"
             Margin="25,10"
             md:HintAssist.Hint="Description"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding Path=Description}" />
+            Text="{Binding Service.Description}" />
+
+        <Border
+            x:Name="PasswordGeneratorSettingsArea"
+            Grid.Row="1"
+            Grid.RowSpan="5"
+            Grid.Column="1"
+            Margin="0,20,25,10"
+            Padding="20"
+            Background="{StaticResource LightGray}"
+            BorderBrush="{StaticResource DarkGray}"
+            BorderThickness="3"
+            Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Foreground="#dddddd"
+                    Text="Password length:" />
+
+                <TextBox
+                    x:Name="DefaultPasswordLengthBox"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="40"
+                    Margin="10,0,0,0"
+                    md:HintAssist.IsFloating="False"
+                    Foreground="{StaticResource PrimaryOrange}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding PasswordGeneratorSettings.PasswordLength}" />
+
+                <CheckBox
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Content="Numbers"
+                    IsChecked="{Binding PasswordGeneratorSettings.AllowNumbers}" />
+
+                <CheckBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Content="Lowercase letters"
+                    IsChecked="{Binding PasswordGeneratorSettings.AllowLowercaseLetters}" />
+
+                <CheckBox
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Content="Uppercase letters"
+                    IsChecked="{Binding PasswordGeneratorSettings.AllowUppercaseLetters}" />
+
+                <CheckBox
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Content="Special characters"
+                    IsChecked="{Binding PasswordGeneratorSettings.AllowSpecialCharacters}" />
+
+                <CheckBox
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Content="Spaces"
+                    IsChecked="{Binding PasswordGeneratorSettings.AllowSpace}" />
+
+            </Grid>
+        </Border>
 
         <StackPanel
             Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Margin="10,10,10,20"
             HorizontalAlignment="Center"
             Orientation="Horizontal">

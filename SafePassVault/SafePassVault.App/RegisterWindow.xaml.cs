@@ -16,6 +16,7 @@ using System.Diagnostics;
 using SafePassVault.App.UserControls;
 using MaterialDesignThemes.Wpf;
 using SafePassVault.App.Helpers;
+using SafePassVault.Core.Helpers;
 
 namespace SafePassVault.App
 {
@@ -67,22 +68,15 @@ namespace SafePassVault.App
             {
                 var result = await UserData.ApiClient.ApiUsersRegisterAsync(registerModel);
 
-                var successDialog = new MessageDialog("You registered successfuly!\nYou can log in now.");
-                var dialogResult = await DialogHost.Show(successDialog, "register");
+                var dialogResult = await DialogHost.Show(new MessageDialog("You registered successfuly!\nYou can log in now."), "register");
 
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.Show();
+                WindowManager.LoginWindow = new LoginWindow();
+                WindowManager.LoginWindow.Show();
                 Close();
             }
-            catch (ApiException ex) 
+            catch (ApiException<ProblemDetails> exc)
             {
-                if(ex.StatusCode == 400)
-                {
-                    await DialogHost.Show(new MessageDialog("User with that login already exists!"), "register");
-                } else
-                {
-                    await DialogHost.Show(new MessageDialog("Server error, exit code: " + ex.StatusCode), "register");
-                }
+                await DialogHost.Show(new MessageDialog(ApiErrorsBuilder.GetErrorString(exc.Result.Errors)), "register");
             }
             catch (Exception)
             {
@@ -92,8 +86,8 @@ namespace SafePassVault.App
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            LoginWindow login = new LoginWindow();
-            login.Show();
+            WindowManager.LoginWindow = new LoginWindow();
+            WindowManager.LoginWindow.Show();
             Close();
         }
     }

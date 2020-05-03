@@ -21,6 +21,7 @@ using System.Windows.Shapes;
 using ToastNotifications.Messages;
 using SafePassVault.App.Helpers;
 using System.Security.Cryptography;
+using SafePassVault.Core.Helpers;
 
 namespace SafePassVault.App
 {
@@ -36,6 +37,8 @@ namespace SafePassVault.App
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            UserData.eccKeyPairs = new List<EccKeyPairGetModel>();
+
             if (String.IsNullOrEmpty(LoginBox.Text) || String.IsNullOrEmpty(PasswordBox.Password))
             {
                 await DialogHost.Show(new MessageDialog("Fields cannot be empty!"), "login");
@@ -54,6 +57,7 @@ namespace SafePassVault.App
                 var result = await UserData.ApiClient.ApiUsersAuthenticateAsync(loginModel);
 
                 UserData.AuthToken = result.AuthenticationToken;
+                UserData.UserName = LoginBox.Text;
                 UserData.BytePassword = Encoding.UTF8.GetBytes(PasswordBox.Password);
                 
                 var checkResult = await UserData.ApiClient.ApiEcckeypairsGetAsync(20, 0);
@@ -88,57 +92,55 @@ namespace SafePassVault.App
                             PublicKey = keypair.PublicKey
                         }
                     });
+
+                    checkResult = await UserData.ApiClient.ApiEcckeypairsGetAsync(20, 0);
                 }
-                else
+               
+                // Get user keypairs and decrypt them
+                foreach (var keyPair in checkResult)
                 {
-                    // Get user keypairs and decrypt them
-                    foreach(var keyPair in checkResult)
-                    {
-                        UserData.eccKeyPairs.Add(keyPair);
-                        var masterKeyService = new KeyDerivationServiceProvider();
-                        var masterKey = masterKeyService.DeriveKeyFromBlob(UserData.BytePassword, new KeyDerivationBlob(
-                            keyPair.EncryptedPrivateKey.DerivationDescription,
-                            keyPair.EncryptedPrivateKey.DerivationSalt,
-                            null
-                            ));
+                    UserData.eccKeyPairs.Add(keyPair);
+                    var masterKeyService = new KeyDerivationServiceProvider();
+                    var masterKey = masterKeyService.DeriveKeyFromBlob(UserData.BytePassword, new KeyDerivationBlob(
+                        keyPair.EncryptedPrivateKey.DerivationDescription,
+                        keyPair.EncryptedPrivateKey.DerivationSalt,
+                        null
+                        ));
 
-                        var crypto = new SymmetricCryptographyServiceProvider();
+                    var crypto = new SymmetricCryptographyServiceProvider();
 
-                        var privateKeyDecrypted = crypto.DecryptFromSymmetricCipthertextBlob(masterKey.MasterKey, new SymmetricCipthertextBlob
-                            (
-                                keyPair.EncryptedPrivateKey.CipherDescription,
-                                keyPair.EncryptedPrivateKey.InitializationVector,
-                                keyPair.EncryptedPrivateKey.Ciphertext,
-                                keyPair.EncryptedPrivateKey.AuthenticationTag
-                            )
-                        );
+                    var privateKeyDecrypted = crypto.DecryptFromSymmetricCipthertextBlob(masterKey.MasterKey, new SymmetricCipthertextBlob
+                        (
+                            keyPair.EncryptedPrivateKey.CipherDescription,
+                            keyPair.EncryptedPrivateKey.InitializationVector,
+                            keyPair.EncryptedPrivateKey.Ciphertext,
+                            keyPair.EncryptedPrivateKey.AuthenticationTag
+                        )
+                    );
 
-                        UserData.PrivateKeyDecrypted = privateKeyDecrypted;
-                        //CngKey.Import(privateKeyDecrypted, CngKeyBlobFormat.EccPrivateBlob, new CngProvider());
-                    }
-                }
+                    UserData.PrivateKeyDecrypted = privateKeyDecrypted;
+                    //CngKey.Import(privateKeyDecrypted, CngKeyBlobFormat.EccPrivateBlob, new CngProvider());
+                }                
 
-                MainWindow window = new MainWindow();
-                window.Show();
-                window.Notifier.ShowSuccess("You logged in successfully!");
+                WindowManager.MainWindow = new MainWindow();
+                WindowManager.MainWindow.Show();
+                WindowManager.MainWindow.Notifier.ShowSuccess("You logged in successfully!");
                 Close();
             }
-            catch (ApiException)
+            catch (ApiException<ProblemDetails> exc)
             {
-                await DialogHost.Show(new MessageDialog("Wrong username or password!\nPlease try again."), "login");
+                await DialogHost.Show(new MessageDialog(ApiErrorsBuilder.GetErrorString(exc.Result.Errors)), "login");
             }
             catch (Exception)
             {
                 await DialogHost.Show(new MessageDialog("Unknown error"), "login");
             }
-
-            
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            RegisterWindow register = new RegisterWindow();
-            register.Show();
+            WindowManager.RegisterWindow = new RegisterWindow();
+            WindowManager.RegisterWindow.Show();
             Close();
         }
     }

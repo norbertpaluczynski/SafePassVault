@@ -10,6 +10,10 @@ using ToastNotifications.Position;
 using Newtonsoft.Json;
 using System.IO;
 using SafePassVault.App.Helpers;
+using System.Timers;
+using SafePassVault.Core.Helpers;
+using ToastNotifications.Messages;
+using MaterialDesignThemes.Wpf;
 
 namespace SafePassVault.App
 {
@@ -18,9 +22,11 @@ namespace SafePassVault.App
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Timer _timer;
+
         public static StartPage StartPage;
         public static ServiceListPage ServiceListPage;
-        public static PasswordSettingsPage PasswordSettingsPage;
+        public static ChangePasswordPage ChangePasswordPage;
 
         public Notifier Notifier { get; set; }
 
@@ -37,7 +43,9 @@ namespace SafePassVault.App
 
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
                     notificationLifetime: TimeSpan.FromSeconds(1.5),
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.DisplayOptions.TopMost = false;
 
                 cfg.DisplayOptions.Width = 230;
 
@@ -46,17 +54,44 @@ namespace SafePassVault.App
 
             StartPage = new StartPage();
             ServiceListPage = new ServiceListPage(Notifier);
-            PasswordSettingsPage = new PasswordSettingsPage(Notifier);
+            ChangePasswordPage = new ChangePasswordPage(Notifier);
 
             InitializeComponent();
             ApplicationFrame.Content = StartPage;
+
+            _timer = new Timer(1000);
+            _timer.Elapsed += _timer_Elapsed;
+            _timer.Start();
+        }
+
+        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var timeLeft = AppSettings.Settings.IdleTimeLimit - TimeSpan.FromMilliseconds(IdleTimeFinder.GetIdleTime());
+
+            if (timeLeft.Seconds > 0 && timeLeft.Seconds <= 3)
+            {
+                Notifier.ShowInformation($"You will be loged out in: { timeLeft.Seconds }!");
+            }
+            else if(timeLeft.Seconds <= 0)
+            {                
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Logout();
+                });
+            }
+        }
+
+        public void Logout()
+        {
+            _timer.Stop();
+            WindowManager.LoginWindow = new LoginWindow();
+            WindowManager.LoginWindow.Show();
+            Close();
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginWindow window = new LoginWindow();
-            window.Show();
-            Close();            
+            Logout();
         }
 
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)
@@ -64,9 +99,9 @@ namespace SafePassVault.App
             ApplicationFrame.Content = ServiceListPage;
         }
 
-        private void PasswordSettingsButton_Click(object sender, RoutedEventArgs e)
+        private void ChangePasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationFrame.Content = PasswordSettingsPage;
+            ApplicationFrame.Content = ChangePasswordPage;
         }
     }
 }

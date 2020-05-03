@@ -613,6 +613,16 @@
                 }
               }
             }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -657,6 +667,71 @@
             }
           },
           "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/change-password": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_PostPasswordChange_v1",
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserChangePasswordModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
             "description": "",
             "content": {
               "application/json": {
@@ -1087,6 +1162,60 @@
             "type": "string",
             "format": "byte",
             "minLength": 1
+          }
+        }
+      },
+      "UserChangePasswordModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "passwordRepeat": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "eccKeyPairs": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EccKeyPairModel"
+            }
+          }
+        }
+      },
+      "EccKeyPairModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "publicKey": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccPublicKeyModel"
+              }
+            ]
+          },
+          "encryptedPrivateKey": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EccEncryptedPrivateKeyModel"
+              }
+            ]
           }
         }
       }

@@ -8,14 +8,14 @@ namespace SafePassVault.Core.Helpers
 {
     public static class PasswordGenerator
     {
-        public static string Generate(PasswordCharsetPreset preset, int length)
+        public static string Generate(PasswordGeneratorSettings settings)
         {
-            var allowedCharset = GetAllowedCharsets(preset);
+            var allowedCharset = GetAllowedCharsets(settings);
             var array = ShuffleArray(allowedCharset);
 
             StringBuilder password = new StringBuilder();
 
-            for(int i = 0; i < length; i++)
+            for(int i = 0; i < settings.PasswordLength; i++)
             {
                 password.Append(array[RandomNumberGenerator.GetInt32(int.MaxValue) % array.Length]);
             }
@@ -23,27 +23,27 @@ namespace SafePassVault.Core.Helpers
             return password.ToString();
         }
 
-        private static char[] GetAllowedCharsets(PasswordCharsetPreset preset)
+        private static char[] GetAllowedCharsets(PasswordGeneratorSettings settings)
         {
             StringBuilder builder = new StringBuilder();
 
-            if(preset.AllowNumbers)
+            if(settings.AllowNumbers)
             {
                 builder.Append(PasswordCharsets.Numbers);
             }
-            if (preset.AllowLowercaseLetters)
+            if (settings.AllowLowercaseLetters)
             {
                 builder.Append(PasswordCharsets.LowercaseLetters);
             }
-            if (preset.AllowUppercaseLetters)
+            if (settings.AllowUppercaseLetters)
             {
                 builder.Append(PasswordCharsets.UppercaseLetters);
             }
-            if (preset.AllowSpecialCharacters)
+            if (settings.AllowSpecialCharacters)
             {
                 builder.Append(PasswordCharsets.SpecialCharacters);
             }
-            if (preset.AllowSpace)
+            if (settings.AllowSpace)
             {
                 builder.Append(PasswordCharsets.Space);
             }
