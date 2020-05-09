@@ -246,9 +246,10 @@ namespace SafePassVault.App.Pages
                 {
                     Clipboard.Clear();
                 });
-                Notifier.ShowInformation("Clipboard cleaned!");
                 _stopWatch.Stop();
+                _stopWatch.Reset();
                 _copyTimer.Stop();
+                Notifier.ShowInformation("Clipboard cleaned!");
             }
         }
     }
