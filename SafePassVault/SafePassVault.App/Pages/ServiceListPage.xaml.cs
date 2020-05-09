@@ -236,15 +236,23 @@ namespace SafePassVault.App.Pages
             _stopWatch.Start();
             _copyTimer.Elapsed += _copyTimer_Elapsed;
             _copyTimer.Start();
+            CopyProgressBar.Visibility = Visibility.Visible;
+            CopyProgressBar.Value = 15;
         }
 
         private void _copyTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                CopyProgressBar.Value -= 1;
+            });
+            
             if (_stopWatch.Elapsed.Seconds > 14)
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Clipboard.Clear();
+                    CopyProgressBar.Visibility = Visibility.Hidden;
                 });
                 _stopWatch.Stop();
                 _stopWatch.Reset();

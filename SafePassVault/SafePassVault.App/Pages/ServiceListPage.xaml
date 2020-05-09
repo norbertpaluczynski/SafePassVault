@@ -183,5 +183,18 @@
 
             </DataGrid.Columns>
         </DataGrid>
+        <ProgressBar
+            x:Name="CopyProgressBar"
+            Width="70"
+            Height="20"
+            Margin="10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Background="{StaticResource PrimaryGray}"
+            Foreground="{StaticResource PrimaryOrange}"
+            Maximum="15"
+            Minimum="0"
+            Visibility="Hidden"
+            Value="7" />
     </Grid>
 </Page>
