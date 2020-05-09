@@ -15,6 +15,7 @@ using System;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using SafePassVault.Core.Helpers;
+using System.Timers;
 
 namespace SafePassVault.App.Pages
 {
@@ -23,6 +24,10 @@ namespace SafePassVault.App.Pages
     /// </summary>
     public partial class ServiceListPage : Page
     {
+        private Timer _copyTimer;
+        //private int _passwordWatcher;
+        private Stopwatch _stopWatch;
+
         public Notifier Notifier { get; set; }
         public ObservableCollection<Service> Services { get; set; }
 
@@ -224,7 +229,27 @@ namespace SafePassVault.App.Pages
         {
             var service = (Service)((DataGridCell)e.Source).DataContext;
             Clipboard.SetText(service.Password);
-            Notifier.ShowSuccess("Password copied to clipboard!");
+            Notifier.ShowSuccess("Password copied to clipboard for 15 sec!");
+
+            _copyTimer = new Timer(1000);
+            _stopWatch = new Stopwatch();
+            _stopWatch.Start();
+            _copyTimer.Elapsed += _copyTimer_Elapsed;
+            _copyTimer.Start();
+        }
+
+        private void _copyTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (_stopWatch.Elapsed.Seconds > 14)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Clipboard.Clear();
+                });
+                Notifier.ShowInformation("Clipboard cleaned!");
+                _stopWatch.Stop();
+                _copyTimer.Stop();
+            }
         }
     }
 }
