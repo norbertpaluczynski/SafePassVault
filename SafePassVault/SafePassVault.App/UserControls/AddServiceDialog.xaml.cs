@@ -26,6 +26,7 @@ namespace SafePassVault.App.UserControls
             Notifier = notifier;
             DataContext = this;
             InitializeComponent();
+            PasswordExpirationDatePicker.DisplayDateStart = DateTime.Now + TimeSpan.FromDays(1);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

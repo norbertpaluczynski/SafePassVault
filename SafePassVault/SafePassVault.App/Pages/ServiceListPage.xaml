@@ -68,6 +68,15 @@
                                 <md:PackIcon Width="7" Kind="Circle" />
                                 <md:PackIcon Width="7" Kind="Circle" />
                                 <md:PackIcon Width="7" Kind="Circle" />
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsPasswordExpired}" Value="True">
+                                                <Setter Property="Foreground" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

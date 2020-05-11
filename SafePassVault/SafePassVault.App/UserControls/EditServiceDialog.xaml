@@ -24,6 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -106,9 +107,20 @@
 
         </StackPanel>
 
+        <DatePicker
+            x:Name="PasswordExpirationDatePicker"
+            Grid.Row="4"
+            Grid.Column="0"
+            Margin="25,10"
+            Padding="0"
+            md:HintAssist.Hint="Password expiration date"
+            SelectedDate="{Binding Service.PasswordExpirationDate}"
+            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+            ToolTip="Pick password expiration date." />
+
         <TextBox
             x:Name="UrlBox"
-            Grid.Row="4"
+            Grid.Row="5"
             Margin="25,10"
             md:HintAssist.Hint="URL"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -116,7 +128,7 @@
 
         <TextBox
             x:Name="DescriptionBox"
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="0"
             Margin="25,10"
             md:HintAssist.Hint="Description"
@@ -206,7 +218,7 @@
 
 
         <StackPanel
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="10,10,10,20"

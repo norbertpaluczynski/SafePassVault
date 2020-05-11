@@ -28,6 +28,8 @@ namespace SafePassVault.App.UserControls
             Notifier = notifier;
             DataContext = this;
             InitializeComponent();
+
+            PasswordExpirationDatePicker.DisplayDateStart = DateTime.Now + TimeSpan.FromDays(1);
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -39,6 +41,7 @@ namespace SafePassVault.App.UserControls
             _service.Url = Service.Url;
             _service.CreatedAt = Service.CreatedAt;
             _service.UpdatedAt = DateTime.Now;
+            _service.PasswordExpirationDate = Service.PasswordExpirationDate;
         }
 
         private void GeneratePassword_Click(object sender, RoutedEventArgs e)

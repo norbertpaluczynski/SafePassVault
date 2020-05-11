@@ -97,6 +97,14 @@ namespace SafePassVault.App
         private void ServiceListButton_Click(object sender, RoutedEventArgs e)
         {
             ApplicationFrame.Content = ServiceListPage;
+
+            foreach (var service in ServiceListPage.Services)
+            {
+                if (service.PasswordExpirationDate < DateTime.Now)
+                {
+                    Notifier.ShowWarning($"Your {service.Name} password has expired!");
+                }
+            }
         }
 
         private void ChangePasswordButton_Click(object sender, RoutedEventArgs e)

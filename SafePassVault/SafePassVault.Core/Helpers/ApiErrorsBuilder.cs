@@ -10,13 +10,16 @@ namespace SafePassVault.Core.Helpers
         {
             var errorsList = new List<string>();
 
-            foreach(var key in dictionary.Keys)
+            if(dictionary != null)
             {
-                foreach(var error in dictionary[key])
+                foreach (var key in dictionary.Keys)
                 {
-                    if(!errorsList.Contains(error))
+                    foreach (var error in dictionary[key])
                     {
-                        errorsList.Add(error);
+                        if (!errorsList.Contains(error))
+                        {
+                            errorsList.Add(error);
+                        }
                     }
                 }
             }

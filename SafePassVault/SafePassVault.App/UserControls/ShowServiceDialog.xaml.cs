@@ -21,6 +21,8 @@ namespace SafePassVault.App.UserControls
             Notifier = notifier;
             DataContext = Service;
             InitializeComponent();
+            PasswordExpirationDate.Text = Service.PasswordExpirationDate == null ? 
+                "Not specified" : ((System.DateTime)Service.PasswordExpirationDate).ToString("dd-MM-yyyy");
         }
 
         private void OpenInBrowserButton_Click(object sender, RoutedEventArgs e)

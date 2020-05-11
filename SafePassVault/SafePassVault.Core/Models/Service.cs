@@ -14,11 +14,13 @@ namespace SafePassVault.Core.Models
         private string _description;
         private DateTime _createdAt;
         private DateTime _updatedAt;
+        private DateTime? _passwordExpirationDate;
 
         public Service()
         {
             _createdAt = DateTime.Now;
             _updatedAt = DateTime.Now;
+            _passwordExpirationDate = null;
         }
 
         public Service(Service service)
@@ -30,6 +32,7 @@ namespace SafePassVault.Core.Models
             _url = service.Url;
             _createdAt = service.CreatedAt;
             _updatedAt = service.UpdatedAt;
+            _passwordExpirationDate = service._passwordExpirationDate;
         }
 
 
@@ -112,6 +115,18 @@ namespace SafePassVault.Core.Models
                 OnPropertyChanged();
             }
         }
+
+        public DateTime? PasswordExpirationDate
+        {
+            get => _passwordExpirationDate;
+            set
+            {
+                _passwordExpirationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsPasswordExpired => _passwordExpirationDate < DateTime.Now + TimeSpan.FromDays(1);
 
         string IDataErrorInfo.Error
         {
