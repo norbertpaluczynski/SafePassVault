@@ -53,13 +53,26 @@
 
                 </StackPanel>
 
-                <Button
-                    x:Name="LogoutButton"
-                    Grid.Row="2"
-                    Margin="20"
-                    Click="LogoutButton_Click"
-                    Content="Logout"
-                    Style="{StaticResource Sp_MaterialDesignFlatDarkBgButton}" />
+                <StackPanel Grid.Row="2" Margin="20">
+
+                    <Button
+                        x:Name="DeleteUserAccountButton"
+                        BorderBrush="#c41d00"
+                        Click="DeleteUserAccountButton_Click"
+                        Content="Delete account"
+                        Foreground="#c41d00"
+                        Style="{StaticResource Sp_SidebarButton}" />
+
+                    <Button
+                        x:Name="LogoutButton"
+                        Margin="0,5"
+                        Click="LogoutButton_Click"
+                        Content="Logout"
+                        Style="{StaticResource Sp_MaterialDesignFlatDarkBgButton}" />
+
+                </StackPanel>
+
+
             </Grid>
 
             <Frame

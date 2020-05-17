@@ -14,6 +14,8 @@ using System.Timers;
 using SafePassVault.Core.Helpers;
 using ToastNotifications.Messages;
 using MaterialDesignThemes.Wpf;
+using SafePassVault.App.UserControls;
+using SafePassVault.Core.ApiClient;
 
 namespace SafePassVault.App
 {
@@ -110,6 +112,37 @@ namespace SafePassVault.App
         private void ChangePasswordButton_Click(object sender, RoutedEventArgs e)
         {
             ApplicationFrame.Content = ChangePasswordPage;
+        }
+
+        private async void DeleteUserAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmWithPasswordDialog confirmDialog = new ConfirmWithPasswordDialog();
+            await DialogHost.Show(confirmDialog, "root");
+
+            if (confirmDialog.IsPasswordCorrect)
+            {
+                try
+                {
+                    await UserData.ApiClient.ApiUsersAsync();
+                    Logout();
+                    await DialogHost.Show(new MessageDialog("Account deleted succesfully!"), "login");
+                }
+                catch (ApiException<ProblemDetails> exc)
+                {
+                    foreach (var error in ApiErrorsBuilder.GetErrorList(exc.Result.Errors))
+                    {
+                        Notifier.ShowError(error);
+                    }
+                }
+                catch (Exception)
+                {
+                    Notifier.ShowError("Unknown error");
+                }
+            }
+            else
+            {
+                Notifier.ShowError("Password is not correct!");
+            }
         }
     }
 }
