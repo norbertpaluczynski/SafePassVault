@@ -1,5 +1,7 @@
-﻿using SafePassVault.Core.Models;
+﻿using SafePassVault.App.Helpers;
+using SafePassVault.Core.Models;
 using System.Diagnostics;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using ToastNotifications;
@@ -57,7 +59,7 @@ namespace SafePassVault.App.UserControls
         private void CopyPasswordButton_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(Service.Password);
-            Notifier.ShowSuccess("Password copied to clipboard!");
+            MainWindow.ServiceListPage.CopyTimerStart();
         }
     }
 }

@@ -24,9 +24,8 @@ namespace SafePassVault.App.Pages
     /// </summary>
     public partial class ServiceListPage : Page
     {
-        private Timer _copyTimer;
-        //private int _passwordWatcher;
-        private Stopwatch _stopWatch;
+        private Timer CopyTimer;
+        private Stopwatch StopWatch;
 
         public Notifier Notifier { get; set; }
         public ObservableCollection<Service> Services { get; set; }
@@ -38,6 +37,9 @@ namespace SafePassVault.App.Pages
             Notifier = notifier;
             InitializeComponent();
             DataContext = this;
+            CopyTimer = new Timer(1000);
+            StopWatch = new Stopwatch();
+            CopyTimer.Elapsed += CopyTimer_Elapsed;
         }
 
         private async void ShowServiceButton_Click(object sender, RoutedEventArgs e)
@@ -229,34 +231,39 @@ namespace SafePassVault.App.Pages
         {
             var service = (Service)((DataGridCell)e.Source).DataContext;
             Clipboard.SetText(service.Password);
-            Notifier.ShowSuccess("Password copied to clipboard for 15 sec!");
+            CopyTimerStart();
+        }
 
-            _copyTimer = new Timer(1000);
-            _stopWatch = new Stopwatch();
-            _stopWatch.Start();
-            _copyTimer.Elapsed += _copyTimer_Elapsed;
-            _copyTimer.Start();
+        public void CopyTimerStart()
+        {
+            Notifier.ShowSuccess("Password copied to clipboard for 15 sec!");
+            StopWatch.Reset();
+            CopyTimer.Stop();
+
+            StopWatch.Start();
+            CopyTimer.Start();
             CopyProgressBar.Visibility = Visibility.Visible;
             CopyProgressBar.Value = 15;
         }
 
-        private void _copyTimer_Elapsed(object sender, ElapsedEventArgs e)
+
+        private void CopyTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 CopyProgressBar.Value -= 1;
             });
             
-            if (_stopWatch.Elapsed.Seconds > 14)
+            if (StopWatch.Elapsed.Seconds > 14)
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Clipboard.Clear();
                     CopyProgressBar.Visibility = Visibility.Hidden;
                 });
-                _stopWatch.Stop();
-                _stopWatch.Reset();
-                _copyTimer.Stop();
+                StopWatch.Stop();
+                StopWatch.Reset();
+                CopyTimer.Stop();
                 Notifier.ShowInformation("Clipboard cleaned!");
             }
         }

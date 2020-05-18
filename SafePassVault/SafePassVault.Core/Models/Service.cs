@@ -126,7 +126,7 @@ namespace SafePassVault.Core.Models
             }
         }
 
-        public bool IsPasswordExpired => _passwordExpirationDate < DateTime.Now + TimeSpan.FromDays(1);
+        public bool IsPasswordExpired => _passwordExpirationDate < DateTime.Now;
 
         string IDataErrorInfo.Error
         {
